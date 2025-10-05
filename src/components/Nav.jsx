@@ -97,6 +97,11 @@ export default function Nav({ currentLang = 'en', currentPath = '/' }) {
                 {link.label}
               </a>
             ))}
+            <div className="h-px bg-slate-200 dark:bg-slate-800 my-2"></div>
+            <div className="flex items-center justify-center space-x-4 px-4 py-2">
+              <DarkModeToggle />
+              <LanguageSwitcher currentLang={currentLang} currentPath={currentPath} />
+            </div>
           </div>
         )}
       </div>
