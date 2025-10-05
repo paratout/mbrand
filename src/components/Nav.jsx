@@ -54,7 +54,7 @@ export default function Nav({ currentLang = 'en', currentPath = '/' }) {
               </a>
             ))}
             <DarkModeToggle />
-            <LanguageSwitcher currentLang={currentLang} />
+            <LanguageSwitcher currentLang={currentLang} currentPath={currentPath} />
           </div>
             
           {/* Mobile Menu Button */}

@@ -13,5 +13,12 @@ export default defineConfig({
   ],
   output: 'server',
   adapter: cloudflare(),
-  site: 'https://mehdibamou.com'
+  site: 'https://mehdibamou.com',
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'fr', 'ar', 'de'],
+    routing: {
+      prefixDefaultLocale: false
+    }
+  }
 });

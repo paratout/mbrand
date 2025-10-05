@@ -1,15 +1,15 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
-const languages = [
-  { code: 'en', name: 'English', flag: '🇬🇧' },
-  { code: 'fr', name: 'Français', flag: '🇫🇷' },
-  { code: 'ar', name: 'العربية', flag: '🇲🇦' },
-  { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
-];
-
-export default function LanguageSwitcher({ currentLang = 'en' }) {
+export default function LanguageSwitcher({ currentLang = 'en', currentPath = '/' }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
+
+  const languages = [
+    { code: 'en', name: 'English', flag: '🇬🇧' },
+    { code: 'fr', name: 'Français', flag: '🇫🇷' },
+    { code: 'ar', name: 'العربية', flag: '🇲🇦' },
+    { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
+  ];
 
   const currentLanguage = languages.find(lang => lang.code === currentLang) || languages[0];
 
@@ -25,10 +25,26 @@ export default function LanguageSwitcher({ currentLang = 'en' }) {
   }, []);
 
   const handleLanguageChange = (langCode) => {
-    // For now, just reload with language prefix
-    // TODO: Implement proper i18n routing
-    const currentPath = window.location.pathname;
-    const newPath = langCode === 'en' ? currentPath : `/${langCode}${currentPath}`;
+    setIsOpen(false);
+    
+    // Get the current path without locale prefix
+    let pathWithoutLocale = currentPath;
+    const locales = ['en', 'fr', 'ar', 'de'];
+    
+    // Remove existing locale prefix if present
+    for (const locale of locales) {
+      if (pathWithoutLocale.startsWith(`/${locale}/`) || pathWithoutLocale === `/${locale}`) {
+        pathWithoutLocale = pathWithoutLocale.replace(`/${locale}`, '') || '/';
+        break;
+      }
+    }
+    
+    // Build new path with selected locale
+    // English is default, no prefix needed
+    const newPath = langCode === 'en' 
+      ? pathWithoutLocale 
+      : `/${langCode}${pathWithoutLocale}`;
+    
     window.location.href = newPath;
   };
 
