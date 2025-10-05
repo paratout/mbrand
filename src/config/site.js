@@ -2,7 +2,7 @@
 export const siteConfig = {
   // Set to true to enable "Coming Soon" mode
   // Set to false to show the full website
-  comingSoonMode: true,
+  comingSoonMode: false,
   
   // Site metadata
   title: 'Mehdi Bamou',
