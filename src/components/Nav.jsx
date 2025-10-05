@@ -6,7 +6,6 @@ export default function Nav({ currentLang = 'en' }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const navLinks = [
-    { href: '/', label: 'Home', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
     { href: '/perspectives', label: 'Perspectives', icon: 'M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z' },
     { href: '/portfolio', label: 'Portfolio', icon: 'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z' },
     { href: '/speaking', label: 'Speaking', icon: 'M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z' },
@@ -20,17 +19,9 @@ export default function Nav({ currentLang = 'en' }) {
       <div className="container-custom">
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
-          <a href="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary-700 rounded-lg flex items-center justify-center text-white font-bold text-lg group-hover:scale-105 transition-transform">
+          <a href="/" className="group" aria-label="Mehdi Bamou - Home">
+            <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary-700 rounded-lg flex items-center justify-center text-white font-bold text-lg group-hover:scale-105 transition-transform shadow-md">
               MB
-            </div>
-            <div className="hidden sm:block">
-              <div className="text-lg font-heading font-bold text-slate-900 dark:text-white">
-                Mehdi Bamou
-              </div>
-              <div className="text-xs text-slate-600 dark:text-slate-400">
-                Enterprise Architect
-              </div>
             </div>
           </a>
 
@@ -48,37 +39,33 @@ export default function Nav({ currentLang = 'en' }) {
                 <span className="text-sm">{link.label}</span>
               </a>
             ))}
-          </div>
-
-          {/* Right Side Controls */}
-          <div className="flex items-center gap-2">
             <DarkModeToggle />
             <LanguageSwitcher currentLang={currentLang} />
-            
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="lg:hidden p-2 text-slate-700 dark:text-slate-300 focus:outline-none"
-              aria-label="Toggle menu"
-              aria-expanded={isOpen}
-            >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                {isOpen ? (
-                  <path d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
           </div>
+            
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="lg:hidden p-2 text-slate-700 dark:text-slate-300 focus:outline-none"
+            aria-label="Toggle menu"
+            aria-expanded={isOpen}
+          >
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              {isOpen ? (
+                <path d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
         </div>
 
         {/* Mobile Menu */}
