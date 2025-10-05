@@ -1,0 +1,59 @@
+---
+import Nav from '../components/Nav.jsx';
+import Footer from '../components/Footer.jsx';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  path?: string;
+}
+
+const { 
+  title = "Mehdi Bamou - Enterprise Architect & Digital Transformation Leader",
+  description = "Enterprise Architect specializing in digital transformation, cloud strategy, and MENA market advisory.",
+  ogImage = "/og-image.jpg",
+  path = "/"
+} = Astro.props;
+
+const siteUrl = "https://mehdibamou.com";
+const fullUrl = `${siteUrl}${path}`;
+const fullImageUrl = `${siteUrl}${ogImage}`;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={fullImageUrl} />
+    <meta property="og:url" content={fullUrl} />
+    <meta property="og:type" content="website" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={fullImageUrl} />
+    
+    <!-- Additional SEO -->
+    <link rel="canonical" href={fullUrl} />
+    <meta name="author" content="Mehdi Bamou" />
+    
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <Nav client:load />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

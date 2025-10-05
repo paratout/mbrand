@@ -1,0 +1,204 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.jsx';
+import SpeakingCard from '../components/SpeakingCard.jsx';
+
+const speakingEngagements = [
+  {
+    eventName: "Enterprise Architecture Summit 2024",
+    date: "2024-11-15",
+    location: "Berlin, Germany",
+    status: "upcoming",
+    description: "Keynote: 'Building Resilient Enterprise Architectures in the Age of AI'",
+    link: "#"
+  },
+  {
+    eventName: "Cloud Innovation Conference",
+    date: "2024-09-20",
+    location: "Amsterdam, Netherlands",
+    status: "past",
+    description: "Workshop: 'Multi-Cloud Strategy and Implementation Best Practices'",
+    link: "#"
+  },
+  {
+    eventName: "Digital Transformation Forum MENA",
+    date: "2024-06-10",
+    location: "Dubai, UAE",
+    status: "past",
+    description: "Panel Discussion: 'Bridging Technology Innovation Between Europe and MENA'",
+    link: "#"
+  },
+  {
+    eventName: "Tech Leaders Meetup Düsseldorf",
+    date: "2024-12-05",
+    location: "Düsseldorf, Germany",
+    status: "confirmed",
+    description: "Talk: 'Lessons Learned from Enterprise Cloud Migrations'",
+    link: "#"
+  },
+  {
+    eventName: "Architecture & Design Conference",
+    date: "2024-03-15",
+    location: "Paris, France",
+    status: "past",
+    description: "Presentation: 'TOGAF in Practice: Real-World Case Studies'",
+    link: "#"
+  },
+  {
+    eventName: "Morocco Tech Summit",
+    date: "2023-11-20",
+    location: "Casablanca, Morocco",
+    status: "past",
+    description: "Keynote: 'The Future of Enterprise Technology in North Africa'",
+    link: "#"
+  }
+];
+
+const upcomingEvents = speakingEngagements.filter(e => e.status === 'upcoming' || e.status === 'confirmed');
+const pastEvents = speakingEngagements.filter(e => e.status === 'past');
+---
+
+<BaseLayout 
+  title="Speaking Engagements - Mehdi Bamou"
+  description="Conference talks, workshops, and keynotes on enterprise architecture, digital transformation, and cloud strategy."
+  path="/speaking"
+>
+  <Hero 
+    title="Speaking Engagements"
+    subtitle="Sharing Knowledge on Enterprise Architecture & Digital Transformation"
+    client:load
+  />
+
+  <!-- Speaking Topics -->
+  <section class="section-spacing bg-slate-50 dark:bg-slate-800">
+    <div class="container-custom">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-heading font-bold mb-4 text-slate-900 dark:text-white">
+          Speaking Topics
+        </h2>
+        <p class="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
+          I speak on a range of topics related to enterprise architecture, digital transformation, 
+          and technology leadership.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="card text-center">
+          <h3 class="text-lg font-heading font-bold mb-2 text-slate-900 dark:text-white">
+            Enterprise Architecture
+          </h3>
+          <p class="text-slate-600 dark:text-slate-300 text-sm">
+            TOGAF, architecture frameworks, governance, and best practices
+          </p>
+        </div>
+
+        <div class="card text-center">
+          <h3 class="text-lg font-heading font-bold mb-2 text-slate-900 dark:text-white">
+            Cloud Strategy
+          </h3>
+          <p class="text-slate-600 dark:text-slate-300 text-sm">
+            Cloud migration, multi-cloud architectures, and cloud-native design
+          </p>
+        </div>
+
+        <div class="card text-center">
+          <h3 class="text-lg font-heading font-bold mb-2 text-slate-900 dark:text-white">
+            Digital Transformation
+          </h3>
+          <p class="text-slate-600 dark:text-slate-300 text-sm">
+            Change management, innovation, and organizational transformation
+          </p>
+        </div>
+
+        <div class="card text-center">
+          <h3 class="text-lg font-heading font-bold mb-2 text-slate-900 dark:text-white">
+            MENA Technology Markets
+          </h3>
+          <p class="text-slate-600 dark:text-slate-300 text-sm">
+            Market insights, opportunities, and cross-cultural partnerships
+          </p>
+        </div>
+
+        <div class="card text-center">
+          <h3 class="text-lg font-heading font-bold mb-2 text-slate-900 dark:text-white">
+            Technology Leadership
+          </h3>
+          <p class="text-slate-600 dark:text-slate-300 text-sm">
+            Building high-performing teams and technical strategy
+          </p>
+        </div>
+
+        <div class="card text-center">
+          <h3 class="text-lg font-heading font-bold mb-2 text-slate-900 dark:text-white">
+            AI & Emerging Tech
+          </h3>
+          <p class="text-slate-600 dark:text-slate-300 text-sm">
+            Integrating AI, machine learning, and emerging technologies
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Upcoming & Confirmed Events -->
+  {upcomingEvents.length > 0 && (
+    <section class="section-spacing">
+      <div class="container-custom">
+        <h2 class="text-3xl md:text-4xl font-heading font-bold mb-8 text-slate-900 dark:text-white">
+          Upcoming & Confirmed Events
+        </h2>
+        <div class="space-y-6">
+          {upcomingEvents.map((event) => (
+            <SpeakingCard 
+              eventName={event.eventName}
+              date={event.date}
+              location={event.location}
+              status={event.status}
+              description={event.description}
+              link={event.link}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Past Events -->
+  <section class="section-spacing bg-slate-50 dark:bg-slate-800">
+    <div class="container-custom">
+      <h2 class="text-3xl md:text-4xl font-heading font-bold mb-8 text-slate-900 dark:text-white">
+        Past Events
+      </h2>
+      <div class="space-y-6">
+        {pastEvents.map((event) => (
+          <SpeakingCard 
+            eventName={event.eventName}
+            date={event.date}
+            location={event.location}
+            status={event.status}
+            description={event.description}
+            link={event.link}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section-spacing">
+    <div class="container-custom">
+      <div class="card bg-primary text-white text-center p-12">
+        <h2 class="text-3xl md:text-4xl font-heading font-bold mb-6">
+          Invite Me to Speak
+        </h2>
+        <p class="text-xl mb-8 max-w-2xl mx-auto opacity-90">
+          Looking for a speaker for your conference, workshop, or corporate event? 
+          I'd love to share insights with your audience.
+        </p>
+        <a href="/contact" class="btn-secondary inline-block">
+          Send Speaking Request
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

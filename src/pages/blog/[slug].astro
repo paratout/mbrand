@@ -1,0 +1,50 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostLayout from '../../components/PostLayout.jsx';
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('blog', ({ data }) => {
+    return data.draft !== true;
+  });
+  
+  return blogEntries.map(entry => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<BaseLayout 
+  title={`${entry.data.title} - Mehdi Bamou`}
+  description={entry.data.description}
+  ogImage={entry.data.image || '/og-image.jpg'}
+  path={`/blog/${entry.slug}`}
+>
+  <PostLayout
+    title={entry.data.title}
+    date={entry.data.date}
+    image={entry.data.image}
+    tags={entry.data.tags}
+    client:load
+  >
+    <Content />
+  </PostLayout>
+
+  <!-- Related Posts Section -->
+  <section class="section-spacing bg-slate-50 dark:bg-slate-800">
+    <div class="container-custom">
+      <h2 class="text-3xl font-heading font-bold mb-8 text-slate-900 dark:text-white">
+        Continue Reading
+      </h2>
+      <div class="text-center py-8">
+        <a href="/thought-leadership" class="btn-primary inline-block">
+          View All Articles
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
