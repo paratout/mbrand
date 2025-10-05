@@ -4,93 +4,172 @@ import Hero from '../components/Hero.jsx';
 ---
 
 <BaseLayout 
-  title="Mehdi Bamou - Enterprise Architect & Digital Transformation Leader"
-  description="Enterprise Architect specializing in digital transformation, cloud strategy, and MENA market advisory. Bridging technology between Morocco and Europe."
+  title="Mehdi Bamou - Enterprise Architect Bridging Europe & MENA | Digital Transformation Expert"
+  description="TOGAF-certified Enterprise Architect with 15+ years transforming businesses across Europe and MENA. Specializing in cloud strategy, digital transformation, and cross-cultural technology leadership. Based in Düsseldorf."
   path="/"
 >
   <!-- Hero Section -->
   <Hero 
-    title="Hello, I'm Mehdi Bamou"
-    subtitle="Enterprise Architect • Digital Transformation Leader • Morocco-Europe Technology Bridge"
-    ctaText="Learn More"
-    ctaLink="/about"
+    title="Transforming Enterprise Architecture Across Continents"
+    subtitle="Bridging European Innovation with MENA Digital Excellence"
+    credentials="TOGAF Certified • AWS Solutions Architect • Executive MBA Candidate • Fluent in 4 Languages"
+    ctaText="Explore My Expertise"
+    ctaLink="/expertise"
+    secondaryCtaText="Discover My Journey"
+    secondaryCtaLink="/about"
     client:load
   />
 
-  <!-- Feature Cards Section -->
-  <section class="section-spacing bg-slate-50 dark:bg-slate-800">
+  <!-- Value Proposition Section -->
+  <section class="section-spacing bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900">
     <div class="container-custom">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-heading font-bold mb-4 text-slate-900 dark:text-white">
+          How I Drive <span class="text-primary">Real Business Value</span>
+        </h2>
+        <p class="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
+          Combining technical excellence with cross-cultural expertise to deliver transformative results
+        </p>
+      </div>
+
       <div class="grid md:grid-cols-3 gap-8">
         <!-- Expertise Card -->
-        <a href="/expertise" class="card group hover:shadow-2xl transition-shadow">
-          <div class="text-primary mb-4">
-            <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <a href="/expertise" class="card group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-t-4 border-primary">
+          <div class="text-primary mb-4 transform group-hover:scale-110 transition-transform duration-300">
+            <svg class="w-14 h-14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
             </svg>
           </div>
           <h3 class="text-2xl font-heading font-bold mb-3 text-slate-900 dark:text-white group-hover:text-primary transition-colors">
-            Expertise
+            Strategic Expertise
           </h3>
-          <p class="text-slate-600 dark:text-slate-300">
-            Enterprise Architecture, Cloud Strategy, Digital Transformation, and MENA Market Advisory services.
+          <p class="text-slate-600 dark:text-slate-300 mb-4 leading-relaxed">
+            Design scalable enterprise architectures that reduce costs by 30% while accelerating time-to-market. Cloud strategies that align with your business goals, not just technical trends.
           </p>
-          <div class="mt-4 text-primary dark:text-primary-400 font-semibold group-hover:underline">
-            Explore Services →
+          <div class="flex items-center mt-auto text-primary dark:text-primary-400 font-semibold group-hover:gap-2 transition-all">
+            <span>Explore Services</span>
+            <svg class="w-5 h-5 ml-1 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
           </div>
         </a>
 
         <!-- Thought Leadership Card -->
-        <a href="/thought-leadership" class="card group hover:shadow-2xl transition-shadow">
-          <div class="text-primary mb-4">
-            <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+        <a href="/thought-leadership" class="card group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-t-4 border-secondary">
+          <div class="text-secondary mb-4 transform group-hover:scale-110 transition-transform duration-300">
+            <svg class="w-14 h-14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
             </svg>
           </div>
-          <h3 class="text-2xl font-heading font-bold mb-3 text-slate-900 dark:text-white group-hover:text-primary transition-colors">
+          <h3 class="text-2xl font-heading font-bold mb-3 text-slate-900 dark:text-white group-hover:text-secondary transition-colors">
             Thought Leadership
           </h3>
-          <p class="text-slate-600 dark:text-slate-300">
-            Insights on enterprise architecture, digital transformation, and technology trends shaping the future.
+          <p class="text-slate-600 dark:text-slate-300 mb-4 leading-relaxed">
+            Actionable insights from real-world transformations. Learn proven frameworks for navigating digital change and emerging tech trends across Europe and MENA markets.
           </p>
-          <div class="mt-4 text-primary dark:text-primary-400 font-semibold group-hover:underline">
-            Read Articles →
+          <div class="flex items-center mt-auto text-secondary dark:text-secondary-400 font-semibold group-hover:gap-2 transition-all">
+            <span>Read Insights</span>
+            <svg class="w-5 h-5 ml-1 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
           </div>
         </a>
 
         <!-- Speaking Card -->
-        <a href="/speaking" class="card group hover:shadow-2xl transition-shadow">
-          <div class="text-primary mb-4">
-            <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <a href="/speaking" class="card group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-t-4 border-primary">
+          <div class="text-primary mb-4 transform group-hover:scale-110 transition-transform duration-300">
+            <svg class="w-14 h-14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
             </svg>
           </div>
           <h3 class="text-2xl font-heading font-bold mb-3 text-slate-900 dark:text-white group-hover:text-primary transition-colors">
-            Speaking
+            Speaking & Workshops
           </h3>
-          <p class="text-slate-600 dark:text-slate-300">
-            Conference talks, workshops, and keynotes on enterprise architecture and digital transformation.
+          <p class="text-slate-600 dark:text-slate-300 mb-4 leading-relaxed">
+            Inspire your team with keynotes and hands-on workshops. From enterprise architecture fundamentals to cross-border digital strategies that drive measurable outcomes.
           </p>
-          <div class="mt-4 text-primary dark:text-primary-400 font-semibold group-hover:underline">
-            View Engagements →
+          <div class="flex items-center mt-auto text-primary dark:text-primary-400 font-semibold group-hover:gap-2 transition-all">
+            <span>View Engagements</span>
+            <svg class="w-5 h-5 ml-1 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
           </div>
         </a>
       </div>
     </div>
   </section>
 
+  <!-- Trust Indicators Section -->
+  <section class="section-spacing border-t border-slate-200 dark:border-slate-700">
+    <div class="container-custom">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-heading font-bold mb-4 text-slate-900 dark:text-white">
+          Trusted by Organizations Across <span class="text-primary">Europe & MENA</span>
+        </h2>
+        <p class="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+          15+ years delivering enterprise transformations • 50+ successful projects • 4 continents
+        </p>
+      </div>
+
+      <!-- Credentials Badges -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+        <div class="text-center p-6 bg-white dark:bg-slate-800 rounded-lg shadow-md">
+          <div class="text-3xl font-bold text-primary mb-2">15+</div>
+          <div class="text-sm text-slate-600 dark:text-slate-300">Years Experience</div>
+        </div>
+        <div class="text-center p-6 bg-white dark:bg-slate-800 rounded-lg shadow-md">
+          <div class="text-3xl font-bold text-secondary mb-2">50+</div>
+          <div class="text-sm text-slate-600 dark:text-slate-300">Projects Delivered</div>
+        </div>
+        <div class="text-center p-6 bg-white dark:bg-slate-800 rounded-lg shadow-md">
+          <div class="text-3xl font-bold text-primary mb-2">4</div>
+          <div class="text-sm text-slate-600 dark:text-slate-300">Languages Fluent</div>
+        </div>
+        <div class="text-center p-6 bg-white dark:bg-slate-800 rounded-lg shadow-md">
+          <div class="text-3xl font-bold text-secondary mb-2">2</div>
+          <div class="text-sm text-slate-600 dark:text-slate-300">Continents Bridged</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- CTA Section -->
-  <section class="section-spacing">
-    <div class="container-custom text-center">
-      <h2 class="text-3xl md:text-4xl font-heading font-bold mb-6 text-slate-900 dark:text-white">
-        Let's Build the Future Together
+  <section class="section-spacing bg-gradient-to-r from-primary to-primary-700 text-white relative overflow-hidden">
+    <!-- Background pattern -->
+    <div class="absolute inset-0 opacity-10">
+      <div class="absolute top-0 right-0 w-96 h-96 border-2 border-white rounded-full transform translate-x-1/2 -translate-y-1/2"></div>
+      <div class="absolute bottom-0 left-0 w-64 h-64 border-2 border-secondary rounded-full transform -translate-x-1/2 translate-y-1/2"></div>
+    </div>
+
+    <div class="container-custom text-center relative z-10">
+      <h2 class="text-3xl md:text-5xl font-heading font-bold mb-6">
+        Ready to Transform Your Enterprise Architecture?
       </h2>
-      <p class="text-xl text-slate-600 dark:text-slate-300 mb-8 max-w-2xl mx-auto">
-        Whether you're looking for enterprise architecture guidance, digital transformation strategy, 
-        or insights into the MENA technology landscape, I'm here to help.
+      <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto opacity-95 leading-relaxed">
+        Let's discuss how strategic architecture and cross-cultural expertise can accelerate your digital transformation journey.
       </p>
-      <a href="/contact" class="btn-primary inline-block">
-        Get in Touch
-      </a>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a 
+          href="/contact" 
+          class="inline-flex items-center justify-center bg-secondary hover:bg-secondary-600 text-white px-10 py-5 rounded-lg font-bold text-lg transition-all duration-200 shadow-xl hover:shadow-2xl hover:scale-105 group"
+          aria-label="Schedule a consultation with Mehdi Bamou"
+        >
+          Start Your Transformation
+          <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </a>
+        <a 
+          href="/expertise" 
+          class="inline-flex items-center justify-center border-2 border-white hover:bg-white hover:text-primary text-white px-10 py-5 rounded-lg font-bold text-lg transition-all duration-200"
+          aria-label="View Mehdi Bamou's service offerings"
+        >
+          View Services
+        </a>
+      </div>
+      <p class="mt-8 text-sm opacity-75">
+        🌍 Based in Düsseldorf, Germany • Serving clients across Europe & MENA
+      </p>
     </div>
   </section>
 </BaseLayout>
