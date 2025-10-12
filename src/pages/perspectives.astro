@@ -1,24 +1,51 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ArticlePreview from '../components/ArticlePreview.jsx';
 import MeshBackground from '../components/MeshBackground.jsx';
 
-const blogPosts = await getCollection('blog', ({ data }) => {
-  return data.draft !== true;
-});
-
-// Sort by date, newest first
-const sortedPosts = blogPosts.sort((a, b) => 
-  b.data.date.valueOf() - a.data.date.valueOf()
-);
+const articles = [
+  {
+    title: 'AI in Enterprise Architecture: Beyond the Hype',
+    description: 'Exploring practical applications of AI and machine learning in enterprise architecture, from automated governance to predictive analytics',
+    date: 'October 10, 2024',
+    slug: '/perspectives/ai-enterprise-architecture',
+    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=400&fit=crop',
+    category: 'AI & Machine Learning',
+    readTime: '8 min read'
+  },
+  {
+    title: 'ESG Metrics in Digital Transformation',
+    description: 'How to integrate sustainability metrics into your technology strategy and measure environmental impact',
+    date: 'Coming Soon',
+    slug: '#',
+    image: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=800&h=400&fit=crop',
+    category: 'Green Energy & ESG',
+    readTime: '10 min read'
+  },
+  {
+    title: 'TOGAF Implementation Best Practices',
+    description: 'Practical lessons from implementing TOGAF in mid-size organizations across Europe',
+    date: 'Coming Soon',
+    slug: '#',
+    image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=400&fit=crop',
+    category: 'Enterprise Architecture',
+    readTime: '12 min read'
+  },
+  {
+    title: 'Cross-Cultural Technology Adoption',
+    description: 'Bridging technology innovation between Europe and MENA markets',
+    date: 'Coming Soon',
+    slug: '#',
+    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=400&fit=crop',
+    category: 'Digital Transformation',
+    readTime: '9 min read'
+  },
+];
 
 const categories = [
   { name: 'All', slug: 'all' },
-  { name: 'Morocco Digital 2030', slug: 'morocco' },
+  { name: 'AI & Machine Learning', slug: 'ai' },
+  { name: 'Green Energy & ESG', slug: 'green-energy' },
   { name: 'Enterprise Architecture', slug: 'enterprise-architecture' },
-  { name: 'TOGAF', slug: 'togaf' },
-  { name: 'Cloud Architecture', slug: 'cloud' },
   { name: 'Digital Transformation', slug: 'digital-transformation' },
 ];
 ---
@@ -74,129 +101,90 @@ const categories = [
   <!-- Articles Grid -->
   <section class="section-spacing">
     <div class="container-custom">
-      {sortedPosts.length === 0 ? (
-        <div class="text-center py-16">
-          <div class="w-16 h-16 mx-auto mb-4 text-slate-400 dark:text-slate-600">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-          </div>
-          <h3 class="text-xl font-heading font-bold mb-2 text-slate-900 dark:text-white">
-            No articles yet
-          </h3>
-          <p class="text-slate-600 dark:text-slate-400">
-            Check back soon for insights on enterprise architecture and digital transformation
-          </p>
-        </div>
-      ) : (
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {sortedPosts.map((post) => (
-            <ArticlePreview
-              title={post.data.title}
-              description={post.data.description}
-              date={post.data.date}
-              slug={`/blog/${post.slug}`}
-              image={post.data.image}
-              tags={post.data.tags}
-              client:load
-            />
-          ))}
-        </div>
-      )}
+      <div class="grid md:grid-cols-2 gap-8">
+        {articles.map((article) => (
+          <a href={article.slug} class="card hover:shadow-xl transition-all hover:-translate-y-1 group block">
+            <div class="mb-4 overflow-hidden rounded-lg">
+              <img 
+                src={article.image} 
+                alt={article.title}
+                class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+            <div class="mb-3">
+              <span class="px-3 py-1 bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary-400 text-sm font-medium rounded-full">
+                {article.category}
+              </span>
+            </div>
+            <h3 class="text-2xl font-heading font-bold mb-3 text-slate-900 dark:text-white group-hover:text-primary transition-colors">
+              {article.title}
+            </h3>
+            <p class="text-slate-600 dark:text-slate-300 mb-4">
+              {article.description}
+            </p>
+            <div class="flex items-center gap-4 text-sm text-slate-500 dark:text-slate-400">
+              <span class="flex items-center gap-1">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                {article.date}
+              </span>
+              <span class="flex items-center gap-1">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                {article.readTime}
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
     </div>
   </section>
 
   <!-- Topics of Interest -->
-  <section class="section-spacing bg-slate-50 dark:bg-slate-800">
+  <section class="section-spacing bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/30 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
     <div class="container-custom">
-      <h2 class="text-3xl md:text-4xl font-heading font-bold mb-8 text-slate-900 dark:text-white text-center">
-        Topics I Write About
-      </h2>
+      <div class="max-w-3xl mx-auto text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-heading font-bold mb-4 text-slate-900 dark:text-white">
+          Topics I Write About
+        </h2>
+        <p class="text-lg text-slate-600 dark:text-slate-300">
+          Exploring the intersection of technology, strategy, and sustainable innovation
+        </p>
+      </div>
       
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-        <div class="card">
-          <div class="flex items-start gap-3">
-            <div class="p-2 bg-primary/10 dark:bg-primary/20 rounded-lg">
-              <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <div>
-              <h3 class="font-heading font-bold mb-1 text-slate-900 dark:text-white">Morocco Digital 2030</h3>
-              <p class="text-sm text-slate-600 dark:text-slate-300">Analysis of Morocco's digital transformation strategy</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="flex items-start gap-3">
-            <div class="p-2 bg-secondary/10 dark:bg-secondary/20 rounded-lg">
-              <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-              </svg>
-            </div>
-            <div>
-              <h3 class="font-heading font-bold mb-1 text-slate-900 dark:text-white">Enterprise Architecture</h3>
-              <p class="text-sm text-slate-600 dark:text-slate-300">Patterns, frameworks, and best practices</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="flex items-start gap-3">
-            <div class="p-2 bg-primary/10 dark:bg-primary/20 rounded-lg">
-              <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-              </svg>
-            </div>
-            <div>
-              <h3 class="font-heading font-bold mb-1 text-slate-900 dark:text-white">TOGAF Implementation</h3>
-              <p class="text-sm text-slate-600 dark:text-slate-300">Practical guides for adopting TOGAF</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="flex items-start gap-3">
-            <div class="p-2 bg-secondary/10 dark:bg-secondary/20 rounded-lg">
-              <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
-              </svg>
-            </div>
-            <div>
-              <h3 class="font-heading font-bold mb-1 text-slate-900 dark:text-white">Cloud Architecture</h3>
-              <p class="text-sm text-slate-600 dark:text-slate-300">Migration strategies and design patterns</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="flex items-start gap-3">
-            <div class="p-2 bg-primary/10 dark:bg-primary/20 rounded-lg">
-              <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-            </div>
-            <div>
-              <h3 class="font-heading font-bold mb-1 text-slate-900 dark:text-white">Digital Transformation</h3>
-              <p class="text-sm text-slate-600 dark:text-slate-300">Strategies for organizational change</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="flex items-start gap-3">
-            <div class="p-2 bg-secondary/10 dark:bg-secondary/20 rounded-lg">
-              <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <div>
-              <h3 class="font-heading font-bold mb-1 text-slate-900 dark:text-white">Cross-Cultural Tech</h3>
-              <p class="text-sm text-slate-600 dark:text-slate-300">Europe-MENA technology exchange</p>
-            </div>
-          </div>
-        </div>
+      <div class="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
+        <span class="px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-full text-lg font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all cursor-pointer">
+          🤖 AI & Machine Learning
+        </span>
+        <span class="px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-full text-lg font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all cursor-pointer">
+          🌱 Green Energy & ESG
+        </span>
+        <span class="px-5 py-2.5 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-full font-medium shadow-md hover:shadow-lg hover:scale-105 transition-all cursor-pointer">
+          🏗️ Enterprise Architecture
+        </span>
+        <span class="px-5 py-2.5 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white rounded-full font-medium shadow-md hover:shadow-lg hover:scale-105 transition-all cursor-pointer">
+          📋 TOGAF & Frameworks
+        </span>
+        <span class="px-5 py-2.5 bg-gradient-to-r from-cyan-500 to-cyan-600 text-white rounded-full font-medium shadow-md hover:shadow-lg hover:scale-105 transition-all cursor-pointer">
+          ☁️ Cloud Architecture
+        </span>
+        <span class="px-5 py-2.5 bg-gradient-to-r from-pink-500 to-pink-600 text-white rounded-full font-medium shadow-md hover:shadow-lg hover:scale-105 transition-all cursor-pointer">
+          ⚡ Digital Transformation
+        </span>
+        <span class="px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-full text-sm font-medium shadow hover:shadow-md hover:scale-105 transition-all cursor-pointer">
+          🌍 Cross-Cultural Tech
+        </span>
+        <span class="px-4 py-2 bg-gradient-to-r from-teal-500 to-teal-600 text-white rounded-full text-sm font-medium shadow hover:shadow-md hover:scale-105 transition-all cursor-pointer">
+          🔐 Security & Compliance
+        </span>
+        <span class="px-4 py-2 bg-gradient-to-r from-rose-500 to-rose-600 text-white rounded-full text-sm font-medium shadow hover:shadow-md hover:scale-105 transition-all cursor-pointer">
+          📊 Data Architecture
+        </span>
+        <span class="px-4 py-2 bg-gradient-to-r from-violet-500 to-violet-600 text-white rounded-full text-sm font-medium shadow hover:shadow-md hover:scale-105 transition-all cursor-pointer">
+          🚀 Innovation Strategy
+        </span>
       </div>
     </div>
   </section>

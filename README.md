@@ -18,14 +18,15 @@
 
 ## 📖 Overview
 
-A professional portfolio and thought leadership platform showcasing expertise in enterprise architecture, digital transformation, and cross-cultural technology leadership. Built with modern web technologies and focused on knowledge sharing rather than client acquisition.
+A professional portfolio and thought leadership platform showcasing expertise in enterprise architecture, digital transformation, and technology leadership. Built with modern web technologies and focused on knowledge sharing and professional presence.
 
 **Key Focus Areas:**
 - 🏗️ Enterprise Architecture & TOGAF
+- 🤖 AI/ML Integration in Enterprise Systems
+- 🌱 Green Energy & ESG Technology Strategy
 - ☁️ Cloud Architecture & Migration
 - 🌍 Digital Transformation (Europe & MENA)
-- 🔬 Research & Publications
-- 🎤 Speaking & Conferences
+- 📚 Research & Publications
 
 ## 🚀 Tech Stack
 
@@ -39,11 +40,11 @@ A professional portfolio and thought leadership platform showcasing expertise in
 
 ### Core Features
 - 🌓 **Dark Mode** - System preference detection with manual toggle, persistent across sessions
-- 🌐 **Multilanguage (i18n)** - Full support for EN, FR, AR, DE with Astro's built-in routing
 - 📱 **Fully Responsive** - Mobile-first design, optimized for all devices
 - 🔍 **SEO Optimized** - Proper meta tags, semantic HTML, and Open Graph support
 - ⚡ **Performance** - Static site generation with edge deployment on Cloudflare
 - ♿ **Accessible** - WCAG compliant with proper ARIA labels
+- 📄 **Project Detail Pages** - Individual pages for each project with company context and outcomes
 
 ### Design System
 - 🎨 **Animated Mesh Backgrounds** - Beautiful gradient blob animations on all hero sections
@@ -53,30 +54,31 @@ A professional portfolio and thought leadership platform showcasing expertise in
 - 📐 **Consistent Layout** - Unified design language across all pages
 
 ### Content Sections
-- 📝 **Perspectives** - Blog/articles on enterprise architecture and digital transformation
-- 💼 **Portfolio** - Technical projects and code contributions
-- 🎤 **Speaking** - Conference talks, workshops, and keynotes
-- 🔬 **Research** - Publications, white papers, and academic work
+- 📝 **Perspectives** - In-depth articles on AI, ESG, enterprise architecture, and digital transformation
+- 💼 **Portfolio** - Strategic architecture projects with detailed case studies
+- 🎤 **Speaking** - Conference talks and speaking opportunities
+- 📚 **Publications** - Research papers, white papers, and practical resources
 - 📸 **Media Library** - Professional photos, presentations, and videos
-- 👤 **About** - Professional background and credentials
+- 👤 **About** - Professional background, credentials, and career timeline
 
 ### Developer Features
 - 🚧 **Coming Soon Mode** - Toggle to show/hide full site during development
 - 🔧 **Centralized Config** - Easy site configuration in `src/config/site.js`
 - 📦 **Component Library** - Reusable React components
 - 🎯 **Active Navigation** - Automatic highlighting of current page
-- 🌍 **i18n Ready** - Translation infrastructure with helper functions
 
 ## Site Structure
 
 ```
-/                   - Homepage
-/perspectives       - Blog/articles
-/portfolio          - Projects and code
-/speaking           - Conference talks and events
-/research           - Publications and research
-/media              - Media library (photos, presentations, videos)
-/about              - Professional background
+/                          - Homepage
+/perspectives              - Articles on AI, ESG, EA, and digital transformation
+/perspectives/[article]    - Individual article pages
+/portfolio                 - Strategic architecture projects
+/projects/[project]        - Detailed project case studies
+/speaking                  - Conference talks and opportunities
+/publications              - Research papers, white papers, and resources
+/media                     - Media library (photos, presentations, videos)
+/about                     - Professional background and credentials
 ```
 
 ## 🚀 Getting Started
@@ -151,46 +153,40 @@ export const siteConfig = {
 };
 ```
 
-### Internationalization (i18n)
+### Language
 
-The site supports 4 languages with Astro's built-in i18n routing:
-
-**Configured in:** `astro.config.mjs`
-```javascript
-i18n: {
-  defaultLocale: 'en',
-  locales: ['en', 'fr', 'ar', 'de'],
-  routing: {
-    prefixDefaultLocale: false  // English has no prefix
-  }
-}
-```
-
-**URL Structure:**
-- English (default): `/about`, `/portfolio`
-- French: `/fr/about`, `/fr/portfolio`
-- Arabic: `/ar/about` (RTL support)
-- German: `/de/about`
-
-**Translations:** `src/i18n/translations.js`
+The site is built in English for maximum reach and accessibility.
 
 ## 📝 Content Management
 
-### Adding Blog Posts
+### Adding Perspective Articles
 
-Create a new `.md` or `.mdx` file in `src/content/blog/`:
+Create a new `.astro` file in `src/pages/perspectives/`:
 
-```markdown
+```astro
 ---
-title: "Your Post Title"
-description: "Brief description"
-date: 2024-01-01
-tags: ["Enterprise Architecture", "Cloud"]
-draft: false
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import MeshBackground from '../../components/MeshBackground.jsx';
+
+const article = {
+  title: 'Your Article Title',
+  date: 'October 10, 2024',
+  readTime: '8 min read',
+  author: 'Mehdi Bamou',
+  category: 'Enterprise Architecture',
+  tags: ['TOGAF', 'Digital Transformation'],
+  image: 'https://images.unsplash.com/...'
+};
 ---
 
-Your content here...
+<BaseLayout title={article.title} ...>
+  <!-- Article content -->
+</BaseLayout>
 ```
+
+### Adding Projects
+
+Create a new `.astro` file in `src/pages/projects/` with company details, technologies, and outcomes.
 
 ### Dark Mode
 
@@ -257,7 +253,6 @@ Active navigation items feature:
 ├── src/
 │   ├── components/            # React components
 │   │   ├── DarkModeToggle.jsx      # Theme switcher
-│   │   ├── LanguageSwitcher.jsx    # i18n selector
 │   │   ├── MeshBackground.jsx      # Animated backgrounds
 │   │   ├── Nav.jsx                 # Navigation with active states
 │   │   ├── Footer.jsx              # Comprehensive footer
@@ -266,24 +261,25 @@ Active navigation items feature:
 │   │   └── site.js                 # Site config & coming soon toggle
 │   ├── content/               # Content collections
 │   │   └── blog/                   # Blog posts (MDX)
-│   ├── i18n/                  # Internationalization
-│   │   └── translations.js         # Translation strings
 │   ├── layouts/               # Page layouts
-│   │   └── BaseLayout.astro        # Base layout with i18n
+│   │   └── BaseLayout.astro        # Base layout
 │   ├── pages/                 # Routes
 │   │   ├── index.astro             # Homepage
-│   │   ├── perspectives.astro      # Blog listing
-│   │   ├── portfolio.astro         # Projects
-│   │   ├── research.astro          # Publications
+│   │   ├── perspectives/           # Article pages
+│   │   │   └── [article].astro     # Individual articles
+│   │   ├── perspectives.astro      # Articles listing
+│   │   ├── portfolio.astro         # Projects listing
+│   │   ├── projects/               # Project detail pages
+│   │   │   └── [project].astro     # Individual projects
+│   │   ├── publications.astro      # Research & resources
 │   │   ├── media.astro             # Media library
 │   │   ├── speaking.astro          # Talks & events
 │   │   ├── about.astro             # About page
-│   │   ├── soon.astro              # Coming soon page
-│   │   └── blog/                   # Blog post routes
+│   │   └── soon.astro              # Coming soon page
 │   ├── styles/                # Global styles
 │   │   └── global.css              # Tailwind + animations
 │   └── middleware.js          # Coming soon redirect
-├── astro.config.mjs           # Astro + i18n config
+├── astro.config.mjs           # Astro configuration
 ├── tailwind.config.cjs        # Tailwind configuration
 └── package.json
 ```

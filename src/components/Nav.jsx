@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import DarkModeToggle from './DarkModeToggle';
-import LanguageSwitcher from './LanguageSwitcher';
 
-export default function Nav({ currentLang = 'en', currentPath = '/' }) {
+export default function Nav({ currentPath = '/' }) {
   const [isOpen, setIsOpen] = useState(false);
   const [activePath, setActivePath] = useState(currentPath);
 
@@ -15,7 +14,7 @@ export default function Nav({ currentLang = 'en', currentPath = '/' }) {
     { href: '/perspectives', label: 'Perspectives' },
     { href: '/portfolio', label: 'Portfolio' },
     { href: '/speaking', label: 'Speaking' },
-    { href: '/research', label: 'Research' },
+    { href: '/publications', label: 'Publications' },
     { href: '/media', label: 'Media' },
     { href: '/about', label: 'About' },
   ];
@@ -52,7 +51,6 @@ export default function Nav({ currentLang = 'en', currentPath = '/' }) {
             ))}
             <div className="w-px h-6 bg-slate-300 dark:bg-slate-700 mx-2"></div>
             <DarkModeToggle />
-            <LanguageSwitcher currentLang={currentLang} currentPath={currentPath} />
           </div>
             
           {/* Mobile Menu Button */}
@@ -98,9 +96,8 @@ export default function Nav({ currentLang = 'en', currentPath = '/' }) {
               </a>
             ))}
             <div className="h-px bg-slate-200 dark:bg-slate-800 my-2"></div>
-            <div className="flex items-center justify-center space-x-4 px-4 py-2">
+            <div className="flex items-center justify-center px-4 py-2">
               <DarkModeToggle />
-              <LanguageSwitcher currentLang={currentLang} currentPath={currentPath} />
             </div>
           </div>
         )}

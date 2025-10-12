@@ -17,16 +17,13 @@ const {
   path = "/"
 } = Astro.props;
 
-// Detect current locale from URL
-const currentLocale = Astro.currentLocale || 'en';
-
 const siteUrl = "https://mehdibamou.com";
 const fullUrl = `${siteUrl}${path}`;
 const fullImageUrl = `${siteUrl}${ogImage}`;
 ---
 
 <!DOCTYPE html>
-<html lang={currentLocale} dir={currentLocale === 'ar' ? 'rtl' : 'ltr'}>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -39,7 +36,7 @@ const fullImageUrl = `${siteUrl}${ogImage}`;
     <meta property="og:image" content={fullImageUrl} />
     <meta property="og:url" content={fullUrl} />
     <meta property="og:type" content="website" />
-    <meta property="og:locale" content={currentLocale} />
+    <meta property="og:locale" content="en_US" />
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -54,7 +51,7 @@ const fullImageUrl = `${siteUrl}${ogImage}`;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body>
-    <Nav currentPath={path} currentLang={currentLocale} client:load />
+    <Nav currentPath={path} client:load />
     <main>
       <slot />
     </main>

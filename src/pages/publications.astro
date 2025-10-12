@@ -1,0 +1,324 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import MeshBackground from '../components/MeshBackground.jsx';
+
+const publications = [
+  {
+    title: 'AI-Driven Enterprise Architecture: Integrating Machine Learning into TOGAF Frameworks',
+    authors: ['Mehdi Bamou'],
+    type: 'Research Paper',
+    venue: 'Journal of Enterprise Architecture',
+    year: '2024',
+    status: 'Published',
+    abstract: 'This paper explores the integration of artificial intelligence and machine learning capabilities within traditional enterprise architecture frameworks, specifically TOGAF. It examines how AI can enhance architecture decision-making, automate governance processes, and predict technology adoption patterns. Case studies from renewable energy and pharmaceutical sectors demonstrate practical implementation strategies.',
+    tags: ['AI/ML', 'Enterprise Architecture', 'TOGAF', 'Digital Transformation', 'Automation'],
+    downloadUrl: '#',
+    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=400&fit=crop'
+  },
+  {
+    title: 'Green Energy & ESG: Technology Architecture for Sustainable Digital Transformation',
+    authors: ['Mehdi Bamou'],
+    type: 'White Paper',
+    venue: 'Industry Publication',
+    year: '2024',
+    status: 'Published',
+    abstract: 'A comprehensive examination of how enterprise architecture can drive Environmental, Social, and Governance (ESG) objectives through technology strategy. This white paper presents frameworks for integrating sustainability metrics into architecture governance, designing energy-efficient cloud infrastructures, and leveraging IoT and AI for renewable energy optimization. Real-world examples from Virtual Power Plant implementations illustrate measurable ESG outcomes.',
+    tags: ['Green Energy', 'ESG', 'Sustainability', 'Cloud Architecture', 'IoT', 'Renewable Energy'],
+    downloadUrl: '#',
+    image: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=800&h=400&fit=crop'
+  },
+  {
+    title: 'Cross-Cultural Digital Transformation: Bridging Technology Adoption Between Europe and MENA',
+    authors: ['Mehdi Bamou'],
+    type: 'Research Paper',
+    venue: 'International Journal of Digital Innovation',
+    year: '2023',
+    status: 'Published',
+    abstract: 'This research investigates the unique challenges and opportunities in implementing digital transformation initiatives across culturally diverse regions, specifically comparing European and MENA markets. The paper analyzes regulatory frameworks, organizational culture, technology infrastructure, and stakeholder engagement patterns. It proposes an adapted TOGAF methodology that accounts for cultural context, regulatory diversity, and market maturity levels.',
+    tags: ['Digital Transformation', 'Cross-Cultural', 'MENA', 'Enterprise Architecture', 'Change Management'],
+    downloadUrl: '#',
+    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=400&fit=crop'
+  },
+];
+
+const artifacts = [
+  {
+    title: 'TOGAF Implementation Toolkit',
+    description: 'Comprehensive PowerPoint templates and frameworks for implementing TOGAF in mid-size organizations',
+    type: 'PPTX Templates',
+    icon: 'M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z',
+    downloadUrl: '#',
+    size: '15 MB'
+  },
+  {
+    title: 'Enterprise Architecture Maturity Assessment',
+    description: 'Excel-based assessment tool for evaluating EA maturity across governance, technology, and process dimensions',
+    type: 'Excel Tool',
+    icon: 'M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
+    downloadUrl: '#',
+    size: '2 MB'
+  },
+  {
+    title: 'Cloud Migration Strategy Framework',
+    description: 'Strategic framework and decision matrices for planning enterprise cloud migrations',
+    type: 'PDF Guide',
+    icon: 'M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z',
+    downloadUrl: '#',
+    size: '5 MB'
+  },
+  {
+    title: 'AI Integration Architecture Patterns',
+    description: 'Collection of proven architecture patterns for integrating AI/ML capabilities into enterprise systems',
+    type: 'Technical Documentation',
+    icon: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
+    downloadUrl: '#',
+    size: '8 MB'
+  },
+  {
+    title: 'ESG Technology Metrics Dashboard',
+    description: 'PowerBI template for tracking and visualizing ESG metrics in technology operations',
+    type: 'PowerBI Template',
+    icon: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z',
+    downloadUrl: '#',
+    size: '12 MB'
+  },
+  {
+    title: 'Stakeholder Engagement Playbook',
+    description: 'Practical guide and templates for managing stakeholder relationships in EA initiatives',
+    type: 'PDF Playbook',
+    icon: 'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z',
+    downloadUrl: '#',
+    size: '6 MB'
+  },
+];
+
+const caseStudies = [
+  {
+    title: 'Virtual Power Plant: IoT & AI Architecture Case Study',
+    description: 'Detailed analysis of designing and implementing a cloud-native VPP platform with 25% efficiency gains',
+    industry: 'Renewable Energy',
+    downloadUrl: '#'
+  },
+  {
+    title: 'Pharmaceutical Compliance: Safety System Integration',
+    description: 'Enterprise architecture approach to integrating hazard management systems in regulated environments',
+    industry: 'Pharmaceuticals',
+    downloadUrl: '#'
+  },
+  {
+    title: 'Manufacturing Digital Transformation: SAP Modernization',
+    description: 'Cloud migration strategy for legacy ERP systems in heavy manufacturing',
+    industry: 'Manufacturing',
+    downloadUrl: '#'
+  },
+];
+---
+
+<BaseLayout 
+  title="Publications & Resources | Mehdi Bamou"
+  description="Research papers, white papers, and enterprise architecture resources on AI, green energy, ESG, and digital transformation"
+  path="/publications"
+>
+  <!-- Hero Section -->
+  <section class="relative py-16 md:py-24 bg-white dark:bg-slate-900 overflow-hidden">
+    <MeshBackground variant="success" client:load />
+    
+    <div class="container-custom relative z-10">
+      <div class="max-w-3xl">
+        <div class="inline-block px-4 py-2 bg-white/20 rounded-full mb-4">
+          <span class="text-sm font-medium">Research & Resources</span>
+        </div>
+        
+        <h1 class="text-4xl md:text-5xl font-heading font-bold mb-6 text-slate-900 dark:text-white leading-tight">
+          Publications & Resources
+        </h1>
+        
+        <p class="text-xl md:text-2xl mb-6 leading-relaxed opacity-95">
+          Research papers, frameworks, and practical resources for enterprise architecture, AI integration, and sustainable digital transformation
+        </p>
+        
+        <p class="text-base opacity-90">
+          Sharing knowledge on TOGAF implementation, green energy technology, ESG metrics, and cross-cultural technology adoption
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Research Publications -->
+  <section class="section-spacing">
+    <div class="container-custom">
+      <h2 class="text-3xl md:text-4xl font-heading font-bold mb-12 text-slate-900 dark:text-white">
+        Research Publications
+      </h2>
+      
+      <div class="space-y-8">
+        {publications.map((pub) => (
+          <div class="card hover:shadow-xl transition-shadow">
+            <div class="grid md:grid-cols-3 gap-6">
+              <div class="md:col-span-1">
+                <img 
+                  src={pub.image} 
+                  alt={pub.title}
+                  class="w-full h-48 md:h-full object-cover rounded-lg"
+                />
+              </div>
+              <div class="md:col-span-2">
+                <div class="flex items-start justify-between mb-3">
+                  <div class="flex-1">
+                    <div class="flex items-center gap-3 mb-2">
+                      <span class="px-3 py-1 bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary-400 text-sm font-medium rounded-full">
+                        {pub.type}
+                      </span>
+                      <span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-sm font-medium rounded-full">
+                        {pub.status}
+                      </span>
+                    </div>
+                    <h3 class="text-2xl font-heading font-bold text-slate-900 dark:text-white mb-2">
+                      {pub.title}
+                    </h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mb-3">
+                      {pub.authors.join(', ')} • {pub.venue} • {pub.year}
+                    </p>
+                  </div>
+                </div>
+                
+                <p class="text-slate-600 dark:text-slate-300 mb-4 leading-relaxed">
+                  {pub.abstract}
+                </p>
+                
+                <div class="flex flex-wrap gap-2 mb-4">
+                  {pub.tags.map((tag) => (
+                    <span class="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm rounded-lg">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                
+                <a 
+                  href={pub.downloadUrl}
+                  class="inline-flex items-center gap-2 text-primary dark:text-primary-400 hover:underline font-medium"
+                >
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  Download PDF
+                </a>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Artifacts & Resources -->
+  <section class="section-spacing bg-slate-50 dark:bg-slate-800">
+    <div class="container-custom">
+      <div class="max-w-3xl mb-12">
+        <h2 class="text-3xl md:text-4xl font-heading font-bold mb-4 text-slate-900 dark:text-white">
+          Artifacts & Resources
+        </h2>
+        <p class="text-lg text-slate-600 dark:text-slate-300">
+          Practical templates, frameworks, and tools for enterprise architecture practitioners
+        </p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {artifacts.map((artifact) => (
+          <div class="card hover:shadow-xl transition-all hover:-translate-y-1 group">
+            <div class="flex items-start gap-4 mb-4">
+              <div class="flex-shrink-0 w-12 h-12 bg-primary/10 dark:bg-primary/20 rounded-lg flex items-center justify-center">
+                <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={artifact.icon} />
+                </svg>
+              </div>
+              <div class="flex-1">
+                <h3 class="font-heading font-bold text-lg mb-1 text-slate-900 dark:text-white group-hover:text-primary transition-colors">
+                  {artifact.title}
+                </h3>
+                <p class="text-sm text-slate-500 dark:text-slate-400">
+                  {artifact.type} • {artifact.size}
+                </p>
+              </div>
+            </div>
+            
+            <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">
+              {artifact.description}
+            </p>
+            
+            <a 
+              href={artifact.downloadUrl}
+              class="inline-flex items-center gap-2 text-primary dark:text-primary-400 hover:underline font-medium text-sm"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+              Download
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Case Studies -->
+  <section class="section-spacing">
+    <div class="container-custom">
+      <div class="max-w-3xl mb-12">
+        <h2 class="text-3xl md:text-4xl font-heading font-bold mb-4 text-slate-900 dark:text-white">
+          Case Studies
+        </h2>
+        <p class="text-lg text-slate-600 dark:text-slate-300">
+          Real-world enterprise architecture implementations with measurable outcomes
+        </p>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-6">
+        {caseStudies.map((study) => (
+          <div class="card hover:shadow-xl transition-all hover:-translate-y-1 group">
+            <div class="mb-4">
+              <span class="px-3 py-1 bg-secondary/10 dark:bg-secondary/20 text-secondary dark:text-secondary-400 text-sm font-medium rounded-full">
+                {study.industry}
+              </span>
+            </div>
+            <h3 class="font-heading font-bold text-lg mb-3 text-slate-900 dark:text-white group-hover:text-primary transition-colors">
+              {study.title}
+            </h3>
+            <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">
+              {study.description}
+            </p>
+            <a 
+              href={study.downloadUrl}
+              class="inline-flex items-center gap-2 text-primary dark:text-primary-400 hover:underline font-medium text-sm"
+            >
+              Read Case Study
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section-spacing bg-slate-50 dark:bg-slate-800">
+    <div class="container-custom text-center">
+      <h2 class="text-3xl md:text-4xl font-heading font-bold mb-6 text-slate-900 dark:text-white">
+        Stay Updated
+      </h2>
+      <p class="text-lg text-slate-600 dark:text-slate-300 mb-8 max-w-2xl mx-auto">
+        Get notified when new publications, resources, and case studies are available
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="https://linkedin.com/in/mehdibamou" target="_blank" rel="noopener noreferrer" class="btn-primary">
+          Follow on LinkedIn
+        </a>
+        <a href="https://medium.com/@mehdibamou" target="_blank" rel="noopener noreferrer" class="btn-secondary">
+          Read on Medium
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
