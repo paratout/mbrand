@@ -3,55 +3,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import MeshBackground from '../components/MeshBackground.jsx';
 import SpeakingCard from '../components/SpeakingCard.jsx';
 
+// Speaking engagements - open to opportunities
+// This section will be updated as speaking engagements are confirmed
 const speakingEngagements = [
-  {
-    eventName: "Enterprise Architecture Summit 2024",
-    date: "2024-11-15",
-    location: "Berlin, Germany",
-    status: "upcoming",
-    description: "Keynote: 'Building Resilient Enterprise Architectures in the Age of AI'",
-    link: "#"
-  },
-  {
-    eventName: "Cloud Innovation Conference",
-    date: "2024-09-20",
-    location: "Amsterdam, Netherlands",
-    status: "past",
-    description: "Workshop: 'Multi-Cloud Strategy and Implementation Best Practices'",
-    link: "#"
-  },
-  {
-    eventName: "Digital Transformation Forum MENA",
-    date: "2024-06-10",
-    location: "Dubai, UAE",
-    status: "past",
-    description: "Panel Discussion: 'Bridging Technology Innovation Between Europe and MENA'",
-    link: "#"
-  },
-  {
-    eventName: "Tech Leaders Meetup Düsseldorf",
-    date: "2024-12-05",
-    location: "Düsseldorf, Germany",
-    status: "confirmed",
-    description: "Talk: 'Lessons Learned from Enterprise Cloud Migrations'",
-    link: "#"
-  },
-  {
-    eventName: "Architecture & Design Conference",
-    date: "2024-03-15",
-    location: "Paris, France",
-    status: "past",
-    description: "Presentation: 'TOGAF in Practice: Real-World Case Studies'",
-    link: "#"
-  },
-  {
-    eventName: "Morocco Tech Summit",
-    date: "2023-11-20",
-    location: "Casablanca, Morocco",
-    status: "past",
-    description: "Keynote: 'The Future of Enterprise Technology in North Africa'",
-    link: "#"
-  }
+  // Future speaking engagements will be listed here
+  // Currently open to speaking opportunities on:
+  // - Enterprise Architecture & TOGAF
+  // - Cloud Migration Strategies
+  // - Digital Transformation
+  // - Cross-cultural Technology Adoption (Europe-MENA)
 ];
 
 const upcomingEvents = speakingEngagements.filter(e => e.status === 'upcoming' || e.status === 'confirmed');

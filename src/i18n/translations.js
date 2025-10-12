@@ -21,7 +21,7 @@ export const translations = {
       carbonNeutral: 'Carbon-neutral hosting',
       builtWith: 'Built with Astro, React & Tailwind CSS',
       hostedOn: 'Hosted on Cloudflare Pages',
-      location: 'Based in Düsseldorf, Germany 🇩🇪 • Originally from Morocco 🇲🇦',
+      location: 'Based in Germany 🇩🇪 • Originally from Morocco 🇲🇦',
       description: 'Enterprise Architect exploring digital transformation, cloud architecture, and technology adoption across Europe and MENA.',
       allRightsReserved: 'All rights reserved.'
     },

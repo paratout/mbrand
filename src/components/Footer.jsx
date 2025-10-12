@@ -68,7 +68,7 @@ export default function Footer() {
                 Enterprise Architect exploring digital transformation, cloud architecture, and technology adoption across Europe and MENA.
               </p>
               <p className="text-sm text-slate-500 mb-6">
-                Based in Düsseldorf, Germany 🇩🇪 • Originally from Morocco 🇲🇦
+                Based in Germany 🇩🇪 • Originally from Morocco 🇲🇦
               </p>
               
               {/* Social Links */}
