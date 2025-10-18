@@ -38,356 +38,325 @@ const publishDate = new Date(article.published_at || article.created_at).toLocal
   description={article.seo_description || article.excerpt || ''}
   path={`/perspectives/${slug}`}
 >
-  <!-- Article Header -->
-  <article class="bg-white dark:bg-slate-900">
-    <header class="relative py-16 md:py-24 bg-slate-50 dark:bg-slate-800">
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Category Badge -->
-        <div class="mb-6">
-          <span class="inline-block px-4 py-2 bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary-400 text-sm font-semibold rounded-full">
-            {article.category}
-          </span>
-        </div>
-
-        <!-- Title -->
-        <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-slate-900 dark:text-white mb-6 leading-tight">
-          {article.title}
-        </h1>
-
-        <!-- Excerpt -->
-        {article.excerpt && (
-          <p class="text-xl md:text-2xl text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
-            {article.excerpt}
-          </p>
-        )}
-
-        <!-- Meta Info -->
-        <div class="flex flex-wrap items-center gap-4 text-sm text-slate-500 dark:text-slate-400 border-t border-slate-200 dark:border-slate-700 pt-6">
-          <div class="flex items-center gap-2">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-            <time datetime={article.published_at || article.created_at}>
-              {publishDate}
-            </time>
-          </div>
-          {article.read_time && (
-            <div class="flex items-center gap-2">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span>{article.read_time}</span>
-            </div>
-          )}
-        </div>
+  <article class="article-page">
+    <!-- Header -->
+    <header class="article-header">
+      <a href="/perspectives" class="category-badge">{article.category}</a>
+      <h1 class="article-title">{article.title}</h1>
+      {article.excerpt && <p class="article-excerpt">{article.excerpt}</p>}
+      <div class="article-meta">
+        <time datetime={article.published_at || article.created_at}>{publishDate}</time>
+        {article.read_time && <><span>·</span><span>{article.read_time}</span></>}
       </div>
     </header>
 
     <!-- Cover Image -->
     {article.cover_image && (
-      <div class="relative w-full h-[400px] md:h-[600px] bg-slate-100 dark:bg-slate-800">
-        <img
-          src={article.cover_image}
-          alt={article.title}
-          class="w-full h-full object-cover"
-          loading="eager"
-        />
+      <div class="article-cover">
+        <img src={article.cover_image} alt={article.title} />
       </div>
     )}
 
-    <!-- Article Content - Medium Style -->
-    <div class="max-w-3xl mx-auto px-6 sm:px-8 py-16 md:py-24">
-      <div 
-        class="article-content medium-article
-               prose prose-lg prose-slate dark:prose-invert
-               max-w-none"
-        set:html={article.content}
-      />
-    </div>
+    <!-- Content -->
+    <div class="article-content" set:html={article.content} />
 
-    <!-- Article Footer -->
-    <footer class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-slate-200 dark:border-slate-700">
-      <div class="flex items-center justify-between">
-        <a
-          href="/perspectives"
-          class="inline-flex items-center gap-2 text-primary hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 font-medium transition-colors"
-        >
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-          </svg>
-          Back to Perspectives
-        </a>
-
-        <!-- Share buttons could go here -->
-      </div>
+    <!-- Footer -->
+    <footer class="article-footer">
+      <a href="/perspectives" class="back-link">
+        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        Back to Perspectives
+      </a>
     </footer>
   </article>
-
-  <!-- Related Articles Section (Optional) -->
-  <section class="bg-slate-50 dark:bg-slate-800 py-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-3xl font-heading font-bold text-slate-900 dark:text-white mb-8">
-        More Perspectives
-      </h2>
-      <div class="text-center">
-        <a
-          href="/perspectives"
-          class="inline-block px-6 py-3 bg-primary hover:bg-primary-700 text-white rounded-lg font-semibold transition-colors"
-        >
-          View All Articles
-        </a>
-      </div>
-    </div>
-  </section>
 </BaseLayout>
 
+<style is:global>
+  /* Medium-style article headings - Clean and subtle */
+  .article-content h2 {
+    font-family: Georgia, 'Times New Roman', serif !important;
+    font-size: 28px !important;
+    font-weight: 700 !important;
+    line-height: 1.3 !important;
+    margin: 2em 0 0.5em !important;
+    letter-spacing: -0.02em !important;
+  }
+
+  .article-content h3 {
+    font-family: Georgia, 'Times New Roman', serif !important;
+    font-size: 24px !important;
+    font-weight: 700 !important;
+    line-height: 1.4 !important;
+    margin: 1.75em 0 0.5em !important;
+    letter-spacing: -0.015em !important;
+  }
+
+  .article-content h4 {
+    font-family: Georgia, 'Times New Roman', serif !important;
+    font-size: 21px !important;
+    font-weight: 700 !important;
+    line-height: 1.4 !important;
+    margin: 1.5em 0 0.5em !important;
+  }
+
+  .article-content h5 {
+    font-family: Georgia, 'Times New Roman', serif !important;
+    font-size: 19px !important;
+    font-weight: 700 !important;
+    line-height: 1.4 !important;
+    margin: 1.5em 0 0.5em !important;
+  }
+
+  .article-content h6 {
+    font-family: Georgia, 'Times New Roman', serif !important;
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    line-height: 1.4 !important;
+    margin: 1.5em 0 0.5em !important;
+  }
+</style>
+
 <style>
-  /* Medium-Style Article Typography */
-  .medium-article {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    font-size: 21px;
-    line-height: 1.58;
-    letter-spacing: -0.003em;
-    color: #1a1a1a;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  /* Container */
+  .article-page {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 24px;
   }
 
-  /* Headings */
-  .medium-article h1 {
-    font-size: 42px;
+  /* Header */
+  .article-header {
+    padding: 80px 0 40px;
+  }
+
+  .category-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    background: rgba(0,0,0,0.05);
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    margin-bottom: 32px;
+    transition: background 0.2s;
+  }
+
+  .category-badge:hover {
+    background: rgba(0,0,0,0.1);
+  }
+
+  .article-title {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 48px;
     font-weight: 700;
-    line-height: 1.2;
-    margin: 1.5em 0 0.5em;
-    letter-spacing: -0.022em;
-    color: #1a1a1a;
+    line-height: 1.15;
+    margin: 0 0 24px;
   }
 
-  .medium-article h2 {
-    font-size: 32px;
-    font-weight: 600;
-    line-height: 1.25;
-    margin: 1.8em 0 0.6em;
-    letter-spacing: -0.019em;
-    color: #1a1a1a;
+  .article-excerpt {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 24px;
+    line-height: 1.5;
+    margin: 0 0 32px;
+    opacity: 0.8;
   }
 
-  .medium-article h3 {
-    font-size: 26px;
-    font-weight: 600;
-    line-height: 1.3;
-    margin: 1.5em 0 0.5em;
-    color: #1a1a1a;
+  .article-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    opacity: 0.6;
+  }
+
+  /* Cover Image */
+  .article-cover {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-bottom: 64px;
+    max-height: 60vh;
+    overflow: hidden;
+  }
+
+  .article-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Content */
+  .article-content {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 21px;
+    line-height: 1.7;
+    padding-bottom: 64px;
+  }
+
+  /* Hide H1 in content */
+  .article-content h1 {
+    display: none !important;
   }
 
   /* Paragraphs */
-  .medium-article p {
-    margin: 1.5em 0;
-    font-size: 21px;
-    line-height: 1.58;
-    color: #1a1a1a;
+  .article-content p {
+    margin: 1.4em 0;
+  }
+
+  /* Tighter spacing after headings */
+  .article-content h2 + p,
+  .article-content h3 + p,
+  .article-content h4 + p,
+  .article-content h5 + p,
+  .article-content h6 + p {
+    margin-top: 0.5em;
+  }
+
+  /* Drop Cap - Medium style */
+  .article-content > p:first-of-type::first-letter {
+    font-size: 3.2em;
+    line-height: 1;
+    float: left;
+    margin: 0.07em 0.1em 0 0;
+    font-weight: 400;
   }
 
   /* Links */
-  .medium-article a {
+  .article-content a {
     color: #2563eb;
     text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 2px;
-  }
-
-  .medium-article a:hover {
-    color: #1e40af;
-  }
-
-  /* Blockquotes */
-  .medium-article blockquote {
-    border-left: 3px solid #1a1a1a;
-    padding-left: 20px;
-    margin: 1.8em 0;
-    font-style: italic;
-    font-size: 21px;
-    line-height: 1.58;
-    color: #4a4a4a;
-  }
-
-  /* Code */
-  .medium-article code {
-    background: #f3f4f6;
-    padding: 2px 6px;
-    border-radius: 3px;
-    font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
-    font-size: 0.9em;
-  }
-
-  .medium-article pre {
-    background: #f3f4f6;
-    padding: 20px;
-    border-radius: 8px;
-    margin: 1.8em 0;
-    overflow-x: auto;
-  }
-
-  .medium-article pre code {
-    background: none;
-    padding: 0;
   }
 
   /* Lists */
-  .medium-article ul,
-  .medium-article ol {
+  .article-content ul,
+  .article-content ol {
     padding-left: 30px;
     margin: 1.5em 0;
   }
 
-  /* Numbered lists */
-  .medium-article ol {
-    list-style-type: decimal;
+  .article-content li {
+    margin: 0.75em 0;
   }
 
-  .medium-article ol li {
-    display: list-item;
-    list-style-position: outside;
-  }
-
-  /* Bullet lists */
-  .medium-article ul {
-    list-style-type: disc;
-  }
-
-  .medium-article ul li {
-    display: list-item;
-    list-style-position: outside;
-  }
-
-  .medium-article li {
-    margin: 0.8em 0;
-    font-size: 21px;
-    line-height: 1.58;
-  }
-
-  /* Images with Captions and Alignment */
-  .medium-article .image-wrapper {
-    margin: 2.5em 0;
-    clear: both;
-  }
-
-  .medium-article .image-wrapper img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 4px;
-    display: block;
-  }
-
-  .medium-article .image-caption {
-    display: block;
-    text-align: center;
-    font-size: 16px;
-    color: #6b7280;
+  /* Blockquotes */
+  .article-content blockquote {
+    border-left: 4px solid currentColor;
+    padding-left: 24px;
+    margin: 2em 0;
     font-style: italic;
-    margin-top: 12px;
+    font-size: 24px;
+    opacity: 0.8;
   }
 
-  /* Image Alignment */
-  .medium-article .align-left {
-    float: left;
-    margin-right: 2em;
-    margin-bottom: 1em;
-    max-width: 50%;
+  /* Code */
+  .article-content code {
+    background: rgba(0,0,0,0.05);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: monospace;
+    font-size: 0.9em;
   }
 
-  .medium-article .align-right {
-    float: right;
-    margin-left: 2em;
-    margin-bottom: 1em;
-    max-width: 50%;
+  .article-content pre {
+    background: rgba(0,0,0,0.05);
+    padding: 20px;
+    border-radius: 8px;
+    margin: 1.5em 0;
+    overflow-x: auto;
   }
 
-  .medium-article .align-center {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 100%;
+  .article-content pre code {
+    background: none;
+    padding: 0;
   }
 
-  .medium-article .align-center img {
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .medium-article .align-wide {
-    margin-left: -10%;
-    margin-right: -10%;
-    max-width: 120%;
-  }
-
-  /* Hide image controls in published view */
-  .medium-article .image-controls {
-    display: none;
-  }
-
-  /* Fallback for regular img tags */
-  .medium-article img:not(.image-wrapper img) {
+  /* Images */
+  .article-content img {
     max-width: 100%;
     height: auto;
-    margin: 2.5em 0;
+    margin: 2em 0;
     border-radius: 4px;
   }
 
-  /* Horizontal Rule */
-  .medium-article hr {
+  /* HR */
+  .article-content hr {
     border: none;
-    border-top: 1px solid #e5e7eb;
+    border-top: 1px solid currentColor;
+    opacity: 0.2;
     margin: 3em 0;
   }
 
-  /* Pastel Backgrounds from Editor */
-  .medium-article [style*="background-color"] {
-    padding: 2px 4px;
-    border-radius: 3px;
+  /* Footer */
+  .article-footer {
+    padding: 32px 0 64px;
+    border-top: 1px solid rgba(0,0,0,0.1);
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    text-decoration: none;
+    color: #2563eb;
   }
 
   /* Dark Mode */
   @media (prefers-color-scheme: dark) {
-    .medium-article {
-      color: #e2e8f0;
+    .category-badge {
+      background: rgba(255,255,255,0.1);
     }
-
-    .medium-article h1,
-    .medium-article h2,
-    .medium-article h3,
-    .medium-article h4,
-    .medium-article h5,
-    .medium-article h6 {
-      color: #f8fafc;
+    .category-badge:hover {
+      background: rgba(255,255,255,0.15);
     }
-
-    .medium-article p {
-      color: #e2e8f0;
-    }
-
-    .medium-article a {
+    .article-content a {
       color: #60a5fa;
     }
-
-    .medium-article a:hover {
-      color: #93c5fd;
+    .article-content code,
+    .article-content pre {
+      background: rgba(255,255,255,0.05);
     }
-
-    .medium-article blockquote {
-      border-left-color: #e2e8f0;
-      color: #cbd5e1;
+    .article-footer {
+      border-top-color: rgba(255,255,255,0.1);
     }
-
-    .medium-article code {
-      background: #1e293b;
+    .back-link {
+      color: #60a5fa;
     }
+  }
 
-    .medium-article pre {
-      background: #1e293b;
+  /* Responsive */
+  @media (max-width: 768px) {
+    .article-header {
+      padding: 48px 0 32px;
     }
-
-    .medium-article hr {
-      border-top-color: #334155;
+    .article-title {
+      font-size: 36px;
+    }
+    .article-excerpt {
+      font-size: 20px;
+    }
+    .article-content {
+      font-size: 19px;
+    }
+    .article-content h2 {
+      font-size: 24px !important;
+      margin: 1.75em 0 0.5em !important;
+    }
+    .article-content h3 {
+      font-size: 21px !important;
+      margin: 1.5em 0 0.5em !important;
+    }
+    .article-content h4 {
+      font-size: 19px !important;
+      margin: 1.5em 0 0.5em !important;
+    }
+    .article-content h5,
+    .article-content h6 {
+      font-size: 18px !important;
+      margin: 1.5em 0 0.5em !important;
+    }
+    .article-content blockquote {
+      font-size: 21px;
     }
   }
 </style>
