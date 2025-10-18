@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react';
 import { supabase, type Article } from '../../lib/supabase';
-import AuthForm from './AuthForm.tsx';
-import ArticleList from './ArticleList.tsx';
-import ArticleEditor from './ArticleEditor.tsx';
-import ArticleSEO from './ArticleSEO.tsx';
+import AuthForm from './AuthForm';
+import PerspectivesList from './PerspectivesList';
+import ArticleEditor from './ArticleEditor';
+import ArticleSEO from './ArticleSEO';
+import CategoriesPage from './CategoriesPage';
 
 export default function AdminDashboard() {
   const [session, setSession] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState<'perspectives' | 'categories'>('perspectives');
   const [view, setView] = useState<'list' | 'edit' | 'create' | 'seo'>('list');
-  const [editingArticle, setEditingArticle] = useState<Article | null>(null);
+  const [editingPerspective, setEditingPerspective] = useState<Article | null>(null);
   const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
@@ -49,23 +51,26 @@ export default function AdminDashboard() {
     setView('list');
   };
 
-  const handleEdit = (article: Article) => {
-    setEditingArticle(article);
+  const handleEdit = (perspective: Article) => {
+    setEditingPerspective(perspective);
     setView('edit');
+    setCurrentPage('perspectives');
   };
 
-  const handleSEO = (article: Article) => {
-    setEditingArticle(article);
+  const handleSEO = (perspective: Article) => {
+    setEditingPerspective(perspective);
     setView('seo');
+    setCurrentPage('perspectives');
   };
 
   const handleCreate = () => {
-    setEditingArticle(null);
+    setEditingPerspective(null);
     setView('create');
+    setCurrentPage('perspectives');
   };
 
   const handleBack = () => {
-    setEditingArticle(null);
+    setEditingPerspective(null);
     setView('list');
   };
 
@@ -85,8 +90,8 @@ export default function AdminDashboard() {
     <div className="min-h-screen">
       {/* Header - Redesigned */}
       <header className="bg-gradient-to-r from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-6 py-3">
-          <div className="flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex items-center justify-between py-3">
             {/* Left side - Brand */}
             <h1 className="text-xl font-bold text-slate-900 dark:text-white">
               MBrand
@@ -94,6 +99,33 @@ export default function AdminDashboard() {
 
             {/* Right side - Actions */}
             <div className="flex items-center gap-2">
+              <button
+                onClick={() => {
+                  setCurrentPage('perspectives');
+                  setView('list');
+                }}
+                className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-all ${
+                  currentPage === 'perspectives' && view === 'list'
+                    ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900'
+                    : 'text-slate-700 dark:text-slate-300 hover:bg-white/50 dark:hover:bg-slate-700/50'
+                }`}
+              >
+                Perspectives
+              </button>
+              <button
+                onClick={() => {
+                  setCurrentPage('categories');
+                  setView('list');
+                }}
+                className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-all ${
+                  currentPage === 'categories' && view === 'list'
+                    ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900'
+                    : 'text-slate-700 dark:text-slate-300 hover:bg-white/50 dark:hover:bg-slate-700/50'
+                }`}
+              >
+                Categories
+              </button>
+              <div className="w-px h-6 bg-slate-300 dark:bg-slate-600"></div>
               <button
                 onClick={toggleDarkMode}
                 className="p-2 text-slate-600 dark:text-slate-400 hover:bg-white/50 dark:hover:bg-slate-700/50 rounded-lg transition-all"
@@ -123,19 +155,22 @@ export default function AdminDashboard() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {view === 'list' && (
-          <ArticleList onEdit={handleEdit} onSEO={handleSEO} onCreate={handleCreate} />
+        {view === 'list' && currentPage === 'perspectives' && (
+          <PerspectivesList onEdit={handleEdit} onSEO={handleSEO} onCreate={handleCreate} />
+        )}
+        {view === 'list' && currentPage === 'categories' && (
+          <CategoriesPage />
         )}
         {(view === 'edit' || view === 'create') && (
           <ArticleEditor
-            article={editingArticle}
+            article={editingPerspective}
             onSave={handleBack}
             onCancel={handleBack}
           />
         )}
-        {view === 'seo' && editingArticle && (
+        {view === 'seo' && editingPerspective && (
           <ArticleSEO
-            article={editingArticle}
+            article={editingPerspective}
             onSave={handleBack}
             onCancel={handleBack}
           />

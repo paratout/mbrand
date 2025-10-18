@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import slugify from 'slugify';
+import imageCompression from 'browser-image-compression';
 import { supabase, type Article } from '../../lib/supabase';
 
 interface ArticleSEOProps {
@@ -8,22 +9,42 @@ interface ArticleSEOProps {
   onCancel: () => void;
 }
 
-const categories = [
-  'AI & Machine Learning',
-  'Green Energy & ESG',
-  'Enterprise Architecture',
-  'Digital Transformation',
-  'Cloud Architecture',
-];
+interface Category {
+  id: string;
+  name: string;
+  slug: string;
+}
 
 export default function ArticleSEO({ article, onSave, onCancel }: ArticleSEOProps) {
+  const [categories, setCategories] = useState<Category[]>([]);
   const [title, setTitle] = useState(article.title);
   const [slug, setSlug] = useState(article.slug);
   const [excerpt, setExcerpt] = useState(article.excerpt || '');
-  const [category, setCategory] = useState(article.category);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(
+    article.category ? [article.category] : []
+  );
   const [readTime, setReadTime] = useState(article.read_time || '');
   const [coverImage, setCoverImage] = useState(article.cover_image || '');
+  const [publishedAt, setPublishedAt] = useState(
+    article.published_at ? new Date(article.published_at).toISOString().slice(0, 16) : ''
+  );
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
+
+  // Fetch categories from database
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const { data, error } = await supabase
+        .from('categories')
+        .select('*')
+        .order('name');
+      
+      if (!error && data) {
+        setCategories(data);
+      }
+    };
+    fetchCategories();
+  }, []);
 
   // Auto-generate slug from title
   useEffect(() => {
@@ -32,9 +53,67 @@ export default function ArticleSEO({ article, onSave, onCancel }: ArticleSEOProp
     }
   }, [title, article.title]);
 
+  const uploadCoverImage = async (file: File) => {
+    try {
+      setUploading(true);
+
+      // Compress image
+      const compressedFile = await imageCompression(file, {
+        maxWidthOrHeight: 1200,
+        useWebWorker: true,
+        fileType: 'image/webp',
+      });
+
+      // Generate unique filename
+      const fileName = `cover-${Date.now()}.webp`;
+
+      // Upload to Supabase Storage
+      const { error: uploadError } = await supabase.storage
+        .from('article-images')
+        .upload(fileName, compressedFile, {
+          cacheControl: '3600',
+          upsert: false,
+        });
+
+      if (uploadError) throw uploadError;
+
+      // Get public URL
+      const { data } = supabase.storage
+        .from('article-images')
+        .getPublicUrl(fileName);
+
+      setCoverImage(data.publicUrl);
+    } catch (error) {
+      console.error('Error uploading cover image:', error);
+      alert('Failed to upload image');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      uploadCoverImage(file);
+    }
+  };
+
+  const toggleCategory = (category: string) => {
+    setSelectedCategories((prev) =>
+      prev.includes(category)
+        ? prev.filter((c) => c !== category)
+        : [...prev, category]
+    );
+  };
+
   const handleSave = async () => {
     if (!title || !slug) {
       alert('Title and slug are required');
+      return;
+    }
+
+    if (selectedCategories.length === 0) {
+      alert('Please select at least one category');
       return;
     }
 
@@ -46,9 +125,10 @@ export default function ArticleSEO({ article, onSave, onCancel }: ArticleSEOProp
           title,
           slug,
           excerpt: excerpt || null,
-          category,
+          category: selectedCategories[0], // Primary category
           read_time: readTime || null,
           cover_image: coverImage || null,
+          published_at: publishedAt ? new Date(publishedAt).toISOString() : null,
           updated_at: new Date().toISOString(),
         })
         .eq('id', article.id);
@@ -56,110 +136,97 @@ export default function ArticleSEO({ article, onSave, onCancel }: ArticleSEOProp
       if (error) throw error;
       onSave();
     } catch (error) {
-      console.error('Error updating article SEO:', error);
-      alert('Failed to update article SEO');
+      console.error('Error updating article:', error);
+      alert('Failed to update article');
     } finally {
       setSaving(false);
     }
   };
 
   return (
-    <div className="max-w-5xl mx-auto">
-      {/* Header with Back Button */}
-      <div className="mb-6 flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-1">Article Settings</h2>
-          <p className="text-slate-600 dark:text-slate-400">Edit article metadata and SEO information</p>
-        </div>
-        <div className="flex gap-3">
-          <button
-            onClick={onCancel}
-            className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg border border-slate-300 dark:border-slate-600 transition-colors"
-          >
-            Cancel
-          </button>
-          <button
-            onClick={handleSave}
-            disabled={saving}
-            className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg border border-slate-300 dark:border-slate-600 transition-colors disabled:opacity-50"
-          >
-            {saving ? 'Saving...' : 'Save Changes'}
-          </button>
+    <div className="min-h-screen bg-white dark:bg-slate-900">
+      {/* Top Bar */}
+      <div className="sticky top-0 z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border-b border-slate-200 dark:border-slate-700">
+        <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+          <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Article Settings</h2>
+          <div className="flex gap-3">
+            <button
+              onClick={onCancel}
+              className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg border border-slate-300 dark:border-slate-600 transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleSave}
+              disabled={saving}
+              className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg border border-slate-300 dark:border-slate-600 transition-colors disabled:opacity-50"
+            >
+              {saving ? 'Saving...' : 'Save Changes'}
+            </button>
+          </div>
         </div>
       </div>
 
-      <div className="bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
-
-        {/* Form Fields */}
-        <div className="p-8 space-y-6">
+      {/* Content */}
+      <div className="max-w-7xl mx-auto px-6 py-12">
+        <div className="space-y-8">
           {/* Title */}
           <div>
-            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-              Article Title *
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">
+              Title
             </label>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Article title"
-              className="w-full px-4 py-3 text-xl font-semibold rounded-lg border-2 border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 transition-colors"
+              className="w-full px-4 py-3 text-2xl font-bold rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-slate-400 dark:focus:border-slate-500 transition-colors"
             />
           </div>
 
           {/* Slug */}
           <div>
-            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-              URL Slug *
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">
+              URL Slug
             </label>
-            <input
-              type="text"
-              value={slug}
-              onChange={(e) => setSlug(e.target.value)}
-              placeholder="article-url-slug"
-              className="w-full px-4 py-2 rounded-lg border-2 border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 transition-colors font-mono text-sm"
-            />
-            <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">
-              <span className="font-medium">Preview:</span> /perspectives/{slug}
-            </p>
+            <div className="flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
+              <span className="text-sm text-slate-500 dark:text-slate-400">/perspectives/</span>
+              <input
+                type="text"
+                value={slug}
+                onChange={(e) => setSlug(e.target.value)}
+                placeholder="article-url-slug"
+                className="flex-1 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none font-mono text-sm"
+              />
+            </div>
           </div>
 
-          {/* Excerpt */}
+          {/* Categories */}
           <div>
-            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-              Excerpt
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">
+              Categories
             </label>
-            <textarea
-              value={excerpt}
-              onChange={(e) => setExcerpt(e.target.value)}
-              placeholder="Brief description for article cards and SEO"
-              rows={4}
-              className="w-full px-4 py-3 rounded-lg border-2 border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 transition-colors resize-none"
-            />
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-              {excerpt.length} characters (recommended: 120-160)
-            </p>
+            <div className="flex flex-wrap gap-2">
+              {categories.map((category) => (
+                <button
+                  key={category.id}
+                  onClick={() => toggleCategory(category.name)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                    selectedCategories.includes(category.name)
+                      ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900'
+                      : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+                  }`}
+                >
+                  {category.name}
+                </button>
+              ))}
+            </div>
           </div>
 
-          {/* Category and Read Time */}
+          {/* Read Time and Publication Date */}
           <div className="grid md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                Category *
-              </label>
-              <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                className="w-full px-4 py-2 rounded-lg border-2 border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 transition-colors"
-              >
-                {categories.map((cat) => (
-                  <option key={cat} value={cat}>
-                    {cat}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">
                 Read Time
               </label>
               <input
@@ -167,59 +234,97 @@ export default function ArticleSEO({ article, onSave, onCancel }: ArticleSEOProp
                 value={readTime}
                 onChange={(e) => setReadTime(e.target.value)}
                 placeholder="5 min read"
-                className="w-full px-4 py-2 rounded-lg border-2 border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 transition-colors"
+                className="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-slate-400 dark:focus:border-slate-500 transition-colors"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">
+                Publication Date
+              </label>
+              <input
+                type="datetime-local"
+                value={publishedAt}
+                onChange={(e) => setPublishedAt(e.target.value)}
+                className="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:border-slate-400 dark:focus:border-slate-500 transition-colors"
               />
             </div>
           </div>
 
+          {/* Excerpt */}
+          <div>
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">
+              Excerpt
+            </label>
+            <textarea
+              value={excerpt}
+              onChange={(e) => setExcerpt(e.target.value)}
+              placeholder="A brief description of your article..."
+              rows={3}
+              className="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-slate-400 dark:focus:border-slate-500 transition-colors resize-none"
+            />
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
+              {excerpt.length} characters
+            </p>
+          </div>
+
           {/* Cover Image */}
           <div>
-            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-              Cover Image URL
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">
+              Cover Image
             </label>
-            <input
-              type="text"
-              value={coverImage}
-              onChange={(e) => setCoverImage(e.target.value)}
-              placeholder="https://example.com/image.jpg"
-              className="w-full px-4 py-2 rounded-lg border-2 border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 transition-colors"
-            />
-            {coverImage && (
-              <div className="mt-4">
-                <p className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Preview:</p>
-                <div className="relative">
-                  <img
-                    src={coverImage}
-                    alt="Cover preview"
-                    className="w-full max-w-2xl h-64 object-cover rounded-lg border-2 border-slate-200 dark:border-slate-700"
-                  />
+            {coverImage ? (
+              <div className="relative group">
+                <img
+                  src={coverImage}
+                  alt="Cover"
+                  className="w-full h-64 object-cover rounded-lg"
+                />
+                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center gap-3">
+                  <label className="px-4 py-2 bg-white text-slate-900 rounded-lg cursor-pointer hover:bg-slate-100 transition-colors">
+                    Change
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      className="hidden"
+                      disabled={uploading}
+                    />
+                  </label>
                   <button
                     onClick={() => setCoverImage('')}
-                    className="absolute top-2 right-2 px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white text-sm rounded-lg transition-colors"
+                    className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
                   >
                     Remove
                   </button>
                 </div>
               </div>
+            ) : (
+              <label className="block w-full h-64 border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-lg hover:border-slate-400 dark:hover:border-slate-500 transition-colors cursor-pointer">
+                <div className="h-full flex flex-col items-center justify-center text-slate-500 dark:text-slate-400">
+                  {uploading ? (
+                    <div className="text-center">
+                      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-slate-900 dark:border-white mx-auto mb-4"></div>
+                      <p>Uploading...</p>
+                    </div>
+                  ) : (
+                    <>
+                      <svg className="w-12 h-12 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                      <p className="text-sm font-medium">Click to upload cover image</p>
+                      <p className="text-xs mt-1">Recommended: 1200x630px</p>
+                    </>
+                  )}
+                </div>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  className="hidden"
+                  disabled={uploading}
+                />
+              </label>
             )}
-          </div>
-
-          {/* Info Box */}
-          <div className="bg-blue-50 dark:bg-blue-900/20 border-2 border-blue-200 dark:border-blue-800 rounded-lg p-4">
-            <div className="flex items-start gap-3">
-              <svg className="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <div className="text-sm text-blue-900 dark:text-blue-100">
-                <p className="font-medium mb-1">SEO Tips:</p>
-                <ul className="space-y-1 text-blue-800 dark:text-blue-200">
-                  <li>• Keep titles under 60 characters for best SEO</li>
-                  <li>• Use descriptive, keyword-rich slugs</li>
-                  <li>• Write compelling excerpts (120-160 characters)</li>
-                  <li>• Use high-quality cover images (1200x630px recommended)</li>
-                </ul>
-              </div>
-            </div>
           </div>
         </div>
       </div>
