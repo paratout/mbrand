@@ -1,0 +1,393 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { supabase } from '../../lib/supabase';
+
+export async function getStaticPaths() {
+  const { data: articles } = await supabase
+    .from('articles')
+    .select('slug')
+    .eq('status', 'published');
+
+  return (articles || []).map((article) => ({
+    params: { slug: article.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+
+const { data: article, error } = await supabase
+  .from('articles')
+  .select('*')
+  .eq('slug', slug)
+  .eq('status', 'published')
+  .single();
+
+if (error || !article) {
+  return Astro.redirect('/404');
+}
+
+const publishDate = new Date(article.published_at || article.created_at).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout
+  title={article.seo_title || article.title}
+  description={article.seo_description || article.excerpt || ''}
+  path={`/perspectives/${slug}`}
+>
+  <!-- Article Header -->
+  <article class="bg-white dark:bg-slate-900">
+    <header class="relative py-16 md:py-24 bg-slate-50 dark:bg-slate-800">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Category Badge -->
+        <div class="mb-6">
+          <span class="inline-block px-4 py-2 bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary-400 text-sm font-semibold rounded-full">
+            {article.category}
+          </span>
+        </div>
+
+        <!-- Title -->
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-slate-900 dark:text-white mb-6 leading-tight">
+          {article.title}
+        </h1>
+
+        <!-- Excerpt -->
+        {article.excerpt && (
+          <p class="text-xl md:text-2xl text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
+            {article.excerpt}
+          </p>
+        )}
+
+        <!-- Meta Info -->
+        <div class="flex flex-wrap items-center gap-4 text-sm text-slate-500 dark:text-slate-400 border-t border-slate-200 dark:border-slate-700 pt-6">
+          <div class="flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            <time datetime={article.published_at || article.created_at}>
+              {publishDate}
+            </time>
+          </div>
+          {article.read_time && (
+            <div class="flex items-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span>{article.read_time}</span>
+            </div>
+          )}
+        </div>
+      </div>
+    </header>
+
+    <!-- Cover Image -->
+    {article.cover_image && (
+      <div class="relative w-full h-[400px] md:h-[600px] bg-slate-100 dark:bg-slate-800">
+        <img
+          src={article.cover_image}
+          alt={article.title}
+          class="w-full h-full object-cover"
+          loading="eager"
+        />
+      </div>
+    )}
+
+    <!-- Article Content - Medium Style -->
+    <div class="max-w-3xl mx-auto px-6 sm:px-8 py-16 md:py-24">
+      <div 
+        class="article-content medium-article
+               prose prose-lg prose-slate dark:prose-invert
+               max-w-none"
+        set:html={article.content}
+      />
+    </div>
+
+    <!-- Article Footer -->
+    <footer class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-slate-200 dark:border-slate-700">
+      <div class="flex items-center justify-between">
+        <a
+          href="/perspectives"
+          class="inline-flex items-center gap-2 text-primary hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 font-medium transition-colors"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Back to Perspectives
+        </a>
+
+        <!-- Share buttons could go here -->
+      </div>
+    </footer>
+  </article>
+
+  <!-- Related Articles Section (Optional) -->
+  <section class="bg-slate-50 dark:bg-slate-800 py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-heading font-bold text-slate-900 dark:text-white mb-8">
+        More Perspectives
+      </h2>
+      <div class="text-center">
+        <a
+          href="/perspectives"
+          class="inline-block px-6 py-3 bg-primary hover:bg-primary-700 text-white rounded-lg font-semibold transition-colors"
+        >
+          View All Articles
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Medium-Style Article Typography */
+  .medium-article {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-size: 21px;
+    line-height: 1.58;
+    letter-spacing: -0.003em;
+    color: #1a1a1a;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Headings */
+  .medium-article h1 {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 1.5em 0 0.5em;
+    letter-spacing: -0.022em;
+    color: #1a1a1a;
+  }
+
+  .medium-article h2 {
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 1.25;
+    margin: 1.8em 0 0.6em;
+    letter-spacing: -0.019em;
+    color: #1a1a1a;
+  }
+
+  .medium-article h3 {
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1.3;
+    margin: 1.5em 0 0.5em;
+    color: #1a1a1a;
+  }
+
+  /* Paragraphs */
+  .medium-article p {
+    margin: 1.5em 0;
+    font-size: 21px;
+    line-height: 1.58;
+    color: #1a1a1a;
+  }
+
+  /* Links */
+  .medium-article a {
+    color: #2563eb;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
+
+  .medium-article a:hover {
+    color: #1e40af;
+  }
+
+  /* Blockquotes */
+  .medium-article blockquote {
+    border-left: 3px solid #1a1a1a;
+    padding-left: 20px;
+    margin: 1.8em 0;
+    font-style: italic;
+    font-size: 21px;
+    line-height: 1.58;
+    color: #4a4a4a;
+  }
+
+  /* Code */
+  .medium-article code {
+    background: #f3f4f6;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
+    font-size: 0.9em;
+  }
+
+  .medium-article pre {
+    background: #f3f4f6;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 1.8em 0;
+    overflow-x: auto;
+  }
+
+  .medium-article pre code {
+    background: none;
+    padding: 0;
+  }
+
+  /* Lists */
+  .medium-article ul,
+  .medium-article ol {
+    padding-left: 30px;
+    margin: 1.5em 0;
+  }
+
+  /* Numbered lists */
+  .medium-article ol {
+    list-style-type: decimal;
+  }
+
+  .medium-article ol li {
+    display: list-item;
+    list-style-position: outside;
+  }
+
+  /* Bullet lists */
+  .medium-article ul {
+    list-style-type: disc;
+  }
+
+  .medium-article ul li {
+    display: list-item;
+    list-style-position: outside;
+  }
+
+  .medium-article li {
+    margin: 0.8em 0;
+    font-size: 21px;
+    line-height: 1.58;
+  }
+
+  /* Images with Captions and Alignment */
+  .medium-article .image-wrapper {
+    margin: 2.5em 0;
+    clear: both;
+  }
+
+  .medium-article .image-wrapper img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    display: block;
+  }
+
+  .medium-article .image-caption {
+    display: block;
+    text-align: center;
+    font-size: 16px;
+    color: #6b7280;
+    font-style: italic;
+    margin-top: 12px;
+  }
+
+  /* Image Alignment */
+  .medium-article .align-left {
+    float: left;
+    margin-right: 2em;
+    margin-bottom: 1em;
+    max-width: 50%;
+  }
+
+  .medium-article .align-right {
+    float: right;
+    margin-left: 2em;
+    margin-bottom: 1em;
+    max-width: 50%;
+  }
+
+  .medium-article .align-center {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+  }
+
+  .medium-article .align-center img {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .medium-article .align-wide {
+    margin-left: -10%;
+    margin-right: -10%;
+    max-width: 120%;
+  }
+
+  /* Hide image controls in published view */
+  .medium-article .image-controls {
+    display: none;
+  }
+
+  /* Fallback for regular img tags */
+  .medium-article img:not(.image-wrapper img) {
+    max-width: 100%;
+    height: auto;
+    margin: 2.5em 0;
+    border-radius: 4px;
+  }
+
+  /* Horizontal Rule */
+  .medium-article hr {
+    border: none;
+    border-top: 1px solid #e5e7eb;
+    margin: 3em 0;
+  }
+
+  /* Pastel Backgrounds from Editor */
+  .medium-article [style*="background-color"] {
+    padding: 2px 4px;
+    border-radius: 3px;
+  }
+
+  /* Dark Mode */
+  @media (prefers-color-scheme: dark) {
+    .medium-article {
+      color: #e2e8f0;
+    }
+
+    .medium-article h1,
+    .medium-article h2,
+    .medium-article h3,
+    .medium-article h4,
+    .medium-article h5,
+    .medium-article h6 {
+      color: #f8fafc;
+    }
+
+    .medium-article p {
+      color: #e2e8f0;
+    }
+
+    .medium-article a {
+      color: #60a5fa;
+    }
+
+    .medium-article a:hover {
+      color: #93c5fd;
+    }
+
+    .medium-article blockquote {
+      border-left-color: #e2e8f0;
+      color: #cbd5e1;
+    }
+
+    .medium-article code {
+      background: #1e293b;
+    }
+
+    .medium-article pre {
+      background: #1e293b;
+    }
+
+    .medium-article hr {
+      border-top-color: #334155;
+    }
+  }
+</style>

@@ -159,30 +159,46 @@ The site is built in English for maximum reach and accessibility.
 
 ## 📝 Content Management
 
-### Adding Perspective Articles
+### Perspectives Admin System
 
-Create a new `.astro` file in `src/pages/perspectives/`:
+A complete CMS for managing articles with authentication, WYSIWYG editing, and image optimization.
 
-```astro
----
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import MeshBackground from '../../components/MeshBackground.jsx';
+**Access Admin:** `/rabat`
 
-const article = {
-  title: 'Your Article Title',
-  date: 'October 10, 2024',
-  readTime: '8 min read',
-  author: 'Mehdi Bamou',
-  category: 'Enterprise Architecture',
-  tags: ['TOGAF', 'Digital Transformation'],
-  image: 'https://images.unsplash.com/...'
-};
----
+**Features:**
+- 🔐 Magic link authentication (single-user)
+- ✍️ WYSIWYG editor with Tiptap
+- 🖼️ Image upload with auto-optimization (WebP, 3 sizes)
+- 📊 Article management (create, edit, delete, publish/draft)
+- 🏷️ Category filtering
+- 🎨 NYT-style article display
+- 📱 Fully responsive
 
-<BaseLayout title={article.title} ...>
-  <!-- Article content -->
-</BaseLayout>
+**Setup:**
+
+1. **Environment Variables** (already configured):
+```env
+PUBLIC_SUPABASE_URL=https://frexfpowcyifnhmauaho.supabase.co
+PUBLIC_SUPABASE_ANON_KEY=your_key_here
 ```
+
+2. **Database** (already created):
+- Articles table with RLS policies
+- Indexes for performance
+- Auto-updating timestamps
+
+3. **Storage Bucket** (manual step):
+- Go to: https://supabase.com/dashboard/project/frexfpowcyifnhmauaho/storage
+- Create bucket: `article-images` (public)
+- Policies are already configured
+
+**Usage:**
+1. Navigate to `/rabat`
+2. Enter your email
+3. Click magic link in email
+4. Create, edit, and publish articles
+5. Upload images with drag & drop
+6. Articles appear on `/perspectives` automatically
 
 ### Adding Projects
 
