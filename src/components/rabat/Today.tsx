@@ -849,6 +849,590 @@ const quotes = [
     text: "Good people do not need laws to tell them to act responsibly, while bad people will find a way around the laws.",
     author: "Plato"
   },
+  {
+    text: "The throne is not a privilege, it is a responsibility.",
+    author: "King Mohammed VI"
+  },
+  {
+    text: "Development is not just about building infrastructure, it's about building human capacity.",
+    author: "King Mohammed VI"
+  },
+  {
+    text: "Morocco's strength lies in its diversity and its ability to embrace modernity while preserving its traditions.",
+    author: "King Mohammed VI"
+  },
+  {
+    text: "True democracy is not just about elections, it's about ensuring dignity and justice for all citizens.",
+    author: "King Mohammed VI"
+  },
+  {
+    text: "We must invest in our youth, for they are the architects of our future.",
+    author: "King Mohammed VI"
+  },
+  {
+    text: "Economic development without social justice is meaningless.",
+    author: "King Mohammed VI"
+  },
+  {
+    text: "Morocco's African identity is not a choice, it is a reality and a destiny.",
+    author: "King Mohammed VI"
+  },
+  {
+    text: "Solidarity is not charity, it is a duty we owe to one another.",
+    author: "King Mohammed VI"
+  },
+  {
+    text: "The fight against poverty is the most noble of all battles.",
+    author: "King Mohammed VI"
+  },
+  {
+    text: "Women's empowerment is not a favor, it is a right and a necessity for progress.",
+    author: "King Mohammed VI"
+  },
+  {
+    text: "A nation that does not honor its past cannot build its future.",
+    author: "King Hassan II"
+  },
+  {
+    text: "Authority without wisdom is tyranny, and wisdom without authority is futile.",
+    author: "King Hassan II"
+  },
+  {
+    text: "The art of governance is the art of balance.",
+    author: "King Hassan II"
+  },
+  {
+    text: "A leader must have the courage to make difficult decisions for the greater good.",
+    author: "King Hassan II"
+  },
+  {
+    text: "Morocco's stability is built on the pillars of tradition and progress.",
+    author: "King Hassan II"
+  },
+  {
+    text: "Diplomacy is the art of making the impossible possible.",
+    author: "King Hassan II"
+  },
+  {
+    text: "National unity is our greatest strength in the face of adversity.",
+    author: "King Hassan II"
+  },
+  {
+    text: "The Sahara is Moroccan, and Morocco is Saharan.",
+    author: "King Hassan II"
+  },
+  {
+    text: "A wise ruler listens to his people before he speaks.",
+    author: "King Hassan II"
+  },
+  {
+    text: "Independence is not given, it is earned through sacrifice and determination.",
+    author: "King Mohammed V"
+  },
+  {
+    text: "The unity of our people is the foundation of our sovereignty.",
+    author: "King Mohammed V"
+  },
+  {
+    text: "Freedom is the most precious gift a nation can possess.",
+    author: "King Mohammed V"
+  },
+  {
+    text: "A leader's duty is to serve his people, not to be served by them.",
+    author: "King Mohammed V"
+  },
+  {
+    text: "Justice and equality are the cornerstones of a free society.",
+    author: "King Mohammed V"
+  },
+  {
+    text: "Our struggle for independence is a struggle for dignity.",
+    author: "King Mohammed V"
+  },
+  {
+    text: "The strength of a nation lies in the character of its people.",
+    author: "King Mohammed V"
+  },
+  {
+    text: "We must build a Morocco where every citizen has a voice.",
+    author: "King Mohammed V"
+  },
+  {
+    text: "True leadership requires sacrifice and unwavering commitment.",
+    author: "King Mohammed V"
+  },
+  {
+    text: "Our diversity is our wealth, our unity is our strength.",
+    author: "Allal al-Fassi"
+  },
+  {
+    text: "Independence without social justice is incomplete.",
+    author: "Allal al-Fassi"
+  },
+  {
+    text: "Education is the key to liberation and progress.",
+    author: "Allal al-Fassi"
+  },
+  {
+    text: "A nation's identity is rooted in its history and culture.",
+    author: "Allal al-Fassi"
+  },
+  {
+    text: "The fight for freedom is a continuous struggle that requires vigilance.",
+    author: "Allal al-Fassi"
+  },
+  {
+    text: "Nationalism without humanism is hollow.",
+    author: "Allal al-Fassi"
+  },
+  {
+    text: "Reform must come from within, not be imposed from without.",
+    author: "Mehdi Ben Barka"
+  },
+  {
+    text: "True revolution is the liberation of human potential.",
+    author: "Mehdi Ben Barka"
+  },
+  {
+    text: "Economic independence is as important as political independence.",
+    author: "Mehdi Ben Barka"
+  },
+  {
+    text: "The people are the true architects of change.",
+    author: "Mehdi Ben Barka"
+  },
+  {
+    text: "Social justice is not a luxury, it is a fundamental right.",
+    author: "Mehdi Ben Barka"
+  },
+  {
+    text: "Development must serve the people, not exploit them.",
+    author: "Mehdi Ben Barka"
+  },
+  {
+    text: "Democracy is meaningless without economic equality.",
+    author: "Abderrahim Bouabid"
+  },
+  {
+    text: "Progress requires both vision and action.",
+    author: "Abderrahim Bouabid"
+  },
+  {
+    text: "A just society is one where opportunity is accessible to all.",
+    author: "Abderrahim Bouabid"
+  },
+  {
+    text: "The measure of a nation's greatness is how it treats its most vulnerable.",
+    author: "Abderrahim Bouabid"
+  },
+  {
+    text: "Political freedom must be accompanied by economic freedom.",
+    author: "Abderrahim Bouabid"
+  },
+  {
+    text: "Dialogue is the foundation of democracy.",
+    author: "Abdellatif Filali"
+  },
+  {
+    text: "Diplomacy is the art of building bridges, not walls.",
+    author: "Abdellatif Filali"
+  },
+  {
+    text: "Morocco's role in Africa is one of partnership, not domination.",
+    author: "Abdellatif Filali"
+  },
+  {
+    text: "Regional cooperation is essential for shared prosperity.",
+    author: "Abdellatif Filali"
+  },
+  {
+    text: "Morocco's future lies in the hands of its educated youth.",
+    author: "Driss Jettou"
+  },
+  {
+    text: "Good governance requires transparency and accountability.",
+    author: "Driss Jettou"
+  },
+  {
+    text: "Economic reform must benefit all segments of society.",
+    author: "Driss Jettou"
+  },
+  {
+    text: "Modernization does not mean abandoning our values.",
+    author: "Driss Jettou"
+  },
+  {
+    text: "A strong economy is built on a foundation of education and innovation.",
+    author: "Driss Jettou"
+  },
+  {
+    text: "The path to progress is paved with hard work and determination.",
+    author: "Abbas El Fassi"
+  },
+  {
+    text: "National development requires the participation of all citizens.",
+    author: "Abbas El Fassi"
+  },
+  {
+    text: "We must build institutions that serve the people, not the other way around.",
+    author: "Abbas El Fassi"
+  },
+  {
+    text: "Morocco's stability is a model for the region.",
+    author: "Abbas El Fassi"
+  },
+  {
+    text: "Reform is a continuous process, not a destination.",
+    author: "Abdelilah Benkirane"
+  },
+  {
+    text: "Justice and development go hand in hand.",
+    author: "Abdelilah Benkirane"
+  },
+  {
+    text: "The voice of the people must be heard and respected.",
+    author: "Abdelilah Benkirane"
+  },
+  {
+    text: "True leadership means serving with humility and integrity.",
+    author: "Abdelilah Benkirane"
+  },
+  {
+    text: "Economic growth must translate into improved living standards for all.",
+    author: "Abdelilah Benkirane"
+  },
+  {
+    text: "Morocco's territorial integrity is non-negotiable.",
+    author: "Saadeddine El Othmani"
+  },
+  {
+    text: "Sustainable development requires environmental responsibility.",
+    author: "Saadeddine El Othmani"
+  },
+  {
+    text: "Healthcare and education are fundamental rights, not privileges.",
+    author: "Saadeddine El Othmani"
+  },
+  {
+    text: "National unity transcends political differences.",
+    author: "Saadeddine El Othmani"
+  },
+  {
+    text: "The strength of our democracy lies in our institutions.",
+    author: "Saadeddine El Othmani"
+  },
+  {
+    text: "Morocco's strategic position demands wise and balanced diplomacy.",
+    author: "Aziz Akhannouch"
+  },
+  {
+    text: "Investment in agriculture is investment in our future.",
+    author: "Aziz Akhannouch"
+  },
+  {
+    text: "Economic resilience comes from diversification and innovation.",
+    author: "Aziz Akhannouch"
+  },
+  {
+    text: "We must create opportunities for all Moroccans to prosper.",
+    author: "Aziz Akhannouch"
+  },
+  {
+    text: "Partnership with the private sector is key to development.",
+    author: "Aziz Akhannouch"
+  },
+  {
+    text: "Morocco's cultural heritage is a bridge between civilizations.",
+    author: "Mohamed Benaissa"
+  },
+  {
+    text: "Diplomacy is about finding common ground while defending national interests.",
+    author: "Mohamed Benaissa"
+  },
+  {
+    text: "Our foreign policy reflects our values and aspirations.",
+    author: "Mohamed Benaissa"
+  },
+  {
+    text: "International cooperation is essential in an interconnected world.",
+    author: "Mohamed Benaissa"
+  },
+  {
+    text: "Peace and stability in the region benefit all nations.",
+    author: "Mohamed Benaissa"
+  },
+  {
+    text: "The Moroccan model of development is unique and effective.",
+    author: "Salaheddine Mezouar"
+  },
+  {
+    text: "Trade and investment are engines of prosperity.",
+    author: "Salaheddine Mezouar"
+  },
+  {
+    text: "Morocco's openness to the world is a source of strength.",
+    author: "Salaheddine Mezouar"
+  },
+  {
+    text: "Economic diplomacy serves our national interests.",
+    author: "Salaheddine Mezouar"
+  },
+  {
+    text: "We must position Morocco as a hub for Africa and Europe.",
+    author: "Salaheddine Mezouar"
+  },
+  {
+    text: "Human rights are universal and indivisible.",
+    author: "Nasser Bourita"
+  },
+  {
+    text: "Morocco's sovereignty over its territory is a matter of principle.",
+    author: "Nasser Bourita"
+  },
+  {
+    text: "Multilateralism is the foundation of international order.",
+    author: "Nasser Bourita"
+  },
+  {
+    text: "Our African partnerships are based on mutual respect and benefit.",
+    author: "Nasser Bourita"
+  },
+  {
+    text: "Diplomacy requires patience, wisdom, and strategic vision.",
+    author: "Nasser Bourita"
+  },
+  {
+    text: "Women's participation in politics strengthens democracy.",
+    author: "Bassima Hakkaoui"
+  },
+  {
+    text: "Social solidarity is the foundation of a cohesive society.",
+    author: "Bassima Hakkaoui"
+  },
+  {
+    text: "Family values are the cornerstone of our society.",
+    author: "Bassima Hakkaoui"
+  },
+  {
+    text: "Empowering women empowers the entire nation.",
+    author: "Bassima Hakkaoui"
+  },
+  {
+    text: "Social progress requires addressing inequality at its roots.",
+    author: "Bassima Hakkaoui"
+  },
+  {
+    text: "Morocco's religious tolerance is a model for the world.",
+    author: "Ahmed Toufiq"
+  },
+  {
+    text: "Spiritual values guide our path to progress.",
+    author: "Ahmed Toufiq"
+  },
+  {
+    text: "Moderation and balance are essential in all aspects of life.",
+    author: "Ahmed Toufiq"
+  },
+  {
+    text: "Faith and reason are complementary, not contradictory.",
+    author: "Ahmed Toufiq"
+  },
+  {
+    text: "Our Islamic heritage teaches us compassion and justice.",
+    author: "Ahmed Toufiq"
+  },
+  {
+    text: "Everyone sees what you appear to be, few experience what you really are.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "Men judge generally more by the eye than by the hand, for everyone can see and few can feel.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "The wise man does at once what the fool does finally.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "Where the willingness is great, the difficulties cannot be great.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "There is no other way to guard yourself against flattery than by making men understand that telling you the truth will not offend you.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "He who wishes to be obeyed must know how to command.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "Before all else, be armed.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "The promise given was a necessity of the past: the word broken is a necessity of the present.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "Men are so simple and so much inclined to obey immediate needs that a deceiver will never lack victims for his deceptions.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "Politics have no relation to morals.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "One change always leaves the way open for the establishment of others.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "Whoever conquers a free town and does not demolish it commits a great error and may expect to be ruined himself.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "A prince never lacks legitimate reasons to break his promise.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "Men are driven by two principal impulses, either by love or by fear.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "It is better to be feared than loved, if you cannot be both.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "The first method for estimating the intelligence of a ruler is to look at the men he has around him.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "Whoever desires constant success must change his conduct with the times.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "A return to first principles in a republic is sometimes caused by simple virtues of one man.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "The more sand has escaped from the hourglass of our life, the clearer we should see through it.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "Hatred is gained as much by good works as by evil.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "There is nothing more difficult to take in hand, more perilous to conduct, or more uncertain in its success, than to take the lead in the introduction of a new order of things.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "Entrepreneurs are simply those who understand that there is little difference between obstacle and opportunity and are able to turn both to their advantage.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "Of mankind we may say in general they are fickle, hypocritical, and greedy of gain.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "Princes and governments are far more dangerous than other elements within society.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "War should be the only study of a prince.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "A wise ruler ought never to keep faith when by doing so it would be against his interests.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "The end justifies the means.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "Men rise from one ambition to another: first, they seek to secure themselves against attack, and then they attack others.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "Tardiness often robs us opportunity, and the dispatch of our forces.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "Since love and fear can hardly exist together, if we must choose between them, it is far safer to be feared than loved.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "A son can bear with equanimity the loss of his father, but the loss of his inheritance may drive him to despair.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "Whosoever desires constant success must change his conduct with the times.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "He who builds on the people, builds on mud.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "Benefits should be conferred gradually; and in that way they will taste better.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "Injuries ought to be done all at one time, so that, being tasted less, they offend less.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "Men ought either to be well treated or crushed, because they can avenge themselves of lighter injuries, of more serious ones they cannot.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "There are three classes of intellects: one which comprehends by itself; another which appreciates what others comprehend; and a third which neither comprehends by itself nor by the showing of others.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "One who deceives will always find those who allow themselves to be deceived.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "For the great majority of mankind are satisfied with appearances, as though they were realities, and are often more influenced by the things that seem than by those that are.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "God is not willing to do everything, and thus take away our free will and that share of glory which belongs to us.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "Whoever is responsible for another's becoming powerful ruins himself.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "The vulgar crowd always is taken by appearances, and the world consists chiefly of the vulgar.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "A prudent man should always follow in the path trodden by great men and imitate those who are most excellent.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "To understand the nature of the people one must be a prince, and to understand the nature of the prince, one must be of the people.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "Wise men say, and not without reason, that whoever wishes to foresee the future must consult the past.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "The best fortress is to be found in the love of the people, for although you may have fortresses they will not save you if you are hated by the people.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "Severities should be dealt out all at once, that their suddenness may give less offense; benefits ought to be handed out drop by drop, that they may be relished the more.",
+    author: "Niccolò Machiavelli"
+  },
+  {
+    text: "For among other evils caused by being disarmed, it renders you contemptible.",
+    author: "Niccolò Machiavelli"
+  },
 ];
 
 export default function Today() {
