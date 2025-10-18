@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react';
 import { supabase, type Article } from '../../lib/supabase';
 import AuthForm from './AuthForm';
+import Today from './Today';
 import PerspectivesList from './PerspectivesList';
-import ArticleEditor from './ArticleEditor';
+import PerspectiveEditor from './PerspectiveEditor';
 import PerspectiveSEO from './PerspectiveSEO';
 import CategoriesPage from './CategoriesPage';
 
-export default function AdminDashboard() {
+export default function ContentHub() {
   const [session, setSession] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState<'perspectives' | 'categories'>('perspectives');
+  const [currentPage, setCurrentPage] = useState<'today' | 'perspectives' | 'categories'>('today');
   const [view, setView] = useState<'list' | 'edit' | 'create' | 'seo'>('list');
   const [editingPerspective, setEditingPerspective] = useState<Article | null>(null);
   const [darkMode, setDarkMode] = useState(false);
@@ -74,6 +75,11 @@ export default function AdminDashboard() {
     setView('list');
   };
 
+  const handleManageCategories = () => {
+    setCurrentPage('categories');
+    setView('list');
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -93,9 +99,15 @@ export default function AdminDashboard() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex items-center justify-between py-3">
             {/* Left side - Brand */}
-            <h1 className="text-xl font-bold text-slate-900 dark:text-white">
+            <button
+              onClick={() => {
+                setCurrentPage('today');
+                setView('list');
+              }}
+              className="text-xl font-bold text-slate-900 dark:text-white hover:text-slate-700 dark:hover:text-slate-300 transition-colors"
+            >
               MBrand
-            </h1>
+            </button>
 
             {/* Right side - Actions */}
             <div className="flex items-center gap-2">
@@ -112,19 +124,17 @@ export default function AdminDashboard() {
               >
                 Perspectives
               </button>
-              <button
-                onClick={() => {
-                  setCurrentPage('categories');
-                  setView('list');
-                }}
-                className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${
-                  currentPage === 'categories'
-                    ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-sm'
-                    : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
-                }`}
+              <a
+                href="/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2 text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-all flex items-center gap-2"
               >
-                Categories
-              </button>
+                Public
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
               <div className="w-px h-6 bg-slate-300 dark:bg-slate-600"></div>
               <button
                 onClick={toggleDarkMode}
@@ -155,14 +165,22 @@ export default function AdminDashboard() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {view === 'list' && currentPage === 'today' && (
+          <Today />
+        )}
         {view === 'list' && currentPage === 'perspectives' && (
-          <PerspectivesList onEdit={handleEdit} onSEO={handleSEO} onCreate={handleCreate} />
+          <PerspectivesList 
+            onEdit={handleEdit} 
+            onSEO={handleSEO} 
+            onCreate={handleCreate}
+            onManageCategories={handleManageCategories}
+          />
         )}
         {view === 'list' && currentPage === 'categories' && (
           <CategoriesPage />
         )}
         {(view === 'edit' || view === 'create') && (
-          <ArticleEditor
+          <PerspectiveEditor
             article={editingPerspective}
             onSave={handleBack}
             onCancel={handleBack}

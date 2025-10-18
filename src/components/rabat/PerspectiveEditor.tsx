@@ -2,13 +2,13 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import imageCompression from 'browser-image-compression';
 import { supabase, type Article } from '../../lib/supabase';
 
-interface ArticleEditorProps {
+interface PerspectiveEditorProps {
   article: Article | null;
   onSave: () => void;
   onCancel: () => void;
 }
 
-export default function ArticleEditor({ article, onSave, onCancel }: ArticleEditorProps) {
+export default function PerspectiveEditor({ article, onSave, onCancel }: PerspectiveEditorProps) {
   const [content, setContent] = useState(article?.content || '');
   const [status, setStatus] = useState<'draft' | 'published'>(article?.status || 'draft');
   const [saving, setSaving] = useState(false);
