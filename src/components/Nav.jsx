@@ -28,19 +28,13 @@ export default function Nav({ currentPath = '/' }) {
       <div className="container-custom">
         <div className="flex justify-between items-center py-3">
           {/* Logo */}
-          <a href="/" className="group flex items-center gap-3" aria-label="Mehdi Bamou - Home">
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary to-secondary rounded-xl blur-sm opacity-70 group-hover:opacity-100 transition-opacity"></div>
-              <div className="relative w-11 h-11 bg-gradient-to-br from-primary via-primary-600 to-secondary rounded-xl flex items-center justify-center text-white font-bold text-lg group-hover:scale-105 transition-transform shadow-lg">
-                MB
-              </div>
-            </div>
-            <div className="hidden md:block">
-              <div className="font-heading font-bold text-slate-900 dark:text-white text-lg leading-none">
+          <a href="/" className="group flex items-center" aria-label="Mehdi Bamou - Home">
+            <div>
+              <div className="font-heading font-bold text-slate-900 dark:text-white text-xl leading-none group-hover:text-primary dark:group-hover:text-primary-400 transition-colors">
                 Mehdi Bamou
               </div>
-              <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-                Enterprise Architect
+              <div className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">
+                  Business & Technology
               </div>
             </div>
           </a>
@@ -51,15 +45,15 @@ export default function Nav({ currentPath = '/' }) {
               <a
                 key={link.href}
                 href={link.href}
-                className={`relative px-4 py-2 rounded-full font-medium text-sm transition-all duration-300 ${
+                className={`relative px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 ${
                   isActive(link.href)
-                    ? 'text-white bg-gradient-to-r from-primary to-primary-600 shadow-lg shadow-primary/30'
-                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
+                    ? 'text-primary dark:text-primary-400'
+                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-slate-800/50'
                 }`}
               >
                 {link.label}
                 {isActive(link.href) && (
-                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-white rounded-full"></span>
+                  <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-5 h-0.5 bg-primary dark:bg-primary-400 rounded-full"></span>
                 )}
               </a>
             ))}
@@ -103,19 +97,17 @@ export default function Nav({ currentPath = '/' }) {
               <a
                 key={link.href}
                 href={link.href}
-                className={`block px-4 py-3 rounded-xl font-medium text-sm transition-all duration-300 ${
+                className={`relative block px-4 py-3 rounded-lg font-medium text-sm transition-all duration-200 ${
                   isActive(link.href)
-                    ? 'text-white bg-gradient-to-r from-primary to-primary-600 shadow-lg shadow-primary/20'
-                    : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-primary dark:hover:text-primary-400'
+                    ? 'text-primary dark:text-primary-400 bg-primary/5 dark:bg-primary/10'
+                    : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
                 }`}
                 onClick={() => setIsOpen(false)}
               >
                 <div className="flex items-center justify-between">
                   <span>{link.label}</span>
                   {isActive(link.href) && (
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                    </svg>
+                    <div className="w-1.5 h-1.5 bg-primary dark:bg-primary-400 rounded-full"></div>
                   )}
                 </div>
               </a>

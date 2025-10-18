@@ -143,47 +143,95 @@ const categories = [
   </section>
 
   <!-- Topics of Interest -->
-  <section class="section-spacing bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/30 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+  <section class="section-spacing bg-slate-50 dark:bg-slate-900">
     <div class="container-custom">
       <div class="max-w-3xl mx-auto text-center mb-12">
         <h2 class="text-3xl md:text-4xl font-heading font-bold mb-4 text-slate-900 dark:text-white">
-          Topics I Write About
+          Areas of Expertise
         </h2>
         <p class="text-lg text-slate-600 dark:text-slate-300">
-          Exploring the intersection of technology, strategy, and sustainable innovation
+          Bridging technology strategy, enterprise architecture, and sustainable innovation across Europe and MENA
         </p>
       </div>
       
-      <div class="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
-        <span class="px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-full text-lg font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all cursor-pointer">
-          🤖 AI & Machine Learning
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
+        <!-- Core Architecture -->
+        <div class="group p-5 bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-xl border border-slate-200/50 dark:border-slate-700/50 hover:border-primary/30 dark:hover:border-primary/30 hover:shadow-lg transition-all duration-200">
+          <h3 class="font-heading font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary dark:group-hover:text-primary-400 transition-colors">
+            Enterprise Architecture
+          </h3>
+          <p class="text-sm text-slate-600 dark:text-slate-400">
+            TOGAF frameworks, architecture governance, and strategic technology planning
+          </p>
+        </div>
+
+        <!-- AI & Innovation -->
+        <div class="group p-5 bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-xl border border-slate-200/50 dark:border-slate-700/50 hover:border-primary/30 dark:hover:border-primary/30 hover:shadow-lg transition-all duration-200">
+          <h3 class="font-heading font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary dark:group-hover:text-primary-400 transition-colors">
+            AI & Machine Learning
+          </h3>
+          <p class="text-sm text-slate-600 dark:text-slate-400">
+            Practical AI applications, automated governance, and predictive analytics
+          </p>
+        </div>
+
+        <!-- Cloud & Infrastructure -->
+        <div class="group p-5 bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-xl border border-slate-200/50 dark:border-slate-700/50 hover:border-primary/30 dark:hover:border-primary/30 hover:shadow-lg transition-all duration-200">
+          <h3 class="font-heading font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary dark:group-hover:text-primary-400 transition-colors">
+            Cloud Architecture
+          </h3>
+          <p class="text-sm text-slate-600 dark:text-slate-400">
+            AWS solutions, microservices design, and event-driven architectures
+          </p>
+        </div>
+
+        <!-- Digital Transformation -->
+        <div class="group p-5 bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-xl border border-slate-200/50 dark:border-slate-700/50 hover:border-primary/30 dark:hover:border-primary/30 hover:shadow-lg transition-all duration-200">
+          <h3 class="font-heading font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary dark:group-hover:text-primary-400 transition-colors">
+            Digital Transformation
+          </h3>
+          <p class="text-sm text-slate-600 dark:text-slate-400">
+            Change management, technology adoption, and organizational modernization
+          </p>
+        </div>
+
+        <!-- Sustainability -->
+        <div class="group p-5 bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-xl border border-slate-200/50 dark:border-slate-700/50 hover:border-primary/30 dark:hover:border-primary/30 hover:shadow-lg transition-all duration-200">
+          <h3 class="font-heading font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary dark:group-hover:text-primary-400 transition-colors">
+            Green Energy & ESG
+          </h3>
+          <p class="text-sm text-slate-600 dark:text-slate-400">
+            Sustainable technology strategies and environmental impact measurement
+          </p>
+        </div>
+
+        <!-- Cross-Cultural -->
+        <div class="group p-5 bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-xl border border-slate-200/50 dark:border-slate-700/50 hover:border-primary/30 dark:hover:border-primary/30 hover:shadow-lg transition-all duration-200">
+          <h3 class="font-heading font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary dark:group-hover:text-primary-400 transition-colors">
+            Cross-Cultural Technology
+          </h3>
+          <p class="text-sm text-slate-600 dark:text-slate-400">
+            Bridging innovation between European and MENA technology markets
+          </p>
+        </div>
+      </div>
+
+      <!-- Secondary Topics -->
+      <div class="flex flex-wrap justify-center gap-2 max-w-4xl mx-auto mt-8">
+        <span class="px-4 py-2 bg-white/40 dark:bg-slate-800/40 backdrop-blur-sm text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium border border-slate-200/50 dark:border-slate-700/50 hover:border-primary/30 dark:hover:border-primary/30 transition-all">
+          Data Architecture
         </span>
-        <span class="px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-full text-lg font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all cursor-pointer">
-          🌱 Green Energy & ESG
+        <span class="px-4 py-2 bg-white/40 dark:bg-slate-800/40 backdrop-blur-sm text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium border border-slate-200/50 dark:border-slate-700/50 hover:border-primary/30 dark:hover:border-primary/30 transition-all">
+          Security & Compliance
         </span>
-        <span class="px-5 py-2.5 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-full font-medium shadow-md hover:shadow-lg hover:scale-105 transition-all cursor-pointer">
-          🏗️ Enterprise Architecture
+        <span class="px-4 py-2 bg-white/40 dark:bg-slate-800/40 backdrop-blur-sm text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium border border-slate-200/50 dark:border-slate-700/50 hover:border-primary/30 dark:hover:border-primary/30 transition-all">
+          Innovation Strategy
         </span>
-        <span class="px-5 py-2.5 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white rounded-full font-medium shadow-md hover:shadow-lg hover:scale-105 transition-all cursor-pointer">
-          📋 TOGAF & Frameworks
+        <span class="px-4 py-2 bg-white/40 dark:bg-slate-800/40 backdrop-blur-sm text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium border border-slate-200/50 dark:border-slate-700/50 hover:border-primary/30 dark:hover:border-primary/30 transition-all">
+          Manufacturing Tech
         </span>
-        <span class="px-5 py-2.5 bg-gradient-to-r from-cyan-500 to-cyan-600 text-white rounded-full font-medium shadow-md hover:shadow-lg hover:scale-105 transition-all cursor-pointer">
-          ☁️ Cloud Architecture
-        </span>
-        <span class="px-5 py-2.5 bg-gradient-to-r from-pink-500 to-pink-600 text-white rounded-full font-medium shadow-md hover:shadow-lg hover:scale-105 transition-all cursor-pointer">
-          ⚡ Digital Transformation
-        </span>
-        <span class="px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-full text-sm font-medium shadow hover:shadow-md hover:scale-105 transition-all cursor-pointer">
-          🌍 Cross-Cultural Tech
-        </span>
-        <span class="px-4 py-2 bg-gradient-to-r from-teal-500 to-teal-600 text-white rounded-full text-sm font-medium shadow hover:shadow-md hover:scale-105 transition-all cursor-pointer">
-          🔐 Security & Compliance
-        </span>
-        <span class="px-4 py-2 bg-gradient-to-r from-rose-500 to-rose-600 text-white rounded-full text-sm font-medium shadow hover:shadow-md hover:scale-105 transition-all cursor-pointer">
-          📊 Data Architecture
-        </span>
-        <span class="px-4 py-2 bg-gradient-to-r from-violet-500 to-violet-600 text-white rounded-full text-sm font-medium shadow hover:shadow-md hover:scale-105 transition-all cursor-pointer">
-          🚀 Innovation Strategy
+        <span class="px-4 py-2 bg-white/40 dark:bg-slate-800/40 backdrop-blur-sm text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium border border-slate-200/50 dark:border-slate-700/50 hover:border-primary/30 dark:hover:border-primary/30 transition-all">
+          Pharmaceutical Systems
         </span>
       </div>
     </div>
