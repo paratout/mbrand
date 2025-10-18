@@ -19,6 +19,40 @@ export default function ArticleEditor({ article, onSave, onCancel }: ArticleEdit
   const [currentArticle, setCurrentArticle] = useState<Article | null>(article);
   const quillRef = useRef<any>(null);
   const autoSaveTimeout = useRef<any>(null);
+  const editorContainerRef = useRef<HTMLDivElement>(null);
+
+  // Handle native fullscreen
+  const toggleFullscreen = async () => {
+    if (!document.fullscreenElement) {
+      // Enter fullscreen
+      try {
+        await editorContainerRef.current?.requestFullscreen();
+        setFullscreen(true);
+      } catch (err) {
+        console.error('Error entering fullscreen:', err);
+      }
+    } else {
+      // Exit fullscreen
+      try {
+        await document.exitFullscreen();
+        setFullscreen(false);
+      } catch (err) {
+        console.error('Error exiting fullscreen:', err);
+      }
+    }
+  };
+
+  // Listen for fullscreen changes
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setFullscreen(!!document.fullscreenElement);
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+    };
+  }, []);
 
   useEffect(() => {
     // Suppress React warnings
@@ -263,36 +297,27 @@ export default function ArticleEditor({ article, onSave, onCancel }: ArticleEdit
   ];
 
   return (
-    <div className={`min-h-screen bg-white dark:bg-slate-900 ${fullscreen ? 'fixed inset-0 z-[100] overflow-y-auto' : ''}`}>
+    <div 
+      ref={editorContainerRef}
+      className="min-h-screen bg-white dark:bg-slate-900"
+    >
       {/* Sticky Top Bar */}
       <div className="sticky top-0 z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border-b border-slate-200 dark:border-slate-700">
-        <div className="max-w-5xl mx-auto px-6 py-3 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
           <button
             onClick={onCancel}
-            className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
-            title="Close"
+            className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg border border-slate-300 dark:border-slate-600 transition-colors"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
+            Cancel
           </button>
 
           <div className="flex items-center gap-3">
             {saving && <span className="text-sm text-slate-500 dark:text-slate-400">Saving...</span>}
             <button
-              onClick={() => setFullscreen(!fullscreen)}
-              className="p-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
-              title={fullscreen ? 'Exit fullscreen' : 'Fullscreen mode'}
+              onClick={toggleFullscreen}
+              className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg border border-slate-300 dark:border-slate-600 transition-colors"
             >
-              {fullscreen ? (
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              ) : (
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
-                </svg>
-              )}
+              {fullscreen ? 'Exit Fullscreen' : 'Fullscreen'}
             </button>
             <button
               onClick={() => {
@@ -319,7 +344,7 @@ export default function ArticleEditor({ article, onSave, onCancel }: ArticleEdit
       </div>
 
       {/* Editor Container */}
-      <div className="max-w-5xl mx-auto px-6 py-12">
+      <div className="max-w-7xl mx-auto px-6 py-12">
         {uploading && (
           <div className="fixed top-20 right-6 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg z-50">
             Uploading image...
@@ -346,10 +371,24 @@ export default function ArticleEditor({ article, onSave, onCancel }: ArticleEdit
 
       {/* Clean CSS */}
       <style>{`
+        /* Fullscreen Styling */
+        :fullscreen {
+          overflow-y: auto;
+        }
+
+        :-webkit-full-screen {
+          overflow-y: auto;
+        }
+
+        :-moz-full-screen {
+          overflow-y: auto;
+        }
+
         /* Quill Editor Styling */
         .quill-wrapper {
           background: white;
           min-height: 70vh;
+          border-radius: 8px;
         }
 
         .quill-wrapper .ql-toolbar {
@@ -360,6 +399,7 @@ export default function ArticleEditor({ article, onSave, onCancel }: ArticleEdit
           border: none;
           border-bottom: 1px solid #e5e7eb;
           padding: 12px 0;
+          border-radius: 8px 8px 0 0;
         }
 
         .quill-wrapper .ql-container {
@@ -367,17 +407,22 @@ export default function ArticleEditor({ article, onSave, onCancel }: ArticleEdit
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
           font-size: 21px;
           line-height: 1.58;
+          background: white;
         }
 
         .quill-wrapper .ql-editor {
           padding: 40px 0;
           min-height: 60vh;
           color: #1a1a1a;
+          background: white !important;
         }
 
         .quill-wrapper .ql-editor.ql-blank::before {
           color: #9ca3af;
           font-style: normal;
+          position: static !important;
+          left: 0 !important;
+          right: 0 !important;
         }
 
         /* Typography */
@@ -433,22 +478,43 @@ export default function ArticleEditor({ article, onSave, onCancel }: ArticleEdit
           padding: 0;
         }
 
-        /* Lists */
+        /* Lists - Override Quill defaults */
         .quill-wrapper .ql-editor ol {
-          list-style-type: decimal;
-          padding-left: 30px;
-          margin: 1.5em 0;
+          list-style-type: decimal !important;
+          padding-left: 30px !important;
+          margin: 1.5em 0 !important;
+          counter-reset: none !important;
+        }
+
+        .quill-wrapper .ql-editor ol li {
+          display: list-item !important;
+          list-style-position: outside !important;
+          list-style-type: decimal !important;
+          padding-left: 0 !important;
+        }
+
+        .quill-wrapper .ql-editor ol li:before {
+          display: none !important;
         }
 
         .quill-wrapper .ql-editor ul {
-          list-style-type: disc;
-          padding-left: 30px;
-          margin: 1.5em 0;
+          list-style-type: disc !important;
+          padding-left: 30px !important;
+          margin: 1.5em 0 !important;
+        }
+
+        .quill-wrapper .ql-editor ul li {
+          display: list-item !important;
+          list-style-position: outside !important;
+          list-style-type: disc !important;
+          padding-left: 0 !important;
+        }
+
+        .quill-wrapper .ql-editor ul li:before {
+          display: none !important;
         }
 
         .quill-wrapper .ql-editor li {
-          display: list-item;
-          list-style-position: outside;
           margin: 0.5em 0;
         }
 
@@ -460,45 +526,84 @@ export default function ArticleEditor({ article, onSave, onCancel }: ArticleEdit
           border-radius: 4px;
         }
 
-        /* Dark Mode */
+        /* Dark Mode - Consolidated */
         @media (prefers-color-scheme: dark) {
           .quill-wrapper {
-            background: #0f172a;
+            background: #0f172a !important;
           }
-
           .quill-wrapper .ql-toolbar {
-            background: #0f172a;
-            border-bottom-color: #334155;
+            background: #0f172a !important;
+            border-bottom-color: #334155 !important;
           }
-
           .quill-wrapper .ql-container {
-            background: #0f172a;
+            background: #0f172a !important;
           }
-
           .quill-wrapper .ql-editor {
-            color: #e2e8f0;
+            color: #e2e8f0 !important;
+            background: #0f172a !important;
           }
-
           .quill-wrapper .ql-editor.ql-blank::before {
-            color: #64748b;
+            color: #64748b !important;
           }
-
           .quill-wrapper .ql-editor blockquote {
-            border-left-color: #e2e8f0;
+            border-left-color: #e2e8f0 !important;
           }
-
           .quill-wrapper .ql-editor pre,
           .quill-wrapper .ql-editor code {
-            background: #1e293b;
+            background: #1e293b !important;
           }
-
           .quill-wrapper .ql-stroke {
-            stroke: #e2e8f0;
+            stroke: #e2e8f0 !important;
           }
-
           .quill-wrapper .ql-fill {
-            fill: #e2e8f0;
+            fill: #e2e8f0 !important;
           }
+          .quill-wrapper .ql-picker-label {
+            color: #e2e8f0 !important;
+          }
+          .quill-wrapper .ql-picker-options {
+            background: #1e293b !important;
+            border-color: #334155 !important;
+          }
+        }
+
+        /* Dark mode with class */
+        .dark .quill-wrapper {
+          background: #0f172a !important;
+        }
+        .dark .quill-wrapper .ql-toolbar {
+          background: #0f172a !important;
+          border-bottom-color: #334155 !important;
+        }
+        .dark .quill-wrapper .ql-container {
+          background: #0f172a !important;
+        }
+        .dark .quill-wrapper .ql-editor {
+          color: #e2e8f0 !important;
+          background: #0f172a !important;
+        }
+        .dark .quill-wrapper .ql-editor.ql-blank::before {
+          color: #64748b !important;
+        }
+        .dark .quill-wrapper .ql-editor blockquote {
+          border-left-color: #e2e8f0 !important;
+        }
+        .dark .quill-wrapper .ql-editor pre,
+        .dark .quill-wrapper .ql-editor code {
+          background: #1e293b !important;
+        }
+        .dark .quill-wrapper .ql-stroke {
+          stroke: #e2e8f0 !important;
+        }
+        .dark .quill-wrapper .ql-fill {
+          fill: #e2e8f0 !important;
+        }
+        .dark .quill-wrapper .ql-picker-label {
+          color: #e2e8f0 !important;
+        }
+        .dark .quill-wrapper .ql-picker-options {
+          background: #1e293b !important;
+          border-color: #334155 !important;
         }
       `}</style>
     </div>

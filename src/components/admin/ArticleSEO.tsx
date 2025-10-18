@@ -64,32 +64,31 @@ export default function ArticleSEO({ article, onSave, onCancel }: ArticleSEOProp
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className="bg-white dark:bg-slate-800 rounded-lg shadow-lg overflow-hidden">
-        {/* Header */}
-        <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-2xl font-bold mb-1">SEO & Metadata</h2>
-              <p className="text-blue-100">Edit article information and settings</p>
-            </div>
-            <div className="flex gap-3">
-              <button
-                onClick={onCancel}
-                className="px-4 py-2 text-sm font-medium bg-white/20 hover:bg-white/30 text-white rounded-lg transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleSave}
-                disabled={saving}
-                className="px-4 py-2 text-sm font-medium bg-white text-blue-600 hover:bg-blue-50 rounded-lg transition-colors disabled:opacity-50 font-semibold"
-              >
-                {saving ? 'Saving...' : 'Save Changes'}
-              </button>
-            </div>
-          </div>
+    <div className="max-w-5xl mx-auto">
+      {/* Header with Back Button */}
+      <div className="mb-6 flex items-center justify-between">
+        <div>
+          <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-1">Article Settings</h2>
+          <p className="text-slate-600 dark:text-slate-400">Edit article metadata and SEO information</p>
         </div>
+        <div className="flex gap-3">
+          <button
+            onClick={onCancel}
+            className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg border border-slate-300 dark:border-slate-600 transition-colors"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={handleSave}
+            disabled={saving}
+            className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg border border-slate-300 dark:border-slate-600 transition-colors disabled:opacity-50"
+          >
+            {saving ? 'Saving...' : 'Save Changes'}
+          </button>
+        </div>
+      </div>
+
+      <div className="bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
 
         {/* Form Fields */}
         <div className="p-8 space-y-6">

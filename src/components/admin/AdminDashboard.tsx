@@ -83,39 +83,20 @@ export default function AdminDashboard() {
 
   return (
     <div className="min-h-screen">
-      {/* Header - Improved */}
-      <header className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-50 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 py-4">
+      {/* Header - Redesigned */}
+      <header className="bg-gradient-to-r from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-50 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-6 py-3">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                  </svg>
-                </div>
-                <div>
-                  <h1 className="text-xl font-bold text-slate-900 dark:text-white">
-                    Admin Dashboard
-                  </h1>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">
-                    {session.user.email}
-                  </p>
-                </div>
-              </div>
-            </div>
+            {/* Left side - Brand */}
+            <h1 className="text-xl font-bold text-slate-900 dark:text-white">
+              MBrand
+            </h1>
+
+            {/* Right side - Actions */}
             <div className="flex items-center gap-2">
-              {view !== 'list' && (
-                <button
-                  onClick={handleBack}
-                  className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
-                >
-                  ← Back
-                </button>
-              )}
               <button
                 onClick={toggleDarkMode}
-                className="p-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
+                className="p-2 text-slate-600 dark:text-slate-400 hover:bg-white/50 dark:hover:bg-slate-700/50 rounded-lg transition-all"
                 title={darkMode ? 'Light mode' : 'Dark mode'}
               >
                 {darkMode ? (
@@ -128,9 +109,10 @@ export default function AdminDashboard() {
                   </svg>
                 )}
               </button>
+              <div className="w-px h-6 bg-slate-300 dark:bg-slate-600"></div>
               <button
                 onClick={handleSignOut}
-                className="px-4 py-2 text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                className="px-3 py-1.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-white/50 dark:hover:bg-slate-700/50 rounded-lg transition-all"
               >
                 Sign Out
               </button>
