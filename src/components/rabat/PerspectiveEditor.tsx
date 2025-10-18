@@ -18,7 +18,6 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
   const [uploading, setUploading] = useState(false);
   const [currentArticle, setCurrentArticle] = useState<Article | null>(article);
   const quillRef = useRef<any>(null);
-  const autoSaveTimeout = useRef<any>(null);
   const editorContainerRef = useRef<HTMLDivElement>(null);
 
   // Handle native fullscreen
@@ -54,29 +53,58 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
     };
   }, []);
 
+  // Initialize Quill editor with custom drop cap blot
   useEffect(() => {
-    // Suppress React warnings
     const originalError = console.error;
+    
+    // Suppress React findDOMNode warnings from ReactQuill
     console.error = (...args: any[]) => {
-      if (
-        typeof args[0] === 'string' &&
-        (args[0].includes('findDOMNode') || args[0].includes('DevTools'))
-      ) {
+      if (typeof args[0] === 'string' && (args[0].includes('findDOMNode') || args[0].includes('DevTools'))) {
         return;
       }
       originalError.apply(console, args);
     };
 
-    // Load Quill CSS from CDN
+    // Load Quill CSS
     const link = document.createElement('link');
     link.rel = 'stylesheet';
     link.href = 'https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css';
     document.head.appendChild(link);
 
-    // Wait for CSS to load, then import ReactQuill
+    // Initialize ReactQuill and register custom blot
     link.onload = () => {
       import('react-quill').then((mod) => {
-        setReactQuill(() => mod.default);
+        const ReactQuillComponent = mod.default;
+        const Quill = (ReactQuillComponent as any).Quill;
+        
+        if (Quill) {
+          const Inline = Quill.import('blots/inline');
+
+          // Custom Drop Cap Blot - preserves <span class="drop-cap-letter">
+          class DropCapBlot extends Inline {
+            static blotName = 'drop-cap';
+            static className = 'drop-cap-letter';
+            static tagName = 'span';
+
+            static create(value: any) {
+              const node = super.create(value);
+              node.classList.add('drop-cap-letter');
+              return node;
+            }
+
+            static formats(node: HTMLElement) {
+              return node.classList.contains('drop-cap-letter');
+            }
+          }
+
+          try {
+            Quill.register(DropCapBlot, true);
+          } catch (e) {
+            // Blot already registered, ignore
+          }
+        }
+        
+        setReactQuill(() => ReactQuillComponent);
         setMounted(true);
       });
     };
@@ -85,6 +113,56 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
       console.error = originalError;
     };
   }, []);
+
+  // Drop cap handler
+  const handleDropCap = () => {
+    const quill = quillRef.current?.getEditor();
+    if (!quill) return;
+
+    const range = quill.getSelection();
+    if (!range) {
+      alert('Please place your cursor in a paragraph first');
+      return;
+    }
+
+    // Get the line at cursor position
+    const [line, offset] = quill.getLine(range.index);
+    if (!line || !line.domNode) return;
+
+    const paragraph = line.domNode;
+    if (paragraph.tagName !== 'P') {
+      alert('Drop cap can only be applied to paragraphs');
+      return;
+    }
+
+    // Calculate the start of this paragraph in the document
+    const lineStart = range.index - offset;
+    
+    // Get the text of the entire paragraph
+    const lineText = quill.getText(lineStart, line.length());
+    
+    // Find the first letter in the paragraph
+    const match = lineText.match(/[A-Za-z]/);
+    if (!match) {
+      alert('No letter found in this paragraph');
+      return;
+    }
+
+    const firstLetterIndex = lineStart + (match.index || 0);
+    
+    // Check if already has drop cap format
+    const format = quill.getFormat(firstLetterIndex, 1);
+    if (format['drop-cap']) {
+      alert('This paragraph already has a drop cap');
+      return;
+    }
+
+    // Apply drop cap format to the first character
+    quill.formatText(firstLetterIndex, 1, 'drop-cap', true);
+    
+    // Move cursor after the formatted character
+    quill.setSelection(firstLetterIndex + 1, 0);
+  };
 
   const uploadImage = async (file: File) => {
     try {
@@ -178,45 +256,8 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
     }
   };
 
-  const autoSave = async (newContent: string) => {
-    // Clear existing timeout
-    if (autoSaveTimeout.current) {
-      clearTimeout(autoSaveTimeout.current);
-    }
-
-    // Set new timeout for auto-save (2 seconds after typing stops)
-    autoSaveTimeout.current = setTimeout(async () => {
-      try {
-        setSaving(true);
-
-        // If no article exists, create one first
-        let articleToSave = currentArticle;
-        if (!articleToSave) {
-          articleToSave = await createArticle();
-          if (!articleToSave) return;
-        }
-
-        // Update the article
-        const { error } = await supabase
-          .from('articles')
-          .update({
-            content: newContent,
-            updated_at: new Date().toISOString(),
-          })
-          .eq('id', articleToSave.id);
-
-        if (error) throw error;
-      } catch (error: any) {
-        console.error('Error auto-saving:', error);
-      } finally {
-        setSaving(false);
-      }
-    }, 2000);
-  };
-
   const handleContentChange = (value: string) => {
     setContent(value);
-    autoSave(value);
   };
 
   const handleSave = async () => {
@@ -254,6 +295,26 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
     }
   };
 
+  // Customize drop cap button icon
+  useEffect(() => {
+    if (!mounted) return;
+    
+    const timer = setTimeout(() => {
+      const dropCapBtn = document.querySelector('.ql-drop-cap');
+      if (dropCapBtn) {
+        dropCapBtn.innerHTML = `
+          <svg viewBox="0 0 18 18" style="width: 18px; height: 18px;">
+            <text x="1" y="14" font-size="14" font-weight="bold" fill="currentColor">A</text>
+            <text x="9" y="16" font-size="7" fill="currentColor">a</text>
+          </svg>
+        `;
+        dropCapBtn.setAttribute('title', 'Apply Drop Cap');
+      }
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [mounted]);
+
   // Pastel colors for background highlighting
   const pastelColors = [
     '#FFF4E6', // Peach
@@ -274,10 +335,12 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
         ['blockquote', 'code-block'],
         [{ list: 'ordered' }, { list: 'bullet' }],
         ['link', 'image'],
+        ['drop-cap'],
         ['clean'],
       ],
       handlers: {
         image: imageHandler,
+        'drop-cap': handleDropCap,
       },
     },
   }), []);
@@ -294,6 +357,7 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
     'bullet',
     'link',
     'image',
+    'drop-cap',
   ];
 
   return (
@@ -312,7 +376,6 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
           </button>
 
           <div className="flex items-center gap-3">
-            {saving && <span className="text-sm text-slate-500 dark:text-slate-400">Saving...</span>}
             <button
               onClick={toggleFullscreen}
               className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg border border-slate-300 dark:border-slate-600 transition-colors"
@@ -524,6 +587,15 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
           height: auto;
           margin: 2em 0;
           border-radius: 4px;
+        }
+
+        /* Drop Cap Styling */
+        .quill-wrapper .ql-editor .drop-cap-letter {
+          font-size: 4.5em;
+          line-height: 0.85;
+          float: left;
+          margin: 0.05em 0.1em 0 0;
+          font-weight: 700;
         }
 
         /* Dark Mode - Consolidated */

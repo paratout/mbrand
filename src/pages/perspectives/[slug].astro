@@ -7,14 +7,10 @@ export async function getStaticPaths() {
     .from('articles')
     .select('slug')
     .eq('status', 'published');
-
-  return (articles || []).map((article) => ({
-    params: { slug: article.slug },
-  }));
+  return (articles || []).map((article) => ({ params: { slug: article.slug } }));
 }
 
 const { slug } = Astro.params;
-
 const { data: article, error } = await supabase
   .from('articles')
   .select('*')
@@ -22,9 +18,15 @@ const { data: article, error } = await supabase
   .eq('status', 'published')
   .single();
 
-if (error || !article) {
-  return Astro.redirect('/404');
-}
+if (error || !article) return Astro.redirect('/404');
+
+const { data: relatedArticles } = await supabase
+  .from('articles')
+  .select('*')
+  .eq('status', 'published')
+  .eq('category', article.category)
+  .neq('slug', slug)
+  .limit(3);
 
 const publishDate = new Date(article.published_at || article.created_at).toLocaleDateString('en-US', {
   year: 'numeric',
@@ -39,33 +41,60 @@ const publishDate = new Date(article.published_at || article.created_at).toLocal
   path={`/perspectives/${slug}`}
 >
   <article class="article-page">
-    <!-- Header -->
-    <header class="article-header">
-      <a href="/perspectives" class="category-badge">{article.category}</a>
-      <h1 class="article-title">{article.title}</h1>
-      {article.excerpt && <p class="article-excerpt">{article.excerpt}</p>}
-      <div class="article-meta">
+    <header class="header">
+      <a href="/perspectives" class="badge">{article.category}</a>
+      <h1>{article.title}</h1>
+      {article.excerpt && <p class="excerpt">{article.excerpt}</p>}
+      <div class="meta">
         <time datetime={article.published_at || article.created_at}>{publishDate}</time>
         {article.read_time && <><span>·</span><span>{article.read_time}</span></>}
       </div>
     </header>
 
-    <!-- Cover Image -->
     {article.cover_image && (
-      <div class="article-cover">
+      <div class="cover">
         <img src={article.cover_image} alt={article.title} />
       </div>
     )}
 
-    <!-- Content -->
-    <div class="article-content" set:html={article.content} />
+    <div class="share">
+      <button onclick="navigator.share ? navigator.share({title: document.title, url: window.location.href}) : window.open('https://twitter.com/intent/tweet?url=' + encodeURIComponent(window.location.href) + '&text=' + encodeURIComponent(document.title), '_blank')">
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </button>
+      <button onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href), '_blank')">
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      </button>
+      <button onclick="window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(window.location.href) + '&title=' + encodeURIComponent(document.title), '_blank')">
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      </button>
+      <button onclick="navigator.clipboard.writeText(window.location.href).then(() => alert('Link copied!'))">
+        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+      </button>
+    </div>
 
-    <!-- Footer -->
-    <footer class="article-footer">
-      <a href="/perspectives" class="back-link">
-        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-        </svg>
+    <div class="content" set:html={article.content} />
+
+    {relatedArticles?.length > 0 && (
+      <section class="related">
+        <h2>More from {article.category}</h2>
+        <div class="grid">
+          {relatedArticles.map((r) => (
+            <a href={`/perspectives/${r.slug}`} class="card">
+              {r.cover_image && <img src={r.cover_image} alt={r.title} />}
+              <div>
+                <h3>{r.title}</h3>
+                {r.excerpt && <p>{r.excerpt}</p>}
+                {r.read_time && <span>{r.read_time}</span>}
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <footer>
+      <a href="/perspectives">
+        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
         Back to Perspectives
       </a>
     </footer>
@@ -73,290 +102,78 @@ const publishDate = new Date(article.published_at || article.created_at).toLocal
 </BaseLayout>
 
 <style is:global>
-  /* Medium-style article headings - Clean and subtle */
-  .article-content h2 {
-    font-family: Georgia, 'Times New Roman', serif !important;
-    font-size: 28px !important;
-    font-weight: 700 !important;
-    line-height: 1.3 !important;
-    margin: 2em 0 0.5em !important;
-    letter-spacing: -0.02em !important;
-  }
-
-  .article-content h3 {
-    font-family: Georgia, 'Times New Roman', serif !important;
-    font-size: 24px !important;
-    font-weight: 700 !important;
-    line-height: 1.4 !important;
-    margin: 1.75em 0 0.5em !important;
-    letter-spacing: -0.015em !important;
-  }
-
-  .article-content h4 {
-    font-family: Georgia, 'Times New Roman', serif !important;
-    font-size: 21px !important;
-    font-weight: 700 !important;
-    line-height: 1.4 !important;
-    margin: 1.5em 0 0.5em !important;
-  }
-
-  .article-content h5 {
-    font-family: Georgia, 'Times New Roman', serif !important;
-    font-size: 19px !important;
-    font-weight: 700 !important;
-    line-height: 1.4 !important;
-    margin: 1.5em 0 0.5em !important;
-  }
-
-  .article-content h6 {
-    font-family: Georgia, 'Times New Roman', serif !important;
-    font-size: 18px !important;
-    font-weight: 700 !important;
-    line-height: 1.4 !important;
-    margin: 1.5em 0 0.5em !important;
+  .content h2,.content h3,.content h4,.content h5,.content h6{font-family:Georgia,'Times New Roman',serif!important;font-weight:700!important;line-height:1.4!important}
+  .content h2{font-size:28px!important;margin:2em 0 .5em!important;letter-spacing:-.02em!important}
+  .content h3{font-size:24px!important;margin:1.75em 0 .5em!important;letter-spacing:-.015em!important}
+  .content h4{font-size:21px!important;margin:1.5em 0 .5em!important}
+  .content h5{font-size:19px!important;margin:1.5em 0 .5em!important}
+  .content h6{font-size:18px!important;margin:1.5em 0 .5em!important}
+  
+  /* Drop cap styling - must be in global scope to override Tailwind reset */
+  .content .drop-cap-letter{
+    font-size:5.5em!important;
+    line-height:0.85!important;
+    float:left!important;
+    margin:0.05em 0.1em 0 0!important;
+    font-weight:400!important;
+    display:inline-block!important;
   }
 </style>
 
 <style>
-  /* Container */
-  .article-page {
-    max-width: 680px;
-    margin: 0 auto;
-    padding: 0 24px;
+  .article-page{max-width:680px;margin:0 auto;padding:0 24px;font-family:Georgia,'Times New Roman',serif}
+  .header{padding:80px 0 40px}
+  .badge{display:inline-block;padding:6px 16px;background:rgba(0,0,0,.05);border-radius:20px;font-size:14px;font-weight:500;text-decoration:none;margin-bottom:32px;transition:background .2s}
+  .badge:hover{background:rgba(0,0,0,.1)}
+  .header h1{font-size:48px;font-weight:700;line-height:1.15;margin:0 0 24px}
+  .excerpt{font-size:24px;line-height:1.5;margin:0 0 32px;opacity:.8}
+  .meta{display:flex;align-items:center;gap:12px;font-size:14px;opacity:.6}
+  .cover{width:100vw;margin-left:calc(50% - 50vw);margin-bottom:48px;max-height:60vh;overflow:hidden}
+  .cover img{width:100%;height:100%;object-fit:cover}
+  .share{display:flex;gap:12px;margin-bottom:48px;padding-bottom:24px;border-bottom:1px solid rgba(0,0,0,.1)}
+  .share button{width:40px;height:40px;border-radius:50%;border:1px solid rgba(0,0,0,.1);background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;color:inherit}
+  .share button:hover{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.2)}
+  .content{font-size:21px;line-height:1.7;padding-bottom:64px}
+  .content h1{display:none!important}
+  .content p{margin:1.4em 0}
+  .content h2+p,.content h3+p,.content h4+p,.content h5+p,.content h6+p{margin-top:.5em}
+  .content a{color:#2563eb;text-decoration:underline}
+  .content ul,.content ol{padding-left:30px;margin:1.5em 0}
+  .content li{margin:.75em 0}
+  .content blockquote{border-left:4px solid currentColor;padding-left:24px;margin:2em 0;font-style:italic;font-size:24px;opacity:.8}
+  .content code{background:rgba(0,0,0,.05);padding:2px 6px;border-radius:3px;font-family:monospace;font-size:.9em}
+  .content pre{background:rgba(0,0,0,.05);padding:20px;border-radius:8px;margin:1.5em 0;overflow-x:auto}
+  .content pre code{background:none;padding:0}
+  .content img{max-width:100%;height:auto;margin:2em 0;border-radius:4px}
+  .content hr{border:none;border-top:1px solid currentColor;opacity:.2;margin:3em 0}
+  .related{margin-top:64px;padding-top:48px;border-top:1px solid rgba(0,0,0,.1)}
+  .related h2{font-size:24px;font-weight:700;margin-bottom:32px}
+  .grid{display:grid;gap:32px}
+  .card{display:flex;gap:24px;text-decoration:none;color:inherit;transition:opacity .2s}
+  .card:hover{opacity:.8}
+  .card img{width:200px;height:134px;object-fit:cover;border-radius:4px;flex-shrink:0}
+  .card h3{font-size:20px;font-weight:700;line-height:1.4;margin:0 0 8px}
+  .card p{font-size:16px;line-height:1.5;opacity:.8;margin:0 0 12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .card span{font-size:14px;opacity:.6}
+  footer{padding:32px 0 64px;border-top:1px solid rgba(0,0,0,.1);margin-top:48px}
+  footer a{display:inline-flex;align-items:center;gap:8px;font-weight:500;text-decoration:none;color:#2563eb}
+  @media (prefers-color-scheme:dark){
+    .badge{background:rgba(255,255,255,.1)}
+    .badge:hover{background:rgba(255,255,255,.15)}
+    .content a{color:#60a5fa}
+    .content code,.content pre{background:rgba(255,255,255,.05)}
+    .share{border-bottom-color:rgba(255,255,255,.1)}
+    .share button{border-color:rgba(255,255,255,.1)}
+    .share button:hover{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.2)}
+    .related,footer{border-top-color:rgba(255,255,255,.1)}
+    footer a{color:#60a5fa}
   }
-
-  /* Header */
-  .article-header {
-    padding: 80px 0 40px;
-  }
-
-  .category-badge {
-    display: inline-block;
-    padding: 6px 16px;
-    background: rgba(0,0,0,0.05);
-    border-radius: 20px;
-    font-size: 14px;
-    font-weight: 500;
-    text-decoration: none;
-    margin-bottom: 32px;
-    transition: background 0.2s;
-  }
-
-  .category-badge:hover {
-    background: rgba(0,0,0,0.1);
-  }
-
-  .article-title {
-    font-family: Georgia, 'Times New Roman', serif;
-    font-size: 48px;
-    font-weight: 700;
-    line-height: 1.15;
-    margin: 0 0 24px;
-  }
-
-  .article-excerpt {
-    font-family: Georgia, 'Times New Roman', serif;
-    font-size: 24px;
-    line-height: 1.5;
-    margin: 0 0 32px;
-    opacity: 0.8;
-  }
-
-  .article-meta {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 14px;
-    opacity: 0.6;
-  }
-
-  /* Cover Image */
-  .article-cover {
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
-    margin-bottom: 64px;
-    max-height: 60vh;
-    overflow: hidden;
-  }
-
-  .article-cover img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  /* Content */
-  .article-content {
-    font-family: Georgia, 'Times New Roman', serif;
-    font-size: 21px;
-    line-height: 1.7;
-    padding-bottom: 64px;
-  }
-
-  /* Hide H1 in content */
-  .article-content h1 {
-    display: none !important;
-  }
-
-  /* Paragraphs */
-  .article-content p {
-    margin: 1.4em 0;
-  }
-
-  /* Tighter spacing after headings */
-  .article-content h2 + p,
-  .article-content h3 + p,
-  .article-content h4 + p,
-  .article-content h5 + p,
-  .article-content h6 + p {
-    margin-top: 0.5em;
-  }
-
-  /* Drop Cap - Medium style */
-  .article-content > p:first-of-type::first-letter {
-    font-size: 3.2em;
-    line-height: 1;
-    float: left;
-    margin: 0.07em 0.1em 0 0;
-    font-weight: 400;
-  }
-
-  /* Links */
-  .article-content a {
-    color: #2563eb;
-    text-decoration: underline;
-  }
-
-  /* Lists */
-  .article-content ul,
-  .article-content ol {
-    padding-left: 30px;
-    margin: 1.5em 0;
-  }
-
-  .article-content li {
-    margin: 0.75em 0;
-  }
-
-  /* Blockquotes */
-  .article-content blockquote {
-    border-left: 4px solid currentColor;
-    padding-left: 24px;
-    margin: 2em 0;
-    font-style: italic;
-    font-size: 24px;
-    opacity: 0.8;
-  }
-
-  /* Code */
-  .article-content code {
-    background: rgba(0,0,0,0.05);
-    padding: 2px 6px;
-    border-radius: 3px;
-    font-family: monospace;
-    font-size: 0.9em;
-  }
-
-  .article-content pre {
-    background: rgba(0,0,0,0.05);
-    padding: 20px;
-    border-radius: 8px;
-    margin: 1.5em 0;
-    overflow-x: auto;
-  }
-
-  .article-content pre code {
-    background: none;
-    padding: 0;
-  }
-
-  /* Images */
-  .article-content img {
-    max-width: 100%;
-    height: auto;
-    margin: 2em 0;
-    border-radius: 4px;
-  }
-
-  /* HR */
-  .article-content hr {
-    border: none;
-    border-top: 1px solid currentColor;
-    opacity: 0.2;
-    margin: 3em 0;
-  }
-
-  /* Footer */
-  .article-footer {
-    padding: 32px 0 64px;
-    border-top: 1px solid rgba(0,0,0,0.1);
-  }
-
-  .back-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 500;
-    text-decoration: none;
-    color: #2563eb;
-  }
-
-  /* Dark Mode */
-  @media (prefers-color-scheme: dark) {
-    .category-badge {
-      background: rgba(255,255,255,0.1);
-    }
-    .category-badge:hover {
-      background: rgba(255,255,255,0.15);
-    }
-    .article-content a {
-      color: #60a5fa;
-    }
-    .article-content code,
-    .article-content pre {
-      background: rgba(255,255,255,0.05);
-    }
-    .article-footer {
-      border-top-color: rgba(255,255,255,0.1);
-    }
-    .back-link {
-      color: #60a5fa;
-    }
-  }
-
-  /* Responsive */
-  @media (max-width: 768px) {
-    .article-header {
-      padding: 48px 0 32px;
-    }
-    .article-title {
-      font-size: 36px;
-    }
-    .article-excerpt {
-      font-size: 20px;
-    }
-    .article-content {
-      font-size: 19px;
-    }
-    .article-content h2 {
-      font-size: 24px !important;
-      margin: 1.75em 0 0.5em !important;
-    }
-    .article-content h3 {
-      font-size: 21px !important;
-      margin: 1.5em 0 0.5em !important;
-    }
-    .article-content h4 {
-      font-size: 19px !important;
-      margin: 1.5em 0 0.5em !important;
-    }
-    .article-content h5,
-    .article-content h6 {
-      font-size: 18px !important;
-      margin: 1.5em 0 0.5em !important;
-    }
-    .article-content blockquote {
-      font-size: 21px;
-    }
+  @media (max-width:768px){
+    .header{padding:48px 0 32px}
+    .header h1{font-size:36px}
+    .excerpt{font-size:20px}
+    .content{font-size:19px}
+    .card{flex-direction:column}
+    .card img{width:100%;height:200px}
   }
 </style>
