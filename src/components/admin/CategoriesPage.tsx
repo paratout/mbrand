@@ -107,22 +107,30 @@ export default function CategoriesPage() {
       </div>
 
       {/* Add New Category */}
-      <div className="bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 p-6 mb-6">
-        <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Add New Category</h3>
+      <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-slate-800 dark:to-slate-700 rounded-xl border border-blue-200 dark:border-slate-600 p-6 mb-6">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
+          </div>
+          <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Add New Category</h3>
+        </div>
         <div className="flex gap-3">
           <input
             type="text"
             value={newCategory}
             onChange={(e) => setNewCategory(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && createCategory()}
-            placeholder="Category name"
-            className="flex-1 px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-slate-400 dark:focus:border-slate-500 transition-colors"
+            placeholder="Enter category name..."
+            className="flex-1 px-4 py-3 rounded-lg border-2 border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 transition-colors"
           />
           <button
             onClick={createCategory}
-            className="px-6 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg border border-slate-300 dark:border-slate-600 transition-colors"
+            disabled={!newCategory.trim()}
+            className="px-6 py-3 text-sm font-medium bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Add
+            Add Category
           </button>
         </div>
       </div>
@@ -136,7 +144,7 @@ export default function CategoriesPage() {
         ) : (
           <div className="divide-y divide-slate-200 dark:divide-slate-700">
             {categories.map((category) => (
-              <div key={category.id} className="p-4 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+              <div key={category.id} className="p-5 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
                 {editing === category.id ? (
                   <div className="flex gap-3">
                     <input
@@ -144,12 +152,12 @@ export default function CategoriesPage() {
                       value={editName}
                       onChange={(e) => setEditName(e.target.value)}
                       onKeyPress={(e) => e.key === 'Enter' && updateCategory(category.id)}
-                      className="flex-1 px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:outline-none focus:border-slate-400 dark:focus:border-slate-500 transition-colors"
+                      className="flex-1 px-4 py-2 rounded-lg border-2 border-blue-500 dark:border-blue-400 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:outline-none transition-colors"
                       autoFocus
                     />
                     <button
                       onClick={() => updateCategory(category.id)}
-                      className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg border border-slate-300 dark:border-slate-600 transition-colors"
+                      className="px-4 py-2 text-sm font-medium bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 rounded-lg transition-colors"
                     >
                       Save
                     </button>
@@ -165,9 +173,16 @@ export default function CategoriesPage() {
                   </div>
                 ) : (
                   <div className="flex items-center justify-between">
-                    <div>
-                      <h4 className="text-lg font-medium text-slate-900 dark:text-white">{category.name}</h4>
-                      <p className="text-sm text-slate-500 dark:text-slate-400 font-mono">{category.slug}</p>
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 flex items-center justify-center">
+                        <svg className="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h4 className="text-base font-semibold text-slate-900 dark:text-white">{category.name}</h4>
+                        <p className="text-sm text-slate-500 dark:text-slate-400 font-mono mt-0.5">{category.slug}</p>
+                      </div>
                     </div>
                     <div className="flex gap-2">
                       <button
@@ -175,15 +190,21 @@ export default function CategoriesPage() {
                           setEditing(category.id);
                           setEditName(category.name);
                         }}
-                        className="px-3 py-1.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors"
+                        className="p-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors"
+                        title="Edit category"
                       >
-                        Edit
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
                       </button>
                       <button
                         onClick={() => deleteCategory(category.id)}
-                        className="px-3 py-1.5 text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                        className="p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                        title="Delete category"
                       >
-                        Delete
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
                       </button>
                     </div>
                   </div>

@@ -3,7 +3,7 @@ import { supabase, type Article } from '../../lib/supabase';
 import AuthForm from './AuthForm';
 import PerspectivesList from './PerspectivesList';
 import ArticleEditor from './ArticleEditor';
-import ArticleSEO from './ArticleSEO';
+import PerspectiveSEO from './PerspectiveSEO';
 import CategoriesPage from './CategoriesPage';
 
 export default function AdminDashboard() {
@@ -104,10 +104,10 @@ export default function AdminDashboard() {
                   setCurrentPage('perspectives');
                   setView('list');
                 }}
-                className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-all ${
-                  currentPage === 'perspectives' && view === 'list'
-                    ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900'
-                    : 'text-slate-700 dark:text-slate-300 hover:bg-white/50 dark:hover:bg-slate-700/50'
+                className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${
+                  currentPage === 'perspectives'
+                    ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-sm'
+                    : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
                 }`}
               >
                 Perspectives
@@ -117,10 +117,10 @@ export default function AdminDashboard() {
                   setCurrentPage('categories');
                   setView('list');
                 }}
-                className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-all ${
-                  currentPage === 'categories' && view === 'list'
-                    ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900'
-                    : 'text-slate-700 dark:text-slate-300 hover:bg-white/50 dark:hover:bg-slate-700/50'
+                className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${
+                  currentPage === 'categories'
+                    ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-sm'
+                    : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
                 }`}
               >
                 Categories
@@ -169,8 +169,8 @@ export default function AdminDashboard() {
           />
         )}
         {view === 'seo' && editingPerspective && (
-          <ArticleSEO
-            article={editingPerspective}
+          <PerspectiveSEO
+            perspective={editingPerspective}
             onSave={handleBack}
             onCancel={handleBack}
           />

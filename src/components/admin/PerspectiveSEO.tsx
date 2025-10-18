@@ -3,8 +3,8 @@ import slugify from 'slugify';
 import imageCompression from 'browser-image-compression';
 import { supabase, type Article } from '../../lib/supabase';
 
-interface ArticleSEOProps {
-  article: Article;
+interface PerspectiveSEOProps {
+  perspective: Article;
   onSave: () => void;
   onCancel: () => void;
 }
@@ -15,18 +15,18 @@ interface Category {
   slug: string;
 }
 
-export default function ArticleSEO({ article, onSave, onCancel }: ArticleSEOProps) {
+export default function PerspectiveSEO({ perspective, onSave, onCancel }: PerspectiveSEOProps) {
   const [categories, setCategories] = useState<Category[]>([]);
-  const [title, setTitle] = useState(article.title);
-  const [slug, setSlug] = useState(article.slug);
-  const [excerpt, setExcerpt] = useState(article.excerpt || '');
+  const [title, setTitle] = useState(perspective.title);
+  const [slug, setSlug] = useState(perspective.slug);
+  const [excerpt, setExcerpt] = useState(perspective.excerpt || '');
   const [selectedCategories, setSelectedCategories] = useState<string[]>(
-    article.category ? [article.category] : []
+    perspective.category ? [perspective.category] : []
   );
-  const [readTime, setReadTime] = useState(article.read_time || '');
-  const [coverImage, setCoverImage] = useState(article.cover_image || '');
+  const [readTime, setReadTime] = useState(perspective.read_time || '');
+  const [coverImage, setCoverImage] = useState(perspective.cover_image || '');
   const [publishedAt, setPublishedAt] = useState(
-    article.published_at ? new Date(article.published_at).toISOString().slice(0, 16) : ''
+    perspective.published_at ? new Date(perspective.published_at).toISOString().slice(0, 16) : ''
   );
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -48,10 +48,10 @@ export default function ArticleSEO({ article, onSave, onCancel }: ArticleSEOProp
 
   // Auto-generate slug from title
   useEffect(() => {
-    if (title && title !== article.title) {
+    if (title && title !== perspective.title) {
       setSlug(slugify(title, { lower: true, strict: true }));
     }
-  }, [title, article.title]);
+  }, [title, perspective.title]);
 
   const uploadCoverImage = async (file: File) => {
     try {
@@ -131,13 +131,13 @@ export default function ArticleSEO({ article, onSave, onCancel }: ArticleSEOProp
           published_at: publishedAt ? new Date(publishedAt).toISOString() : null,
           updated_at: new Date().toISOString(),
         })
-        .eq('id', article.id);
+        .eq('id', perspective.id);
 
       if (error) throw error;
       onSave();
     } catch (error) {
-      console.error('Error updating article:', error);
-      alert('Failed to update article');
+      console.error('Error updating perspective:', error);
+      alert('Failed to update perspective');
     } finally {
       setSaving(false);
     }
@@ -229,13 +229,18 @@ export default function ArticleSEO({ article, onSave, onCancel }: ArticleSEOProp
               <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">
                 Read Time
               </label>
-              <input
-                type="text"
+              <select
                 value={readTime}
                 onChange={(e) => setReadTime(e.target.value)}
-                placeholder="5 min read"
-                className="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-slate-400 dark:focus:border-slate-500 transition-colors"
-              />
+                className="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:border-slate-400 dark:focus:border-slate-500 transition-colors"
+              >
+                <option value="">Select read time</option>
+                {[5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25].map((minutes) => (
+                  <option key={minutes} value={`${minutes} min read`}>
+                    {minutes} min read
+                  </option>
+                ))}
+              </select>
             </div>
             <div>
               <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">

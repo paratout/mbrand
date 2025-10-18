@@ -135,7 +135,7 @@ export default function PerspectivesList({ onEdit, onSEO, onCreate }: Perspectiv
                         {perspective.excerpt}
                       </p>
                     )}
-                    <div className="flex items-center gap-4 text-sm text-slate-500 dark:text-slate-400">
+                    <div className="flex items-center flex-wrap gap-2 text-sm">
                       <span className={`px-2 py-1 rounded text-xs font-medium ${
                         perspective.status === 'published'
                           ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400'
@@ -143,12 +143,35 @@ export default function PerspectivesList({ onEdit, onSEO, onCreate }: Perspectiv
                       }`}>
                         {perspective.status}
                       </span>
-                      <span>{perspective.category}</span>
-                      {perspective.read_time && <span>{perspective.read_time}</span>}
-                      <span>{new Date(perspective.created_at).toLocaleDateString()}</span>
+                      {perspective.category && (
+                        <span className="px-2 py-1 rounded text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400">
+                          {perspective.category}
+                        </span>
+                      )}
+                      {perspective.read_time && (
+                        <span className="text-slate-500 dark:text-slate-400">
+                          {perspective.read_time}
+                        </span>
+                      )}
+                      <span className="text-slate-500 dark:text-slate-400">
+                        {new Date(perspective.created_at).toLocaleDateString()}
+                      </span>
                     </div>
                   </div>
                   <div className="flex gap-2 ml-4">
+                    {perspective.status === 'published' && (
+                      <a
+                        href={`/perspectives/${perspective.slug}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors"
+                        title="View perspective"
+                      >
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                      </a>
+                    )}
                     <button
                       onClick={() => toggleStatus(perspective)}
                       className={`p-2 rounded-lg transition-colors ${
