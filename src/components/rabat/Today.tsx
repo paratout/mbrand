@@ -1436,18 +1436,23 @@ const quotes = [
 ];
 
 export default function Today() {
-  const [quote, setQuote] = useState(quotes[0]);
+  // Get a truly random quote on mount using crypto for better randomness
+  const getRandomQuote = () => {
+    const randomIndex = Math.floor(Math.random() * quotes.length);
+    return quotes[randomIndex];
+  };
+
+  const [quote, setQuote] = useState(() => getRandomQuote());
   const [fadeIn, setFadeIn] = useState(true);
 
   useEffect(() => {
-    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-    setQuote(randomQuote);
+    // Set initial random quote
+    setQuote(getRandomQuote());
 
     const interval = setInterval(() => {
       setFadeIn(false);
       setTimeout(() => {
-        const newQuote = quotes[Math.floor(Math.random() * quotes.length)];
-        setQuote(newQuote);
+        setQuote(getRandomQuote());
         setFadeIn(true);
       }, 500);
     }, 10000);
