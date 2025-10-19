@@ -525,6 +525,8 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
           font-size: 21px;
           line-height: 1.7;
           background: white;
+          margin-top: 0;
+          padding-top: 0;
         }
 
         /* Disable saving state visual feedback */
@@ -550,7 +552,7 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
         }
 
         .quill-wrapper .ql-editor {
-          padding: 40px 0;
+          padding: 0;
           min-height: 60vh;
           color: #1a1a1a;
           background: white !important;
@@ -588,9 +590,29 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
         .quill-wrapper .ql-editor img { max-width: 100%; height: auto; margin: 2em 0; border-radius: 4px; }
         .quill-wrapper .ql-editor .drop-cap-letter { font-size: 5.5em; line-height: 0.85; float: left; margin: 0.05em 0.1em 0 0; font-weight: 400; display: inline-block; }
         .quill-wrapper .ql-editor .ql-align-left { text-align: left !important; }
-        .quill-wrapper .ql-editor .ql-align-center { text-align: center !important; }
-        .quill-wrapper .ql-editor .ql-align-right { text-align: right !important; }
+        .quill-wrapper .ql-editor .ql-align-center { text-align: center !important; display: block !important; }
+        .quill-wrapper .ql-editor .ql-align-right { text-align: right !important; display: block !important; }
         .quill-wrapper .ql-editor .ql-align-justify { text-align: justify !important; }
+        
+        /* Image alignment support - works when image is in aligned paragraph */
+        .quill-wrapper .ql-editor .ql-align-center img,
+        .quill-wrapper .ql-editor img.ql-align-center { 
+          display: block !important; 
+          margin-left: auto !important; 
+          margin-right: auto !important; 
+        }
+        .quill-wrapper .ql-editor .ql-align-right img,
+        .quill-wrapper .ql-editor img.ql-align-right { 
+          display: block !important; 
+          margin-left: auto !important; 
+          margin-right: 0 !important; 
+        }
+        .quill-wrapper .ql-editor .ql-align-left img,
+        .quill-wrapper .ql-editor img.ql-align-left { 
+          display: block !important; 
+          margin-left: 0 !important; 
+          margin-right: auto !important; 
+        }
         .ql-drop-cap { width: auto !important; padding: 0 8px !important; }
       `}</style>
     </div>

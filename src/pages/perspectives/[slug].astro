@@ -127,9 +127,17 @@ const publishDate = new Date(article.published_at || article.created_at).toLocal
   
   /* Text alignment support from editor */
   .content .ql-align-left{text-align:left!important}
-  .content .ql-align-center{text-align:center!important}
-  .content .ql-align-right{text-align:right!important}
+  .content .ql-align-center{text-align:center!important;display:block!important}
+  .content .ql-align-right{text-align:right!important;display:block!important}
   .content .ql-align-justify{text-align:justify!important}
+  
+  /* Image alignment support - works when image is in aligned paragraph */
+  .content .ql-align-center img,
+  .content img.ql-align-center{display:block!important;margin-left:auto!important;margin-right:auto!important}
+  .content .ql-align-right img,
+  .content img.ql-align-right{display:block!important;margin-left:auto!important;margin-right:0!important}
+  .content .ql-align-left img,
+  .content img.ql-align-left{display:block!important;margin-left:0!important;margin-right:auto!important}
   
   /* Paragraph spacing */
   .content p{margin:1.5em 0!important}
