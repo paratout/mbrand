@@ -41,6 +41,12 @@ interface PerspectiveEditorProps {
  * A clean, professional Quill-based rich text editor for creating and editing articles
  * Features: Drop caps, pastel backgrounds, image upload, lists, links
  */
+interface Toast {
+  message: string;
+  type: 'success' | 'error';
+  link?: { url: string; text: string };
+}
+
 export default function PerspectiveEditor({ article, onSave, onCancel }: PerspectiveEditorProps) {
   const [content, setContent] = useState(article?.content || '');
   const [status, setStatus] = useState<'draft' | 'published'>(article?.status || 'draft');
@@ -48,10 +54,69 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
   const [uploading, setUploading] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
   const [currentArticle, setCurrentArticle] = useState<Article | null>(article);
+  const [toast, setToast] = useState<Toast | null>(null);
   
   const editorRef = useRef<HTMLDivElement>(null);
   const quillInstance = useRef<Quill | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const toastTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  /**
+   * Show toast notification
+   */
+  const showToast = (message: string, type: 'success' | 'error', link?: { url: string; text: string }) => {
+    if (toastTimeoutRef.current) {
+      clearTimeout(toastTimeoutRef.current);
+    }
+    setToast({ message, type, link });
+    toastTimeoutRef.current = setTimeout(() => {
+      setToast(null);
+    }, 3000);
+  };
+
+  /**
+   * Save article with specific status
+   */
+  const saveWithStatus = async (saveStatus: 'draft' | 'published') => {
+    if (!currentArticle) {
+      showToast('No article loaded', 'error');
+      return;
+    }
+
+    // Get current content directly from Quill to avoid stale closure
+    const currentContent = quillInstance.current?.root.innerHTML || content;
+
+    try {
+      setSaving(true);
+      
+      const { error } = await supabase
+        .from('articles')
+        .update({
+          content: currentContent,
+          status: saveStatus,
+          updated_at: new Date().toISOString(),
+          ...(saveStatus === 'published' && !currentArticle.published_at && {
+            published_at: new Date().toISOString(),
+          }),
+        })
+        .eq('id', currentArticle.id);
+
+      if (error) throw error;
+      
+      setStatus(saveStatus);
+      const message = saveStatus === 'published' ? 'Article published successfully!' : 'Draft saved successfully!';
+      const link = saveStatus === 'published' && currentArticle?.slug 
+        ? { url: `/perspectives/${currentArticle.slug}`, text: 'View Article' }
+        : undefined;
+      
+      showToast(message, 'success', link);
+      // Don't call onSave() - keep user in editor to see toast
+    } catch (error: any) {
+      showToast(error.message || 'Failed to save', 'error');
+    } finally {
+      setSaving(false);
+    }
+  };
 
   /**
    * Handle drop cap formatting
@@ -185,14 +250,8 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
             image: handleImageUpload,
             'drop-cap': handleDropCap,
             'fullscreen': toggleFullscreen,
-            'save-draft': () => {
-              setStatus('draft');
-              handleSave();
-            },
-            'publish': () => {
-              setStatus('published');
-              handleSave();
-            },
+            'save-draft': () => saveWithStatus('draft'),
+            'publish': () => saveWithStatus('published'),
             'back': onCancel,
           },
         },
@@ -207,7 +266,6 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
         'blockquote',
         'code-block',
         'list',
-        'bullet',
         'link',
         'image',
         'drop-cap',
@@ -335,80 +393,59 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
   }, []);
 
   /**
-   * Create a new article
+   * Cleanup toast timeout on unmount
    */
-  const createArticle = async () => {
-    try {
-      setSaving(true);
-      
-      const { data, error } = await supabase
-        .from('articles')
-        .insert({
-          title: 'Untitled Article',
-          slug: `untitled-${Date.now()}`,
-          excerpt: '',
-          content,
-          status: 'draft',
-          category: ['Digital Transformation'], // Array of categories
-        })
-        .select()
-        .single();
-
-      if (error) throw error;
-      
-      setCurrentArticle(data);
-      return data;
-    } catch (error: any) {
-      console.error('Error creating article:', error);
-      alert(error.message || 'Failed to create article');
-      return null;
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  /**
-   * Save article changes
-   */
-  const handleSave = async () => {
-    if (!currentArticle) {
-      const newArticle = await createArticle();
-      if (newArticle) {
-        onSave();
+  useEffect(() => {
+    return () => {
+      if (toastTimeoutRef.current) {
+        clearTimeout(toastTimeoutRef.current);
       }
-      return;
-    }
-
-    try {
-      setSaving(true);
-
-      const { error } = await supabase
-        .from('articles')
-        .update({
-          content,
-          status,
-          updated_at: new Date().toISOString(),
-          ...(status === 'published' && !currentArticle.published_at && {
-            published_at: new Date().toISOString(),
-          }),
-        })
-        .eq('id', currentArticle.id);
-
-      if (error) throw error;
-      onSave();
-    } catch (error: any) {
-      console.error('Error saving article:', error);
-      alert(error.message || 'Failed to save article');
-    } finally {
-      setSaving(false);
-    }
-  };
+    };
+  }, []);
 
   return (
     <div 
       ref={containerRef}
       className="min-h-screen bg-white overflow-y-auto"
     >
+      {/* Toast Notification */}
+      {toast && (
+        <div className={`fixed top-6 right-6 px-6 py-4 rounded-lg shadow-2xl flex items-center gap-4 animate-slide-in ${
+          toast.type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+        }`} style={{ zIndex: 9999 }}>
+          <div className="flex items-center gap-3">
+            {toast.type === 'success' ? (
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            ) : (
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            )}
+            <span className="font-medium">{toast.message}</span>
+          </div>
+          {toast.link && (
+            <a
+              href={toast.link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ml-2 px-3 py-1 bg-white/20 hover:bg-white/30 rounded text-sm font-medium transition-colors"
+            >
+              {toast.link.text} →
+            </a>
+          )}
+          <button
+            onClick={() => setToast(null)}
+            className="ml-2 hover:opacity-75 transition-opacity"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      )}
+
       {/* Editor Container */}
       <div className="max-w-7xl mx-auto px-6 pt-6 pb-12 h-full">
         {uploading && (
@@ -477,6 +514,22 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
         .ql-toolbar button:disabled {
           opacity: 0.5;
           cursor: not-allowed;
+        }
+
+        /* Toast animation */
+        @keyframes slide-in {
+          from {
+            transform: translateX(100%);
+            opacity: 0;
+          }
+          to {
+            transform: translateX(0);
+            opacity: 1;
+          }
+        }
+
+        .animate-slide-in {
+          animation: slide-in 0.3s ease-out;
         }
 
         .quill-wrapper .ql-editor {
