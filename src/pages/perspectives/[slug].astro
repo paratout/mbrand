@@ -102,7 +102,8 @@ const publishDate = new Date(article.published_at || article.created_at).toLocal
 </BaseLayout>
 
 <style is:global>
-  .content h2,.content h3,.content h4,.content h5,.content h6{font-family:Georgia,'Times New Roman',serif!important;font-weight:700!important;line-height:1.4!important}
+  .content h1,.content h2,.content h3,.content h4,.content h5,.content h6{font-family:Georgia,'Times New Roman',serif!important;font-weight:700!important;line-height:1.4!important}
+  .content h1{font-size:32px!important;margin:1.75em 0 .5em!important;letter-spacing:-.02em!important}
   .content h2{font-size:28px!important;margin:2em 0 .5em!important;letter-spacing:-.02em!important}
   .content h3{font-size:24px!important;margin:1.75em 0 .5em!important;letter-spacing:-.015em!important}
   .content h4{font-size:21px!important;margin:1.5em 0 .5em!important}
@@ -118,9 +119,16 @@ const publishDate = new Date(article.published_at || article.created_at).toLocal
     font-weight:400!important;
     display:inline-block!important;
   }
+  
+  /* Text alignment support from editor */
+  .content .ql-align-left{text-align:left!important}
+  .content .ql-align-center{text-align:center!important}
+  .content .ql-align-right{text-align:right!important}
+  .content .ql-align-justify{text-align:justify!important}
 </style>
 
 <style>
+  body{overflow-x:hidden}
   .article-page{max-width:680px;margin:0 auto;padding:0 24px;font-family:Georgia,'Times New Roman',serif}
   .header{padding:80px 0 40px}
   .badge{display:inline-block;padding:6px 16px;background:rgba(0,0,0,.05);border-radius:20px;font-size:14px;font-weight:500;text-decoration:none;margin-bottom:32px;transition:background .2s}
@@ -128,14 +136,14 @@ const publishDate = new Date(article.published_at || article.created_at).toLocal
   .header h1{font-size:48px;font-weight:700;line-height:1.15;margin:0 0 24px}
   .excerpt{font-size:24px;line-height:1.5;margin:0 0 32px;opacity:.8}
   .meta{display:flex;align-items:center;gap:12px;font-size:14px;opacity:.6}
-  .cover{width:100vw;margin-left:calc(50% - 50vw);margin-bottom:48px;max-height:60vh;overflow:hidden}
+  .cover{width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;margin-bottom:48px;max-height:60vh;overflow:hidden}
   .cover img{width:100%;height:100%;object-fit:cover}
   .share{display:flex;gap:12px;margin-bottom:48px;padding-bottom:24px;border-bottom:1px solid rgba(0,0,0,.1)}
   .share button{width:40px;height:40px;border-radius:50%;border:1px solid rgba(0,0,0,.1);background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;color:inherit}
   .share button:hover{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.2)}
-  .content{font-size:21px;line-height:1.7;padding-bottom:64px}
-  .content h1{display:none!important}
-  .content p{margin:1.4em 0}
+  .content{font-size:21px;line-height:1.7;padding-bottom:64px;text-align:justify}
+  .content h1,.content h2,.content h3,.content h4,.content h5,.content h6{text-align:left!important}
+  .content p{margin:1.4em 0;text-align:justify}
   .content h2+p,.content h3+p,.content h4+p,.content h5+p,.content h6+p{margin-top:.5em}
   .content a{color:#2563eb;text-decoration:underline}
   .content ul,.content ol{padding-left:30px;margin:1.5em 0}

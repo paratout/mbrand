@@ -331,6 +331,7 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
       container: [
         [{ header: [1, 2, 3, false] }],
         ['bold', 'italic', 'underline'],
+        [{ align: [] }],
         [{ background: pastelColors }],
         ['blockquote', 'code-block'],
         [{ list: 'ordered' }, { list: 'bullet' }],
@@ -350,6 +351,7 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
     'bold',
     'italic',
     'underline',
+    'align',
     'background',
     'blockquote',
     'code-block',
