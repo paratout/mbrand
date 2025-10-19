@@ -79,10 +79,11 @@ export default function PerspectivesList({ onEdit, onSEO, onCreate, onManageCate
       );
     }
 
-    // Filter by categories
+    // Filter by categories (check if article has any of the selected categories)
     if (selectedCategories.length > 0) {
       filtered = filtered.filter(p => 
-        p.category && selectedCategories.includes(p.category)
+        p.category && Array.isArray(p.category) && 
+        p.category.some(cat => selectedCategories.includes(cat))
       );
     }
 
@@ -270,10 +271,14 @@ export default function PerspectivesList({ onEdit, onSEO, onCreate, onManageCate
                       }`}>
                         {perspective.status}
                       </span>
-                      {perspective.category && (
-                        <span className="px-2 py-1 rounded text-xs font-medium bg-blue-100 text-blue-700">
-                          {perspective.category}
-                        </span>
+                      {perspective.category && Array.isArray(perspective.category) && perspective.category.length > 0 && (
+                        <>
+                          {perspective.category.map((cat) => (
+                            <span key={cat} className="px-2 py-1 rounded text-xs font-medium bg-blue-100 text-blue-700">
+                              {cat}
+                            </span>
+                          ))}
+                        </>
                       )}
                       {perspective.read_time && (
                         <span className="text-slate-500">
