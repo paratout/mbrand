@@ -169,6 +169,7 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
       modules: {
         toolbar: {
           container: [
+            ['back'],
             [{ header: [1, 2, 3, false] }],
             ['bold', 'italic', 'underline'],
             [{ align: [] }],
@@ -178,10 +179,21 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
             ['link', 'image'],
             ['drop-cap'],
             ['clean'],
+            ['fullscreen', 'save-draft', 'publish'],
           ],
           handlers: {
             image: handleImageUpload,
             'drop-cap': handleDropCap,
+            'fullscreen': toggleFullscreen,
+            'save-draft': () => {
+              setStatus('draft');
+              handleSave();
+            },
+            'publish': () => {
+              setStatus('published');
+              handleSave();
+            },
+            'back': onCancel,
           },
         },
       },
@@ -214,8 +226,9 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
 
     quillInstance.current = quill;
 
-    // Customize drop cap button icon
+    // Customize toolbar buttons
     setTimeout(() => {
+      // Drop cap button
       const dropCapBtn = document.querySelector('.ql-drop-cap');
       if (dropCapBtn) {
         dropCapBtn.innerHTML = `
@@ -225,6 +238,56 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
           </svg>
         `;
         dropCapBtn.setAttribute('title', 'Apply Drop Cap to First Letter');
+      }
+
+      // Back button
+      const backBtn = document.querySelector('.ql-back');
+      if (backBtn) {
+        backBtn.innerHTML = `
+          <svg viewBox="0 0 18 18" style="width: 18px; height: 18px;">
+            <path d="M11 5L6 9l5 4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        `;
+        backBtn.setAttribute('title', 'Back to List');
+      }
+
+      // Fullscreen button
+      const fullscreenBtn = document.querySelector('.ql-fullscreen');
+      if (fullscreenBtn) {
+        fullscreenBtn.innerHTML = `
+          <svg viewBox="0 0 18 18" style="width: 18px; height: 18px;">
+            <path d="M2 7V2h5M16 7V2h-5M16 11v5h-5M2 11v5h5" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        `;
+        fullscreenBtn.setAttribute('title', 'Toggle Fullscreen');
+        fullscreenBtn.classList.add('ql-action-icon');
+      }
+
+      // Save Draft button - Floppy disk icon
+      const saveDraftBtn = document.querySelector('.ql-save-draft');
+      if (saveDraftBtn) {
+        saveDraftBtn.innerHTML = `
+          <svg viewBox="0 0 18 18" style="width: 18px; height: 18px;">
+            <path d="M14.5 2h-11C2.67 2 2 2.67 2 3.5v11c0 .83.67 1.5 1.5 1.5h11c.83 0 1.5-.67 1.5-1.5v-11c0-.83-.67-1.5-1.5-1.5z" fill="none" stroke="#f59e0b" stroke-width="1.2"/>
+            <path d="M5 2v4h6V2M11 16v-5H7v5" fill="none" stroke="#f59e0b" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="7" y="11" width="4" height="1" fill="#f59e0b"/>
+          </svg>
+        `;
+        saveDraftBtn.setAttribute('title', 'Save as Draft');
+        saveDraftBtn.classList.add('ql-action-icon');
+      }
+
+      // Publish button - Paper airplane icon
+      const publishBtn = document.querySelector('.ql-publish');
+      if (publishBtn) {
+        publishBtn.innerHTML = `
+          <svg viewBox="0 0 18 18" style="width: 18px; height: 18px;">
+            <path d="M16 2L2 9l5 2 1 5 2-3 4 2L16 2z" fill="none" stroke="#10b981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M7 11l5-5" stroke="#10b981" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        `;
+        publishBtn.setAttribute('title', 'Publish Article');
+        publishBtn.classList.add('ql-action-icon');
       }
     }, 100);
 
@@ -344,51 +407,10 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
   return (
     <div 
       ref={containerRef}
-      className="min-h-screen bg-white"
+      className="min-h-screen bg-white overflow-y-auto"
     >
-      {/* Sticky Top Bar */}
-      <div className="sticky top-0 z-50 bg-white">
-        <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
-          <button
-            onClick={onCancel}
-            className="px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
-          >
-            Cancel
-          </button>
-
-          <div className="flex items-center gap-3">
-            <button
-              onClick={toggleFullscreen}
-              className="px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
-            >
-              {fullscreen ? 'Exit Fullscreen' : 'Fullscreen'}
-            </button>
-            <button
-              onClick={() => {
-                setStatus('draft');
-                handleSave();
-              }}
-              disabled={saving}
-              className="px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition-colors disabled:opacity-50"
-            >
-              Save Draft
-            </button>
-            <button
-              onClick={() => {
-                setStatus('published');
-                handleSave();
-              }}
-              disabled={saving}
-              className="px-4 py-2 text-sm font-medium text-white bg-slate-900 hover:bg-slate-700 rounded-lg transition-colors disabled:opacity-50"
-            >
-              Publish
-            </button>
-          </div>
-        </div>
-      </div>
-
       {/* Editor Container */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
+      <div className="max-w-7xl mx-auto px-6 pt-6 pb-12 h-full">
         {uploading && (
           <div className="fixed top-20 right-6 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg z-50">
             Uploading image...
@@ -411,13 +433,36 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
 
         .quill-wrapper .ql-toolbar {
           position: sticky;
-          top: 65px;
+          top: 0;
           z-index: 40;
           background: white;
           border: none;
           border-bottom: 1px solid #e5e7eb;
-          padding: 12px 0;
+          padding: 12px;
           border-radius: 8px 8px 0 0;
+        }
+
+        .quill-wrapper .ql-toolbar .ql-formats {
+          margin-right: 15px !important;
+        }
+
+        /* Push last group to the right */
+        .quill-wrapper .ql-toolbar .ql-formats:last-child {
+          margin-left: auto;
+          margin-right: 0 !important;
+        }
+
+        /* Custom action icon styles */
+        .ql-action-icon {
+          transition: all 0.2s !important;
+        }
+
+        .ql-action-icon:hover {
+          transform: scale(1.1);
+        }
+
+        .ql-toolbar button.ql-back {
+          margin-right: 8px;
         }
 
         .quill-wrapper .ql-container {
@@ -426,6 +471,12 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
           font-size: 21px;
           line-height: 1.7;
           background: white;
+        }
+
+        /* Disable saving state visual feedback */
+        .ql-toolbar button:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
         }
 
         .quill-wrapper .ql-editor {
