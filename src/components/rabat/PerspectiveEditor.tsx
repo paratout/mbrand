@@ -349,7 +349,7 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
           excerpt: '',
           content,
           status: 'draft',
-          category: 'Digital Transformation',
+          category: ['Digital Transformation'], // Array of categories
         })
         .select()
         .single();

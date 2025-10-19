@@ -21,7 +21,7 @@ export default function PerspectiveSEO({ perspective, onSave, onCancel }: Perspe
   const [slug, setSlug] = useState(perspective.slug);
   const [excerpt, setExcerpt] = useState(perspective.excerpt || '');
   const [selectedCategories, setSelectedCategories] = useState<string[]>(
-    perspective.category ? [perspective.category] : []
+    Array.isArray(perspective.category) ? perspective.category : (perspective.category ? [perspective.category] : [])
   );
   const [readTime, setReadTime] = useState(perspective.read_time || '');
   const [coverImage, setCoverImage] = useState(perspective.cover_image || '');
@@ -125,7 +125,7 @@ export default function PerspectiveSEO({ perspective, onSave, onCancel }: Perspe
           title,
           slug,
           excerpt: excerpt || null,
-          category: selectedCategories[0], // Primary category
+          category: selectedCategories, // Save all selected categories as array
           read_time: readTime || null,
           cover_image: coverImage || null,
           published_at: publishedAt ? new Date(publishedAt).toISOString() : null,

@@ -1,54 +1,107 @@
 import { useState, useEffect } from 'react';
 import { supabase, type Article } from '../lib/supabase';
 
-const categories = [
-  { name: 'All', slug: 'all' },
-  { name: 'AI & Machine Learning', slug: 'ai' },
-  { name: 'Green Energy & ESG', slug: 'green-energy' },
-  { name: 'Enterprise Architecture', slug: 'enterprise-architecture' },
-  { name: 'Digital Transformation', slug: 'digital-transformation' },
-  { name: 'Cloud Architecture', slug: 'cloud-architecture' },
-];
+interface Category {
+  name: string;
+  count: number;
+}
+
+const ARTICLES_PER_PAGE = 6;
 
 export default function PerspectivesContent() {
   const [articles, setArticles] = useState<Article[]>([]);
-  const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
-  const [activeCategory, setActiveCategory] = useState('all');
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [activeCategory, setActiveCategory] = useState('All');
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalArticles, setTotalArticles] = useState(0);
 
   useEffect(() => {
-    fetchArticles();
+    fetchCategories();
   }, []);
 
   useEffect(() => {
-    if (activeCategory === 'all') {
-      setFilteredArticles(articles);
-    } else {
-      const categoryName = categories.find(c => c.slug === activeCategory)?.name;
-      setFilteredArticles(
-        articles.filter(article => article.category === categoryName)
-      );
+    fetchArticles();
+  }, [activeCategory, currentPage]);
+
+  const fetchCategories = async () => {
+    try {
+      // Get all published articles to count by category
+      const { data, error } = await supabase
+        .from('articles')
+        .select('category')
+        .eq('status', 'published');
+
+      if (error) throw error;
+
+      // Count articles per category (handle array of categories)
+      const categoryCounts: Record<string, number> = {};
+      let totalArticles = 0;
+      data?.forEach(article => {
+        if (article.category && Array.isArray(article.category)) {
+          totalArticles++;
+          article.category.forEach((cat: string) => {
+            categoryCounts[cat] = (categoryCounts[cat] || 0) + 1;
+          });
+        }
+      });
+
+      // Create category list with counts
+      const categoryList: Category[] = [
+        { name: 'All', count: totalArticles },
+        ...Object.entries(categoryCounts)
+          .map(([name, count]) => ({ name, count }))
+          .sort((a, b) => b.count - a.count) // Sort by count descending
+      ];
+
+      setCategories(categoryList);
+    } catch (error) {
+      console.error('Error fetching categories:', error);
     }
-  }, [activeCategory, articles]);
+  };
 
   const fetchArticles = async () => {
     try {
       setLoading(true);
-      const { data, error } = await supabase
+      
+      // Build query
+      let query = supabase
         .from('articles')
-        .select('*')
-        .eq('status', 'published')
-        .order('published_at', { ascending: false });
+        .select('*', { count: 'exact' })
+        .eq('status', 'published');
+
+      // Apply category filter (check if category array contains the selected category)
+      if (activeCategory !== 'All') {
+        query = query.contains('category', [activeCategory]);
+      }
+
+      // Apply pagination
+      const from = (currentPage - 1) * ARTICLES_PER_PAGE;
+      const to = from + ARTICLES_PER_PAGE - 1;
+
+      const { data, error, count } = await query
+        .order('published_at', { ascending: false })
+        .range(from, to);
 
       if (error) throw error;
+      
       setArticles(data || []);
-      setFilteredArticles(data || []);
+      setTotalArticles(count || 0);
     } catch (error) {
       console.error('Error fetching articles:', error);
     } finally {
       setLoading(false);
     }
   };
+
+  const handleCategoryChange = (categoryName: string) => {
+    setActiveCategory(categoryName);
+    setCurrentPage(1); // Reset to first page when category changes
+  };
+
+  const totalPages = Math.ceil(totalArticles / ARTICLES_PER_PAGE);
+  const hasNextPage = currentPage < totalPages;
+  const hasPrevPage = currentPage > 1;
 
   if (loading) {
     return (
@@ -66,15 +119,16 @@ export default function PerspectivesContent() {
           <div className="flex flex-wrap gap-3">
             {categories.map((category) => (
               <button
-                key={category.slug}
-                onClick={() => setActiveCategory(category.slug)}
+                key={category.name}
+                onClick={() => handleCategoryChange(category.name)}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  activeCategory === category.slug
+                  activeCategory === category.name
                     ? 'bg-primary text-white'
                     : 'bg-slate-100 text-slate-700 hover:bg-primary hover:text-white'
                 }`}
               >
                 {category.name}
+                <span className="ml-2 opacity-75">({category.count})</span>
               </button>
             ))}
           </div>
@@ -84,15 +138,16 @@ export default function PerspectivesContent() {
       {/* Articles Grid */}
       <section className="section-spacing">
         <div className="container-custom">
-          {filteredArticles.length === 0 ? (
+          {articles.length === 0 ? (
             <div className="text-center py-20">
               <p className="text-lg text-slate-600">
                 No articles found in this category yet.
               </p>
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 gap-8">
-              {filteredArticles.map((article) => (
+            <>
+              <div className="grid md:grid-cols-2 gap-8">
+                {articles.map((article) => (
                 <a
                   key={article.id}
                   href={`/perspectives/${article.slug}`}
@@ -108,11 +163,15 @@ export default function PerspectivesContent() {
                       />
                     </div>
                   )}
-                  <div className="mb-3">
-                    <span className="px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full">
-                      {article.category}
-                    </span>
-                  </div>
+                  {article.category && article.category.length > 0 && (
+                    <div className="mb-3 flex flex-wrap gap-2">
+                      {article.category.map((cat) => (
+                        <span key={cat} className="px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full">
+                          {cat}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                   <h3 className="text-2xl font-heading font-bold mb-3 text-slate-900 group-hover:text-primary transition-colors">
                     {article.title}
                   </h3>
@@ -148,8 +207,64 @@ export default function PerspectivesContent() {
                     )}
                   </div>
                 </a>
-              ))}
-            </div>
+                ))}
+              </div>
+
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <div className="flex items-center justify-center gap-2 mt-12">
+                  <button
+                    onClick={() => setCurrentPage(p => p - 1)}
+                    disabled={!hasPrevPage}
+                    className="px-4 py-2 rounded-lg text-sm font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    Previous
+                  </button>
+                  
+                  <div className="flex items-center gap-2">
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
+                      // Show first page, last page, current page, and pages around current
+                      const showPage = 
+                        page === 1 || 
+                        page === totalPages || 
+                        (page >= currentPage - 1 && page <= currentPage + 1);
+                      
+                      const showEllipsis = 
+                        (page === currentPage - 2 && currentPage > 3) ||
+                        (page === currentPage + 2 && currentPage < totalPages - 2);
+
+                      if (showEllipsis) {
+                        return <span key={page} className="px-2 text-slate-400">...</span>;
+                      }
+
+                      if (!showPage) return null;
+
+                      return (
+                        <button
+                          key={page}
+                          onClick={() => setCurrentPage(page)}
+                          className={`w-10 h-10 rounded-lg text-sm font-medium transition-colors ${
+                            currentPage === page
+                              ? 'bg-primary text-white'
+                              : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                          }`}
+                        >
+                          {page}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  <button
+                    onClick={() => setCurrentPage(p => p + 1)}
+                    disabled={!hasNextPage}
+                    className="px-4 py-2 rounded-lg text-sm font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    Next
+                  </button>
+                </div>
+              )}
+            </>
           )}
         </div>
       </section>

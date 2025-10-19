@@ -18,7 +18,7 @@ export type Article = {
   status: 'draft' | 'published';
   cover_image?: string;
   images: string[];
-  category: string;
+  category: string[]; // Array of category names
   read_time?: string;
   created_at: string;
   updated_at: string;
