@@ -19,6 +19,11 @@ export default function ContentHub() {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       setLoading(false);
+      
+      // Set cookie for middleware authentication check
+      if (session) {
+        document.cookie = `sb-auth-token=${session.access_token}; path=/; max-age=${60 * 60 * 24 * 7}; SameSite=Lax`;
+      }
     });
 
     // Listen for auth changes
@@ -26,6 +31,14 @@ export default function ContentHub() {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
+      
+      // Update cookie when auth state changes
+      if (session) {
+        document.cookie = `sb-auth-token=${session.access_token}; path=/; max-age=${60 * 60 * 24 * 7}; SameSite=Lax`;
+      } else {
+        // Clear cookie on logout
+        document.cookie = 'sb-auth-token=; path=/; max-age=0';
+      }
     });
 
     return () => subscription.unsubscribe();

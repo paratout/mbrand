@@ -1,6 +1,6 @@
 import { siteConfig } from './config/site.js';
 
-export async function onRequest({ url, redirect, cookies }, next) {
+export async function onRequest({ url, redirect, cookies, request }, next) {
   // Allow access to the soon page itself
   if (url.pathname === '/soon') {
     return next();
@@ -11,13 +11,9 @@ export async function onRequest({ url, redirect, cookies }, next) {
     return next();
   }
 
-  // Check if user is authenticated via Supabase session cookie
-  // Check for common Supabase cookie patterns
-  const isAuthenticated = !!(
-    cookies.get('sb-access-token')?.value ||
-    cookies.get('sb-refresh-token')?.value ||
-    cookies.has('supabase-auth-token')
-  );
+  // Check if user is authenticated via our custom auth cookie
+  const authCookie = cookies.get('sb-auth-token');
+  const isAuthenticated = !!authCookie?.value;
 
   // If coming soon mode is enabled and user is not authenticated, redirect to /soon
   if (siteConfig.comingSoonMode && !isAuthenticated) {
