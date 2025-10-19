@@ -5,41 +5,12 @@
 @tailwind utilities;
 
 @layer base {
-  /* Solarized Dark CSS Variables */
-  :root {
-    --solarized-base03: #002b36;
-    --solarized-base02: #073642;
-    --solarized-base01: #586e75;
-    --solarized-base00: #657b83;
-    --solarized-base0: #839496;
-    --solarized-base1: #93a1a1;
-    --solarized-base2: #eee8d5;
-    --solarized-base3: #fdf6e3;
-    --solarized-yellow: #b58900;
-    --solarized-orange: #cb4b16;
-    --solarized-red: #dc322f;
-    --solarized-magenta: #d33682;
-    --solarized-violet: #6c71c4;
-    --solarized-blue: #268bd2;
-    --solarized-cyan: #2aa198;
-    --solarized-green: #859900;
-  }
-
   body {
     @apply font-sans leading-relaxed text-slate-800 bg-white;
   }
 
-  /* Dark Solarized Theme */
-  .dark body {
-    @apply bg-solarized-base03 text-solarized-base0;
-  }
-
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading font-bold;
-  }
-
-  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
-    @apply text-solarized-base1;
   }
 
   h1 {
@@ -61,20 +32,6 @@
   a {
     @apply transition-colors duration-200;
   }
-
-  .dark a {
-    @apply text-solarized-blue hover:text-solarized-cyan;
-  }
-
-  /* Night filter for images in dark mode */
-  .dark img {
-    filter: brightness(0.8) contrast(0.9);
-    transition: filter 0.3s ease;
-  }
-
-  .dark img:hover {
-    filter: brightness(0.9) contrast(0.95);
-  }
 }
 
 @layer components {
@@ -90,24 +47,12 @@
     @apply bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors duration-200;
   }
 
-  .dark .btn-primary {
-    @apply bg-solarized-blue hover:bg-solarized-cyan;
-  }
-
   .btn-secondary {
     @apply bg-secondary text-white px-6 py-3 rounded-lg font-semibold hover:bg-secondary-600 transition-colors duration-200;
   }
 
-  .dark .btn-secondary {
-    @apply bg-solarized-orange hover:bg-solarized-yellow;
-  }
-
   .card {
     @apply bg-white rounded-lg shadow-lg p-6 transition-shadow duration-200 hover:shadow-xl;
-  }
-
-  .dark .card {
-    @apply bg-solarized-base02 shadow-solarized-base03/50;
   }
 }
 

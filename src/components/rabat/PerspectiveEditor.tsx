@@ -344,14 +344,14 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
   return (
     <div 
       ref={containerRef}
-      className="min-h-screen bg-white dark:bg-solarized-base03"
+      className="min-h-screen bg-white"
     >
       {/* Sticky Top Bar */}
-      <div className="sticky top-0 z-50 bg-white dark:bg-solarized-base02">
+      <div className="sticky top-0 z-50 bg-white">
         <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
           <button
             onClick={onCancel}
-            className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-solarized-base0 hover:bg-slate-100 dark:hover:bg-solarized-base03 rounded-lg transition-colors"
+            className="px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
           >
             Cancel
           </button>
@@ -359,7 +359,7 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
           <div className="flex items-center gap-3">
             <button
               onClick={toggleFullscreen}
-              className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-solarized-base0 hover:bg-slate-100 dark:hover:bg-solarized-base03 rounded-lg transition-colors"
+              className="px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
             >
               {fullscreen ? 'Exit Fullscreen' : 'Fullscreen'}
             </button>
@@ -369,7 +369,7 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
                 handleSave();
               }}
               disabled={saving}
-              className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-solarized-base0 hover:bg-slate-100 dark:hover:bg-solarized-base03 rounded-lg transition-colors disabled:opacity-50"
+              className="px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition-colors disabled:opacity-50"
             >
               Save Draft
             </button>
@@ -379,7 +379,7 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
                 handleSave();
               }}
               disabled={saving}
-              className="px-4 py-2 text-sm font-medium text-white bg-slate-900 dark:bg-solarized-blue hover:bg-slate-700 dark:hover:bg-solarized-cyan rounded-lg transition-colors disabled:opacity-50"
+              className="px-4 py-2 text-sm font-medium text-white bg-slate-900 hover:bg-slate-700 rounded-lg transition-colors disabled:opacity-50"
             >
               Publish
             </button>
@@ -469,23 +469,6 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
         .quill-wrapper .ql-editor .ql-align-center { text-align: center !important; }
         .quill-wrapper .ql-editor .ql-align-right { text-align: right !important; }
         .quill-wrapper .ql-editor .ql-align-justify { text-align: justify !important; }
-
-        .dark .quill-wrapper, .dark .quill-wrapper .ql-toolbar, .dark .quill-wrapper .ql-container, .dark .quill-wrapper .ql-editor { background: var(--solarized-base03) !important; }
-        .dark .quill-wrapper .ql-toolbar { border-bottom-color: var(--solarized-base02) !important; }
-        .dark .quill-wrapper .ql-editor { color: var(--solarized-base0) !important; }
-        .dark .quill-wrapper .ql-editor.ql-blank::before { color: var(--solarized-base01) !important; }
-        .dark .quill-wrapper .ql-editor h1, .dark .quill-wrapper .ql-editor h2, .dark .quill-wrapper .ql-editor h3 { color: var(--solarized-base1) !important; }
-        .dark .quill-wrapper .ql-editor blockquote { border-left-color: var(--solarized-blue) !important; color: var(--solarized-base1) !important; }
-        .dark .quill-wrapper .ql-editor pre, .dark .quill-wrapper .ql-editor code { background: var(--solarized-base02) !important; color: var(--solarized-base0) !important; }
-        .dark .quill-wrapper .ql-editor a { color: var(--solarized-blue) !important; }
-        .dark .quill-wrapper .ql-stroke { stroke: var(--solarized-base0) !important; }
-        .dark .quill-wrapper .ql-fill { fill: var(--solarized-base0) !important; }
-        .dark .quill-wrapper .ql-picker-label { color: var(--solarized-base0) !important; }
-        .dark .quill-wrapper .ql-picker-options { background: var(--solarized-base02) !important; border-color: var(--solarized-base01) !important; }
-        .dark .quill-wrapper .ql-picker-item:hover { background: var(--solarized-base02) !important; color: var(--solarized-base1) !important; }
-        .dark .quill-wrapper .ql-toolbar button:hover, .dark .quill-wrapper .ql-toolbar button.ql-active { color: var(--solarized-blue) !important; }
-        .dark .quill-wrapper .ql-toolbar button:hover .ql-stroke, .dark .quill-wrapper .ql-toolbar button.ql-active .ql-stroke { stroke: var(--solarized-blue) !important; }
-        .dark .quill-wrapper .ql-toolbar button:hover .ql-fill, .dark .quill-wrapper .ql-toolbar button.ql-active .ql-fill { fill: var(--solarized-blue) !important; }
         .ql-drop-cap { width: auto !important; padding: 0 8px !important; }
       `}</style>
     </div>

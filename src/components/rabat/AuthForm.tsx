@@ -39,12 +39,12 @@ export default function AuthForm() {
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
       <div className="max-w-md w-full">
-        <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700">
+        <div className="bg-white rounded-2xl shadow-xl p-8 border border-slate-200">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-heading font-bold text-slate-900 dark:text-white mb-2">
+            <h2 className="text-3xl font-heading font-bold text-slate-900 mb-2">
               Admin Access
             </h2>
-            <p className="text-slate-600 dark:text-slate-400">
+            <p className="text-slate-600">
               Sign in to manage your perspectives
             </p>
           </div>
@@ -53,7 +53,7 @@ export default function AuthForm() {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2"
+                className="block text-sm font-medium text-slate-700 mb-2"
               >
                 Email Address
               </label>
@@ -64,7 +64,7 @@ export default function AuthForm() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="your@email.com"
                 required
-                className="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                className="w-full px-4 py-3 rounded-lg border border-slate-300 bg-white text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
               />
             </div>
 
@@ -72,8 +72,8 @@ export default function AuthForm() {
               <div
                 className={`p-4 rounded-lg text-sm ${
                   message.type === 'success'
-                    ? 'bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-200 border border-green-200 dark:border-green-800'
-                    : 'bg-red-50 dark:bg-red-900/20 text-red-800 dark:text-red-200 border border-red-200 dark:border-red-800'
+                    ? 'bg-green-50 text-green-800 border border-green-200'
+                    : 'bg-red-50 text-red-800 border border-red-200'
                 }`}
               >
                 {message.text}
@@ -96,7 +96,7 @@ export default function AuthForm() {
             </button>
           </form>
 
-          <div className="mt-6 text-center text-sm text-slate-500 dark:text-slate-400">
+          <div className="mt-6 text-center text-sm text-slate-500">
             <p>You'll receive a magic link to sign in</p>
             <p className="mt-1">No password required</p>
           </div>

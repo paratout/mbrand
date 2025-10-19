@@ -136,7 +136,7 @@ export default function PerspectivesList({ onEdit, onSEO, onCreate, onManageCate
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-slate-900 dark:border-white"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-slate-900"></div>
       </div>
     );
   }
@@ -145,19 +145,19 @@ export default function PerspectivesList({ onEdit, onSEO, onCreate, onManageCate
     <div>
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Perspectives</h2>
-          <p className="text-slate-600 dark:text-slate-400 mt-1">Manage your perspectives</p>
+          <h2 className="text-2xl font-bold text-slate-900">Perspectives</h2>
+          <p className="text-slate-600 mt-1">Manage your perspectives</p>
         </div>
         <div className="flex gap-3">
           <button
             onClick={onManageCategories}
-            className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg border border-slate-300 dark:border-slate-600 transition-colors"
+            className="px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 rounded-lg border border-slate-300 transition-colors"
           >
             Manage Categories
           </button>
           <button
             onClick={onCreate}
-            className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg border border-slate-300 dark:border-slate-600 transition-colors"
+            className="px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 rounded-lg border border-slate-300 transition-colors"
           >
             New Perspective
           </button>
@@ -174,8 +174,8 @@ export default function PerspectivesList({ onEdit, onSEO, onCreate, onManageCate
               onClick={() => setFilter(filterOption)}
               className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
                 filter === filterOption
-                  ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900'
-                  : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+                  ? 'bg-slate-900 text-white'
+                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
               }`}
             >
               {filterOption.charAt(0).toUpperCase() + filterOption.slice(1)}
@@ -190,7 +190,7 @@ export default function PerspectivesList({ onEdit, onSEO, onCreate, onManageCate
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search perspectives..."
-            className="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-slate-400 dark:focus:border-slate-500 transition-colors"
+            className="w-full px-4 py-2 rounded-lg border border-slate-300 bg-white text-slate-900 placeholder-slate-400 focus:outline-none focus:border-slate-400 transition-colors"
           />
         </div>
 
@@ -198,24 +198,24 @@ export default function PerspectivesList({ onEdit, onSEO, onCreate, onManageCate
         <div className="relative">
           <button
             onClick={() => setShowCategoryDropdown(!showCategoryDropdown)}
-            className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg border border-slate-300 dark:border-slate-600 transition-colors flex items-center gap-2"
+            className="px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 rounded-lg border border-slate-300 transition-colors flex items-center gap-2"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
             </svg>
             Categories
             {selectedCategories.length > 0 && (
-              <span className="px-2 py-0.5 text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 rounded-full">
+              <span className="px-2 py-0.5 text-xs font-medium bg-blue-100 text-blue-700 rounded-full">
                 {selectedCategories.length}
               </span>
             )}
           </button>
 
           {showCategoryDropdown && (
-            <div className="absolute top-full mt-2 right-0 w-64 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-lg z-10">
+            <div className="absolute top-full mt-2 right-0 w-64 bg-white rounded-lg border border-slate-200 shadow-lg z-10">
               <div className="p-3 max-h-64 overflow-y-auto">
                 {categories.length === 0 ? (
-                  <p className="text-sm text-slate-500 dark:text-slate-400 text-center py-2">
+                  <p className="text-sm text-slate-500 text-center py-2">
                     No categories available
                   </p>
                 ) : (
@@ -223,15 +223,15 @@ export default function PerspectivesList({ onEdit, onSEO, onCreate, onManageCate
                     {categories.map((category) => (
                       <label
                         key={category.id}
-                        className="flex items-center gap-2 p-2 hover:bg-slate-50 dark:hover:bg-slate-700 rounded cursor-pointer"
+                        className="flex items-center gap-2 p-2 hover:bg-slate-50 rounded cursor-pointer"
                       >
                         <input
                           type="checkbox"
                           checked={selectedCategories.includes(category.name)}
                           onChange={() => toggleCategory(category.name)}
-                          className="w-4 h-4 rounded border-slate-300 dark:border-slate-600"
+                          className="w-4 h-4 rounded border-slate-300"
                         />
-                        <span className="text-sm text-slate-900 dark:text-white">{category.name}</span>
+                        <span className="text-sm text-slate-900">{category.name}</span>
                       </label>
                     ))}
                   </div>
@@ -243,44 +243,44 @@ export default function PerspectivesList({ onEdit, onSEO, onCreate, onManageCate
       </div>
 
       {/* Perspectives List */}
-      <div className="bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
+      <div className="bg-white rounded-lg border border-slate-200 overflow-hidden">
         {perspectives.length === 0 ? (
-          <div className="p-12 text-center text-slate-500 dark:text-slate-400">
+          <div className="p-12 text-center text-slate-500">
             No perspectives found. Create your first one!
           </div>
         ) : (
-          <div className="divide-y divide-slate-200 dark:divide-slate-700">
+          <div className="divide-y divide-slate-200">
             {perspectives.map((perspective) => (
-              <div key={perspective.id} className="p-6 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+              <div key={perspective.id} className="p-6 hover:bg-slate-50 transition-colors">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
+                    <h3 className="text-lg font-semibold text-slate-900 mb-2">
                       {perspective.title}
                     </h3>
                     {perspective.excerpt && (
-                      <p className="text-slate-600 dark:text-slate-400 text-sm mb-3">
+                      <p className="text-slate-600 text-sm mb-3">
                         {perspective.excerpt}
                       </p>
                     )}
                     <div className="flex items-center flex-wrap gap-2 text-sm">
                       <span className={`px-2 py-1 rounded text-xs font-medium ${
                         perspective.status === 'published'
-                          ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400'
-                          : 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400'
+                          ? 'bg-green-100 text-green-700'
+                          : 'bg-yellow-100 text-yellow-700'
                       }`}>
                         {perspective.status}
                       </span>
                       {perspective.category && (
-                        <span className="px-2 py-1 rounded text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400">
+                        <span className="px-2 py-1 rounded text-xs font-medium bg-blue-100 text-blue-700">
                           {perspective.category}
                         </span>
                       )}
                       {perspective.read_time && (
-                        <span className="text-slate-500 dark:text-slate-400">
+                        <span className="text-slate-500">
                           {perspective.read_time}
                         </span>
                       )}
-                      <span className="text-slate-500 dark:text-slate-400">
+                      <span className="text-slate-500">
                         {new Date(perspective.created_at).toLocaleDateString()}
                       </span>
                     </div>
@@ -291,7 +291,7 @@ export default function PerspectivesList({ onEdit, onSEO, onCreate, onManageCate
                         href={`/perspectives/${perspective.slug}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors"
+                        className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition-colors"
                         title="View perspective"
                       >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -303,8 +303,8 @@ export default function PerspectivesList({ onEdit, onSEO, onCreate, onManageCate
                       onClick={() => toggleStatus(perspective)}
                       className={`p-2 rounded-lg transition-colors ${
                         perspective.status === 'published'
-                          ? 'text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20'
-                          : 'text-yellow-600 dark:text-yellow-400 hover:bg-yellow-50 dark:hover:bg-yellow-900/20'
+                          ? 'text-green-600 hover:bg-green-50'
+                          : 'text-yellow-600 hover:bg-yellow-50'
                       }`}
                       title={perspective.status === 'published' ? 'Set to draft' : 'Publish'}
                     >
@@ -321,7 +321,7 @@ export default function PerspectivesList({ onEdit, onSEO, onCreate, onManageCate
                     </button>
                     <button
                       onClick={() => onEdit(perspective)}
-                      className="p-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors"
+                      className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition-colors"
                       title="Edit content"
                     >
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -330,7 +330,7 @@ export default function PerspectivesList({ onEdit, onSEO, onCreate, onManageCate
                     </button>
                     <button
                       onClick={() => onSEO(perspective)}
-                      className="p-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors"
+                      className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition-colors"
                       title="Settings"
                     >
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -340,7 +340,7 @@ export default function PerspectivesList({ onEdit, onSEO, onCreate, onManageCate
                     </button>
                     <button
                       onClick={() => handleDelete(perspective.id)}
-                      className="p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                      className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                       title="Delete"
                     >
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

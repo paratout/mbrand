@@ -24,12 +24,12 @@ const pastEvents = speakingEngagements.filter(e => e.status === 'past');
   path="/speaking"
 >
   <!-- Hero Section -->
-  <section class="relative py-16 md:py-24 bg-white dark:bg-slate-900 text-slate-900 dark:text-white overflow-hidden">
+  <section class="relative py-16 md:py-24 bg-white text-slate-900 overflow-hidden">
     <MeshBackground variant="primary" client:load />
 
     <div class="container-custom relative z-10">
       <div class="max-w-3xl">
-        <div class="inline-block px-4 py-2 bg-white/20 dark:bg-white/10 rounded-full mb-4">
+        <div class="inline-block px-4 py-2 bg-white/20 rounded-full mb-4">
           <span class="text-sm font-medium">Conferences & Workshops</span>
         </div>
         
@@ -49,13 +49,13 @@ const pastEvents = speakingEngagements.filter(e => e.status === 'past');
   </section>
 
   <!-- Speaking Topics -->
-  <section class="section-spacing bg-slate-50 dark:bg-slate-800">
+  <section class="section-spacing bg-slate-50">
     <div class="container-custom">
       <div class="text-center mb-12">
-        <h2 class="text-3xl md:text-4xl font-heading font-bold mb-4 text-slate-900 dark:text-white">
+        <h2 class="text-3xl md:text-4xl font-heading font-bold mb-4 text-slate-900">
           Speaking Topics
         </h2>
-        <p class="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
+        <p class="text-xl text-slate-600 max-w-3xl mx-auto">
           I speak on a range of topics related to enterprise architecture, digital transformation, 
           and technology leadership.
         </p>
@@ -63,55 +63,55 @@ const pastEvents = speakingEngagements.filter(e => e.status === 'past');
 
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div class="card text-center">
-          <h3 class="text-lg font-heading font-bold mb-2 text-slate-900 dark:text-white">
+          <h3 class="text-lg font-heading font-bold mb-2 text-slate-900">
             Enterprise Architecture
           </h3>
-          <p class="text-slate-600 dark:text-slate-300 text-sm">
+          <p class="text-slate-600 text-sm">
             TOGAF, architecture frameworks, governance, and best practices
           </p>
         </div>
 
         <div class="card text-center">
-          <h3 class="text-lg font-heading font-bold mb-2 text-slate-900 dark:text-white">
+          <h3 class="text-lg font-heading font-bold mb-2 text-slate-900">
             Cloud Strategy
           </h3>
-          <p class="text-slate-600 dark:text-slate-300 text-sm">
+          <p class="text-slate-600 text-sm">
             Cloud migration, multi-cloud architectures, and cloud-native design
           </p>
         </div>
 
         <div class="card text-center">
-          <h3 class="text-lg font-heading font-bold mb-2 text-slate-900 dark:text-white">
+          <h3 class="text-lg font-heading font-bold mb-2 text-slate-900">
             Digital Transformation
           </h3>
-          <p class="text-slate-600 dark:text-slate-300 text-sm">
+          <p class="text-slate-600 text-sm">
             Change management, innovation, and organizational transformation
           </p>
         </div>
 
         <div class="card text-center">
-          <h3 class="text-lg font-heading font-bold mb-2 text-slate-900 dark:text-white">
+          <h3 class="text-lg font-heading font-bold mb-2 text-slate-900">
             MENA Technology Markets
           </h3>
-          <p class="text-slate-600 dark:text-slate-300 text-sm">
+          <p class="text-slate-600 text-sm">
             Market insights, opportunities, and cross-cultural partnerships
           </p>
         </div>
 
         <div class="card text-center">
-          <h3 class="text-lg font-heading font-bold mb-2 text-slate-900 dark:text-white">
+          <h3 class="text-lg font-heading font-bold mb-2 text-slate-900">
             Technology Leadership
           </h3>
-          <p class="text-slate-600 dark:text-slate-300 text-sm">
+          <p class="text-slate-600 text-sm">
             Building high-performing teams and technical strategy
           </p>
         </div>
 
         <div class="card text-center">
-          <h3 class="text-lg font-heading font-bold mb-2 text-slate-900 dark:text-white">
+          <h3 class="text-lg font-heading font-bold mb-2 text-slate-900">
             AI & Emerging Tech
           </h3>
-          <p class="text-slate-600 dark:text-slate-300 text-sm">
+          <p class="text-slate-600 text-sm">
             Integrating AI, machine learning, and emerging technologies
           </p>
         </div>
@@ -123,7 +123,7 @@ const pastEvents = speakingEngagements.filter(e => e.status === 'past');
   {upcomingEvents.length > 0 && (
     <section class="section-spacing">
       <div class="container-custom">
-        <h2 class="text-3xl md:text-4xl font-heading font-bold mb-8 text-slate-900 dark:text-white">
+        <h2 class="text-3xl md:text-4xl font-heading font-bold mb-8 text-slate-900">
           Upcoming & Confirmed Events
         </h2>
         <div class="space-y-6">
@@ -143,9 +143,9 @@ const pastEvents = speakingEngagements.filter(e => e.status === 'past');
   )}
 
   <!-- Past Events -->
-  <section class="section-spacing bg-slate-50 dark:bg-slate-800">
+  <section class="section-spacing bg-slate-50">
     <div class="container-custom">
-      <h2 class="text-3xl md:text-4xl font-heading font-bold mb-8 text-slate-900 dark:text-white">
+      <h2 class="text-3xl md:text-4xl font-heading font-bold mb-8 text-slate-900">
         Past Events
       </h2>
       <div class="space-y-6">

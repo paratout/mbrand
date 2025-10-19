@@ -1545,18 +1545,18 @@ export default function Today() {
         <div
           className={`transition-opacity duration-500 ${fadeIn ? 'opacity-100' : 'opacity-0'}`}
         >
-          <blockquote className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-8 leading-tight">
+          <blockquote className="text-3xl md:text-5xl font-bold text-slate-900 mb-8 leading-tight">
             {quote.text}
           </blockquote>
           
-          <p className="text-xl md:text-2xl text-slate-700 dark:text-slate-300 font-medium">
+          <p className="text-xl md:text-2xl text-slate-700 font-medium">
             {quote.author}
           </p>
         </div>
 
         {/* Date */}
         <div className="mt-12">
-          <p className="text-sm text-slate-500 dark:text-slate-400">
+          <p className="text-sm text-slate-500">
             {new Date().toLocaleDateString('en-US', { 
               weekday: 'long', 
               year: 'numeric', 

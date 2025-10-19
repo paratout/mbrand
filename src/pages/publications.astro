@@ -120,7 +120,7 @@ const caseStudies = [
   path="/publications"
 >
   <!-- Hero Section -->
-  <section class="relative py-16 md:py-24 bg-white dark:bg-slate-900 overflow-hidden">
+  <section class="relative py-16 md:py-24 bg-white overflow-hidden">
     <MeshBackground variant="success" client:load />
     
     <div class="container-custom relative z-10">
@@ -129,7 +129,7 @@ const caseStudies = [
           <span class="text-sm font-medium">Research & Resources</span>
         </div>
         
-        <h1 class="text-4xl md:text-5xl font-heading font-bold mb-6 text-slate-900 dark:text-white leading-tight">
+        <h1 class="text-4xl md:text-5xl font-heading font-bold mb-6 text-slate-900 leading-tight">
           Publications & Resources
         </h1>
         
@@ -147,7 +147,7 @@ const caseStudies = [
   <!-- Research Publications -->
   <section class="section-spacing">
     <div class="container-custom">
-      <h2 class="text-3xl md:text-4xl font-heading font-bold mb-12 text-slate-900 dark:text-white">
+      <h2 class="text-3xl md:text-4xl font-heading font-bold mb-12 text-slate-900">
         Research Publications
       </h2>
       
@@ -166,29 +166,29 @@ const caseStudies = [
                 <div class="flex items-start justify-between mb-3">
                   <div class="flex-1">
                     <div class="flex items-center gap-3 mb-2">
-                      <span class="px-3 py-1 bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary-400 text-sm font-medium rounded-full">
+                      <span class="px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full">
                         {pub.type}
                       </span>
-                      <span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-sm font-medium rounded-full">
+                      <span class="px-3 py-1 bg-green-100 text-green-700 text-sm font-medium rounded-full">
                         {pub.status}
                       </span>
                     </div>
-                    <h3 class="text-2xl font-heading font-bold text-slate-900 dark:text-white mb-2">
+                    <h3 class="text-2xl font-heading font-bold text-slate-900 mb-2">
                       {pub.title}
                     </h3>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 mb-3">
+                    <p class="text-sm text-slate-500 mb-3">
                       {pub.authors.join(', ')} • {pub.venue} • {pub.year}
                     </p>
                   </div>
                 </div>
                 
-                <p class="text-slate-600 dark:text-slate-300 mb-4 leading-relaxed">
+                <p class="text-slate-600 mb-4 leading-relaxed">
                   {pub.abstract}
                 </p>
                 
                 <div class="flex flex-wrap gap-2 mb-4">
                   {pub.tags.map((tag) => (
-                    <span class="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm rounded-lg">
+                    <span class="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-lg">
                       {tag}
                     </span>
                   ))}
@@ -196,7 +196,7 @@ const caseStudies = [
                 
                 <a 
                   href={pub.downloadUrl}
-                  class="inline-flex items-center gap-2 text-primary dark:text-primary-400 hover:underline font-medium"
+                  class="inline-flex items-center gap-2 text-primary hover:underline font-medium"
                 >
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -212,13 +212,13 @@ const caseStudies = [
   </section>
 
   <!-- Artifacts & Resources -->
-  <section class="section-spacing bg-slate-50 dark:bg-slate-800">
+  <section class="section-spacing bg-slate-50">
     <div class="container-custom">
       <div class="max-w-3xl mb-12">
-        <h2 class="text-3xl md:text-4xl font-heading font-bold mb-4 text-slate-900 dark:text-white">
+        <h2 class="text-3xl md:text-4xl font-heading font-bold mb-4 text-slate-900">
           Artifacts & Resources
         </h2>
-        <p class="text-lg text-slate-600 dark:text-slate-300">
+        <p class="text-lg text-slate-600">
           Practical templates, frameworks, and tools for enterprise architecture practitioners
         </p>
       </div>
@@ -227,28 +227,28 @@ const caseStudies = [
         {artifacts.map((artifact) => (
           <div class="card hover:shadow-xl transition-all hover:-translate-y-1 group">
             <div class="flex items-start gap-4 mb-4">
-              <div class="flex-shrink-0 w-12 h-12 bg-primary/10 dark:bg-primary/20 rounded-lg flex items-center justify-center">
+              <div class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
                 <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={artifact.icon} />
                 </svg>
               </div>
               <div class="flex-1">
-                <h3 class="font-heading font-bold text-lg mb-1 text-slate-900 dark:text-white group-hover:text-primary transition-colors">
+                <h3 class="font-heading font-bold text-lg mb-1 text-slate-900 group-hover:text-primary transition-colors">
                   {artifact.title}
                 </h3>
-                <p class="text-sm text-slate-500 dark:text-slate-400">
+                <p class="text-sm text-slate-500">
                   {artifact.type} • {artifact.size}
                 </p>
               </div>
             </div>
             
-            <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">
+            <p class="text-sm text-slate-600 mb-4">
               {artifact.description}
             </p>
             
             <a 
               href={artifact.downloadUrl}
-              class="inline-flex items-center gap-2 text-primary dark:text-primary-400 hover:underline font-medium text-sm"
+              class="inline-flex items-center gap-2 text-primary hover:underline font-medium text-sm"
             >
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -265,10 +265,10 @@ const caseStudies = [
   <section class="section-spacing">
     <div class="container-custom">
       <div class="max-w-3xl mb-12">
-        <h2 class="text-3xl md:text-4xl font-heading font-bold mb-4 text-slate-900 dark:text-white">
+        <h2 class="text-3xl md:text-4xl font-heading font-bold mb-4 text-slate-900">
           Case Studies
         </h2>
-        <p class="text-lg text-slate-600 dark:text-slate-300">
+        <p class="text-lg text-slate-600">
           Real-world enterprise architecture implementations with measurable outcomes
         </p>
       </div>
@@ -277,19 +277,19 @@ const caseStudies = [
         {caseStudies.map((study) => (
           <div class="card hover:shadow-xl transition-all hover:-translate-y-1 group">
             <div class="mb-4">
-              <span class="px-3 py-1 bg-secondary/10 dark:bg-secondary/20 text-secondary dark:text-secondary-400 text-sm font-medium rounded-full">
+              <span class="px-3 py-1 bg-secondary/10 text-secondary text-sm font-medium rounded-full">
                 {study.industry}
               </span>
             </div>
-            <h3 class="font-heading font-bold text-lg mb-3 text-slate-900 dark:text-white group-hover:text-primary transition-colors">
+            <h3 class="font-heading font-bold text-lg mb-3 text-slate-900 group-hover:text-primary transition-colors">
               {study.title}
             </h3>
-            <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">
+            <p class="text-sm text-slate-600 mb-4">
               {study.description}
             </p>
             <a 
               href={study.downloadUrl}
-              class="inline-flex items-center gap-2 text-primary dark:text-primary-400 hover:underline font-medium text-sm"
+              class="inline-flex items-center gap-2 text-primary hover:underline font-medium text-sm"
             >
               Read Case Study
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -303,12 +303,12 @@ const caseStudies = [
   </section>
 
   <!-- CTA -->
-  <section class="section-spacing bg-slate-50 dark:bg-slate-800">
+  <section class="section-spacing bg-slate-50">
     <div class="container-custom text-center">
-      <h2 class="text-3xl md:text-4xl font-heading font-bold mb-6 text-slate-900 dark:text-white">
+      <h2 class="text-3xl md:text-4xl font-heading font-bold mb-6 text-slate-900">
         Stay Updated
       </h2>
-      <p class="text-lg text-slate-600 dark:text-slate-300 mb-8 max-w-2xl mx-auto">
+      <p class="text-lg text-slate-600 mb-8 max-w-2xl mx-auto">
         Get notified when new publications, resources, and case studies are available
       </p>
       <div class="flex flex-wrap justify-center gap-4">

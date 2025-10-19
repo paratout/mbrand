@@ -32,7 +32,7 @@ export default function ArticlePreview({
               {tags.map((tag) => (
                 <span 
                   key={tag}
-                  className="text-xs bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 px-2 py-1 rounded"
+                  className="text-xs bg-primary-100 text-primary-700 px-2 py-1 rounded"
                 >
                   {tag}
                 </span>
@@ -41,22 +41,22 @@ export default function ArticlePreview({
           )}
 
           {/* Title */}
-          <h3 className="text-xl font-heading font-bold mb-2 text-slate-900 dark:text-white group-hover:text-primary dark:group-hover:text-primary-400 transition-colors">
+          <h3 className="text-xl font-heading font-bold mb-2 text-slate-900 group-hover:text-primary transition-colors">
             {title}
           </h3>
 
           {/* Date */}
-          <p className="text-sm text-slate-500 dark:text-slate-400 mb-3">
+          <p className="text-sm text-slate-500 mb-3">
             {formattedDate}
           </p>
 
           {/* Excerpt */}
-          <p className="text-slate-600 dark:text-slate-300 line-clamp-3">
+          <p className="text-slate-600 line-clamp-3">
             {excerpt}
           </p>
 
           {/* Read More */}
-          <div className="mt-4 text-primary dark:text-primary-400 font-semibold group-hover:underline">
+          <div className="mt-4 text-primary font-semibold group-hover:underline">
             Read more →
           </div>
         </div>

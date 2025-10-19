@@ -14,9 +14,9 @@ export default function SpeakingCard({
   });
 
   const statusColors = {
-    upcoming: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300',
-    past: 'bg-slate-100 text-slate-800 dark:bg-slate-700 dark:text-slate-300',
-    confirmed: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300'
+    upcoming: 'bg-green-100 text-green-800',
+    past: 'bg-slate-100 text-slate-800',
+    confirmed: 'bg-blue-100 text-blue-800'
   };
 
   return (
@@ -25,7 +25,7 @@ export default function SpeakingCard({
         {/* Event Logo */}
         {eventLogo && (
           <div className="flex-shrink-0">
-            <div className="w-24 h-24 bg-slate-100 dark:bg-slate-700 rounded-lg flex items-center justify-center overflow-hidden">
+            <div className="w-24 h-24 bg-slate-100 rounded-lg flex items-center justify-center overflow-hidden">
               <img 
                 src={eventLogo} 
                 alt={eventName}
@@ -43,12 +43,12 @@ export default function SpeakingCard({
           </span>
 
           {/* Event Name */}
-          <h3 className="text-xl font-heading font-bold mb-2 text-slate-900 dark:text-white">
+          <h3 className="text-xl font-heading font-bold mb-2 text-slate-900">
             {eventName}
           </h3>
 
           {/* Date & Location */}
-          <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 text-slate-600 dark:text-slate-400 mb-3">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 text-slate-600 mb-3">
             <div className="flex items-center space-x-2">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -66,7 +66,7 @@ export default function SpeakingCard({
 
           {/* Description */}
           {description && (
-            <p className="text-slate-600 dark:text-slate-300 mb-4">
+            <p className="text-slate-600 mb-4">
               {description}
             </p>
           )}
@@ -77,7 +77,7 @@ export default function SpeakingCard({
               href={link}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-primary dark:text-primary-400 font-semibold hover:underline"
+              className="text-primary font-semibold hover:underline"
             >
               Learn more →
             </a>
