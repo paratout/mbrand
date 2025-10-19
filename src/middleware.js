@@ -12,10 +12,11 @@ export async function onRequest({ url, redirect, cookies }, next) {
   }
 
   // Check if user is authenticated via Supabase session cookie
-  // Supabase stores cookies with project-specific prefixes like: sb-<project-ref>-auth-token
-  const allCookies = cookies.getAll();
-  const isAuthenticated = allCookies.some(cookie => 
-    cookie.name.startsWith('sb-') && cookie.name.includes('auth-token')
+  // Check for common Supabase cookie patterns
+  const isAuthenticated = !!(
+    cookies.get('sb-access-token')?.value ||
+    cookies.get('sb-refresh-token')?.value ||
+    cookies.has('supabase-auth-token')
   );
 
   // If coming soon mode is enabled and user is not authenticated, redirect to /soon
