@@ -225,6 +225,12 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
       '#F0FFF4', // Mint
       '#FFF0F5', // Lavender
       '#FFF8DC', // Cream
+      '#F3E5F5', // Light Purple
+      '#E8F5E9', // Light Green
+      '#FFF9C4', // Light Yellow
+      '#FFE0B2', // Light Orange
+      '#F5F5F5', // Light Gray
+      '#E1F5FE', // Light Cyan
     ];
 
     // Initialize Quill with configuration
@@ -469,14 +475,25 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
         }
 
         .quill-wrapper .ql-toolbar {
-          position: sticky;
-          top: 0;
-          z-index: 40;
+          position: fixed;
+          top: 60px;
+          left: 50%;
+          transform: translateX(-50%);
+          max-width: 1280px;
+          width: calc(100% - 2rem);
+          z-index: 1;
           background: white;
           border: none;
           border-bottom: 1px solid #e5e7eb;
           padding: 12px;
-          border-radius: 8px 8px 0 0;
+          border-radius: 0;
+          display: flex;
+          align-items: center;
+        }
+        
+        /* Add padding to editor to account for fixed toolbar */
+        .quill-wrapper .ql-container {
+          margin-top: 60px;
         }
 
         .quill-wrapper .ql-toolbar .ql-formats {
@@ -553,6 +570,7 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
         .quill-wrapper .ql-editor h1 { font-size: 42px; font-weight: 700; line-height: 1.2; margin: 1.5em 0 0.5em; }
         .quill-wrapper .ql-editor h2 { font-size: 32px; font-weight: 600; line-height: 1.25; margin: 1.8em 0 0.6em; }
         .quill-wrapper .ql-editor h3 { font-size: 26px; font-weight: 600; line-height: 1.3; margin: 1.5em 0 0.5em; }
+        .quill-wrapper .ql-editor h4 { font-size: 21px; font-weight: 600; line-height: 1.3; margin: 1.5em 0 0.5em; }
         .quill-wrapper .ql-editor p { margin: 1.5em 0; text-align: justify; }
         .quill-wrapper .ql-editor blockquote { border-left: 3px solid #1a1a1a; padding-left: 20px; margin: 1.8em 0; font-style: italic; opacity: 0.8; }
         .quill-wrapper .ql-editor pre { background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 1.8em 0; overflow-x: auto; }
