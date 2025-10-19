@@ -290,6 +290,14 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
 
     quillInstance.current = quill;
 
+    // Prevent toolbar from stealing focus/selection
+    const toolbar = containerRef.current?.querySelector('.ql-toolbar');
+    if (toolbar) {
+      toolbar.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+      });
+    }
+
     // Customize toolbar buttons
     setTimeout(() => {
       // Drop cap button
@@ -491,6 +499,14 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
           align-items: center;
         }
         
+        /* Prevent toolbar buttons from stealing focus */
+        .quill-wrapper .ql-toolbar button {
+          user-select: none;
+        }
+        .quill-wrapper .ql-toolbar button:focus {
+          outline: none;
+        }
+        
         /* Add padding to editor to account for fixed toolbar */
         .quill-wrapper .ql-container {
           margin-top: 60px;
@@ -556,6 +572,16 @@ export default function PerspectiveEditor({ article, onSave, onCancel }: Perspec
           min-height: 60vh;
           color: #1a1a1a;
           background: white !important;
+        }
+        
+        /* Dark selection background with light text */
+        .quill-wrapper .ql-editor ::selection {
+          background: #1a1a1a;
+          color: #ffffff;
+        }
+        .quill-wrapper .ql-editor ::-moz-selection {
+          background: #1a1a1a;
+          color: #ffffff;
         }
 
         .quill-wrapper .ql-editor.ql-blank::before {
