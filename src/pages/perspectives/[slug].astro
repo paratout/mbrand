@@ -102,6 +102,7 @@ const publishDate = new Date(article.published_at || article.created_at).toLocal
 </BaseLayout>
 
 <style is:global>
+  /* Typography */
   .content h1,.content h2,.content h3,.content h4,.content h5,.content h6{font-family:Georgia,'Times New Roman',serif!important;font-weight:700!important;line-height:1.4!important}
   .content h1{font-size:32px!important;margin:1.75em 0 .5em!important;letter-spacing:-.02em!important}
   .content h2{font-size:28px!important;margin:2em 0 .5em!important;letter-spacing:-.02em!important}
@@ -110,7 +111,7 @@ const publishDate = new Date(article.published_at || article.created_at).toLocal
   .content h5{font-size:19px!important;margin:1.5em 0 .5em!important}
   .content h6{font-size:18px!important;margin:1.5em 0 .5em!important}
   
-  /* Drop cap styling - must be in global scope to override Tailwind reset */
+  /* Drop cap styling - must be in global scope */
   .content .drop-cap-letter{
     font-size:5.5em!important;
     line-height:0.85!important;
@@ -125,6 +126,16 @@ const publishDate = new Date(article.published_at || article.created_at).toLocal
   .content .ql-align-center{text-align:center!important}
   .content .ql-align-right{text-align:right!important}
   .content .ql-align-justify{text-align:justify!important}
+  
+  /* Lists - ensure proper rendering */
+  .content ol{list-style-type:decimal!important;padding-left:30px!important;margin:1.5em 0!important}
+  .content ol li{display:list-item!important;list-style-position:outside!important;list-style-type:decimal!important}
+  .content ul{list-style-type:disc!important;padding-left:30px!important;margin:1.5em 0!important}
+  .content ul li{display:list-item!important;list-style-position:outside!important;list-style-type:disc!important}
+  .content li{margin:0.75em 0!important}
+  
+  /* Pastel backgrounds support */
+  .content [style*="background"]{padding:2px 4px;border-radius:2px}
 </style>
 
 <style>
