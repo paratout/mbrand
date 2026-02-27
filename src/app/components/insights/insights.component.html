@@ -1,0 +1,46 @@
+<section class="insights section-padding" id="insights">
+    <div class="container">
+        <div class="insights-header">
+            <div>
+                <div class="section-label">Thoughts & Perspectives</div>
+                <h2 class="section-title">Latest Insights.</h2>
+            </div>
+            <a href="#" class="btn-text">View All Articles &rarr;</a>
+        </div>
+
+        <div class="insights-grid" *ngIf="!isLoading">
+            <div *ngIf="!featuredArticle && recentArticles.length === 0"
+                style="color: var(--text-secondary); padding: 2rem 0; width: 100%;">
+                Check back soon for new insights and publications from Mehdi Bamou.
+            </div>
+
+            <article class="insight-card featured" *ngIf="featuredArticle">
+                <div class="article-content">
+                    <div class="article-meta">
+                        <span class="category">{{ featuredArticle.category || 'Thought Leadership' }}</span>
+                        <span class="date">{{ featuredArticle.createdAt?.toDate() | date:'mediumDate' }}</span>
+                    </div>
+                    <h3 class="article-title">{{ featuredArticle.title }}</h3>
+                    <p class="article-excerpt">{{ featuredArticle.excerpt }}</p>
+                    <a href="javascript:void(0)" class="read-more">Read Full Article &rarr;</a>
+                </div>
+            </article>
+
+            <article class="insight-card" *ngFor="let article of recentArticles">
+                <div class="article-content">
+                    <div class="article-meta">
+                        <span class="category">{{ article.category }}</span>
+                        <span class="date">{{ article.createdAt?.toDate() | date:'mediumDate' }}</span>
+                    </div>
+                    <h3 class="article-title">{{ article.title }}</h3>
+                    <p class="article-excerpt">{{ article.excerpt }}</p>
+                    <a href="javascript:void(0)" class="read-more">Read Article &rarr;</a>
+                </div>
+            </article>
+        </div>
+
+        <div *ngIf="isLoading" style="text-align: center; padding: 4rem 0; color: var(--text-secondary);">
+            Loading insights...
+        </div>
+    </div>
+</section>

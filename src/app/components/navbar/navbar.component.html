@@ -1,0 +1,33 @@
+<header class="navbar glass">
+    <div class="navbar-container">
+        <a href="#home" class="logo">
+            <span class="logo-text">MB.</span>
+        </a>
+
+        <!-- Hamburger Menu Toggle (Mobile Only) -->
+        <button class="mobile-toggle" [class.active]="isMobileMenuOpen" (click)="toggleMenu()"
+            aria-label="Toggle navigation">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <div class="nav-overlay" [class.active]="isMobileMenuOpen" (click)="closeMenu()"></div>
+
+        <nav class="nav-links" [class.active]="isMobileMenuOpen">
+            <a href="#about" class="nav-link" (click)="closeMenu()">About</a>
+            <a href="#pillars" class="nav-link" (click)="closeMenu()">Pillars</a>
+            <a href="#media" class="nav-link" (click)="closeMenu()">Media</a>
+            <a href="#insights" class="nav-link" (click)="closeMenu()">Insights</a>
+
+            <!-- Move CTA into regular flow for mobile -->
+            <div class="nav-actions mobile-only">
+                <a href="#contact" class="btn-primary" (click)="closeMenu()">Get in Touch</a>
+            </div>
+        </nav>
+
+        <div class="nav-actions desktop-only">
+            <a href="#contact" class="btn-primary">Get in Touch</a>
+        </div>
+    </div>
+</header>

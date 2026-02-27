@@ -1,0 +1,85 @@
+<div class="manager-container">
+    <div class="manager-header">
+        <h1 class="page-title">Media & Appearances</h1>
+        <button class="btn-primary" (click)="toggleCompose()">
+            {{ isComposing ? 'Cancel Draft' : '+ Add Media' }}
+        </button>
+    </div>
+
+    <div class="compose-area glass" *ngIf="isComposing">
+        <h2 class="section-title">Log New Appearance</h2>
+        <form (submit)="saveMedia($event)" class="media-form">
+            <div class="form-row">
+                <div class="form-group flex-2">
+                    <label>Appearance Title</label>
+                    <input type="text" [(ngModel)]="newMedia.title" name="title" class="form-control" required
+                        placeholder="e.g. World Economic Forum 2026 Keynote">
+                </div>
+                <div class="form-group flex-1">
+                    <label>Type / Tag</label>
+                    <select [(ngModel)]="newMedia.tag" name="tag" class="form-control" required>
+                        <option value="Keynote">Keynote</option>
+                        <option value="Interview">Interview</option>
+                        <option value="Podcast">Podcast</option>
+                        <option value="Panel">Panel</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group flex-1">
+                    <label>Event Name / Publisher</label>
+                    <input type="text" [(ngModel)]="newMedia.publisher" name="publisher" class="form-control" required
+                        placeholder="e.g. Financial Times Live">
+                </div>
+                <div class="form-group flex-1">
+                    <label>Duration</label>
+                    <input type="text" [(ngModel)]="newMedia.duration" name="duration" class="form-control" required
+                        placeholder="e.g. 45m or 1h 12m">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Video URL (YouTube/Vimeo Link)</label>
+                <input type="url" [(ngModel)]="newMedia.videoUrl" name="videoUrl" class="form-control" required
+                    placeholder="https://youtube.com/...">
+            </div>
+
+            <div class="form-actions">
+                <span class="status-text success" *ngIf="saveSuccess">Media logged successfully!</span>
+                <span class="status-text error" *ngIf="saveError">{{ saveError }}</span>
+
+                <button type="button" class="btn-outline" (click)="toggleCompose()">Cancel</button>
+                <button type="submit" class="btn-primary" [disabled]="isSaving">
+                    {{ isSaving ? 'Saving...' : 'Save Appearance' }}
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="media-list" *ngIf="!isComposing">
+        <div class="empty-state" *ngIf="mediaItems.length === 0 && !isLoading">
+            No media logged. Click "Add Media" to log your first keynote or interview.
+        </div>
+
+        <div class="loading-state" *ngIf="isLoading">
+            Loading media...
+        </div>
+
+        <div class="media-card glass" *ngFor="let item of mediaItems">
+            <div class="card-content">
+                <div class="card-badges">
+                    <span class="media-tag">{{ item.tag }}</span>
+                    <span class="duration">{{ item.duration }}</span>
+                </div>
+                <h3 class="card-title">{{ item.title }}</h3>
+                <p class="card-meta">{{ item.publisher }}</p>
+                <a [href]="item.videoUrl" target="_blank" class="video-link">View Video &nearr;</a>
+            </div>
+
+            <div class="card-actions">
+                <button class="btn-danger" (click)="deleteMedia(item.id)">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
