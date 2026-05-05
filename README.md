@@ -1,4 +1,4 @@
-# bamoumehdi.com
+# mehdibamou.com
 
 Personal website for Mehdi Bamou — at the intersection of Business, Technology, and Governance.
 
