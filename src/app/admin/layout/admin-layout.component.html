@@ -1,0 +1,20 @@
+<div class="admin-shell">
+  <nav class="admin-nav">
+    <a routerLink="/" class="nav-logo" title="View live site">MB</a>
+
+    <div class="nav-links">
+      <a routerLink="/admin/dashboard" routerLinkActive="active" class="nav-link">
+        Publications
+      </a>
+    </div>
+
+    <div class="nav-right">
+      <span class="nav-email">{{ auth.currentUser()?.email }}</span>
+      <button class="btn-signout" (click)="auth.signOut()">Sign out</button>
+    </div>
+  </nav>
+
+  <main class="admin-content">
+    <router-outlet />
+  </main>
+</div>

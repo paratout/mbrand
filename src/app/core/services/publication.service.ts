@@ -18,14 +18,14 @@ import { from, Observable } from 'rxjs';
 
 export interface Publication {
   slug: string;
-  title: string;
+  title: string | null;
   summary: string;
-  content: Record<string, unknown>; // TipTap JSON
+  content: Record<string, unknown>;
   coverImage: string | null;
   attachments: Attachment[];
   status: 'draft' | 'published';
-  createdAt: Timestamp;
-  updatedAt: Timestamp;
+  createdAt: Timestamp | null;
+  updatedAt: Timestamp | null;
   publishedAt: Timestamp | null;
 }
 

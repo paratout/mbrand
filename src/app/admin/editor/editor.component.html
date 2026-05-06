@@ -1,0 +1,107 @@
+<div class="editor-page">
+
+  @if (isLoading()) {
+    <div class="loading">Loading publication…</div>
+  } @else {
+
+    <!-- Top bar -->
+    <div class="editor-topbar">
+      <a routerLink="/admin/dashboard" class="back-link">← Publications</a>
+
+      <div class="topbar-right">
+        <!-- Save status -->
+        <span class="save-status" [class]="saveStatus()">{{ saveLabel() }}</span>
+
+        <!-- Publish toggle -->
+        @if (pubStatus() === 'draft') {
+          <button id="publish-btn" class="btn-publish" [disabled]="isPublishing() || !effectiveSlug()" (click)="publish()">
+            {{ isPublishing() ? 'Publishing…' : 'Publish' }}
+          </button>
+        } @else {
+          <button id="unpublish-btn" class="btn-unpublish" [disabled]="isPublishing()" (click)="unpublish()">
+            {{ isPublishing() ? '…' : 'Unpublish' }}
+          </button>
+          <a [href]="'/publications/' + effectiveSlug()" target="_blank" class="btn-view">View →</a>
+        }
+
+        <!-- Delete -->
+        @if (!isNew()) {
+          <button class="btn-delete" [disabled]="isDeleting()" (click)="confirmDelete()">
+            {{ isDeleting() ? '…' : 'Delete' }}
+          </button>
+        }
+      </div>
+    </div>
+
+    <!-- Slug chip -->
+    <div class="slug-row">
+      <span class="slug-label">URL:</span>
+      <code class="slug-chip">/publications/{{ effectiveSlug() || '—' }}</code>
+      @if (pubStatus() === 'published') {
+        <span class="pub-badge">● Published</span>
+      } @else {
+        <span class="draft-badge">Draft</span>
+      }
+    </div>
+
+    <!-- Content -->
+    <div class="editor-body">
+      <!-- Title -->
+      <input
+        id="pub-title"
+        class="title-input"
+        type="text"
+        placeholder="Publication title"
+        [value]="title()"
+        (input)="onTitleChange($any($event.target).value)"
+      />
+
+      <!-- Summary -->
+      <textarea
+        id="pub-summary"
+        class="summary-input"
+        placeholder="Short summary shown on the home page…"
+        rows="2"
+        [value]="summary()"
+        (input)="onSummaryChange($any($event.target).value)"
+      ></textarea>
+
+      <!-- TipTap editor -->
+      <app-tiptap-editor
+        [content]="content()"
+        [slug]="effectiveSlug()"
+        placeholder="Start writing your publication…"
+        (contentChange)="onContentChange($event)"
+      />
+
+      <!-- Attachments -->
+      <div class="attachments-section">
+        <div class="attachments-header">
+          <h3>Attachments</h3>
+          <label class="btn-attach" [class.uploading]="isUploadingAttachment()">
+            {{ isUploadingAttachment() ? 'Uploading…' : '+ Add file' }}
+            <input type="file" hidden (change)="onAttachmentSelected($event)" [disabled]="!effectiveSlug()" />
+          </label>
+        </div>
+
+        @if (attachments().length === 0) {
+          <p class="attach-empty">No attachments yet. Add PDFs, ZIPs, or any downloadable file.</p>
+        } @else {
+          <ul class="attach-list">
+            @for (att of attachments(); track att.url; let i = $index) {
+              <li class="attach-item">
+                <span class="attach-icon">📎</span>
+                <div class="attach-info">
+                  <a [href]="att.url" target="_blank" class="attach-name">{{ att.name }}</a>
+                  <span class="attach-size">{{ formatBytes(att.sizeBytes) }}</span>
+                </div>
+                <button class="attach-remove" (click)="removeAttachment(i)" title="Remove">×</button>
+              </li>
+            }
+          </ul>
+        }
+      </div>
+    </div>
+
+  }
+</div>

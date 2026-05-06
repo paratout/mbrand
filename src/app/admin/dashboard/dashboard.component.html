@@ -1,0 +1,58 @@
+<div class="dashboard">
+  <div class="dash-header">
+    <h1>Publications</h1>
+    <a routerLink="/admin/publications/new" id="new-pub-btn" class="btn-primary">
+      + New Publication
+    </a>
+  </div>
+
+  @if (isLoading()) {
+    <div class="state-message">Loading…</div>
+  } @else if (publications().length === 0) {
+    <div class="empty-state">
+      <p>No publications yet.</p>
+      <a routerLink="/admin/publications/new" class="btn-primary">Write your first one</a>
+    </div>
+  } @else {
+    <div class="pub-list">
+      @for (pub of publications(); track pub.slug) {
+        <div class="pub-row">
+          <div class="pub-info">
+            <a [routerLink]="['/admin/publications', pub.slug]" class="pub-title">
+              {{ pub.title?.trim() || 'Untitled' }}
+            </a>
+            <span class="pub-slug">{{ pub.slug }}</span>
+          </div>
+
+          <div class="pub-meta">
+            <span class="status-badge" [class.published]="pub.status === 'published'">
+              {{ pub.status }}
+            </span>
+            <span class="pub-date">
+              {{ pub.updatedAt?.toDate() | date: 'dd MMM yyyy' }}
+            </span>
+          </div>
+
+          <div class="pub-actions">
+            <a [routerLink]="['/admin/publications', pub.slug]" class="btn-icon" title="Edit">
+              ✏️
+            </a>
+            @if (pub.status === 'published') {
+              <a [href]="'/publications/' + pub.slug" target="_blank" class="btn-icon" title="View live">
+                🔗
+              </a>
+            }
+            <button
+              class="btn-icon btn-delete"
+              title="Delete"
+              [disabled]="deletingSlug() === pub.slug"
+              (click)="confirmDelete(pub)"
+            >
+              {{ deletingSlug() === pub.slug ? '…' : '🗑️' }}
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

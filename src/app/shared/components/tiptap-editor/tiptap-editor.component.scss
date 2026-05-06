@@ -1,0 +1,139 @@
+/* ---- Wrapper ---- */
+.editor-wrap {
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff;
+}
+
+/* ---- Toolbar ---- */
+.toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--glass-border);
+  background: var(--bg-secondary);
+}
+
+.toolbar-group {
+  display: flex;
+  gap: 2px;
+}
+
+.toolbar-sep {
+  width: 1px;
+  height: 20px;
+  background: var(--glass-border);
+  margin: 0 4px;
+}
+
+.tb-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  height: 30px;
+  padding: 0 6px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-family: var(--font-primary);
+  cursor: pointer;
+  transition: background var(--transition-base), color var(--transition-base);
+
+  &:hover { background: rgba(0, 0, 0, 0.07); color: var(--text-primary); }
+  &.active { background: rgba(37, 99, 235, 0.12); color: var(--accent-primary); }
+}
+
+.upload-indicator {
+  margin-left: auto;
+  font-size: 0.75rem;
+  color: var(--accent-primary);
+  animation: pulse-text 1s ease-in-out infinite;
+}
+
+@keyframes pulse-text {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+/* ---- ProseMirror content area ---- */
+.prosemirror-host {
+  padding: var(--spacing-lg) var(--spacing-xl);
+  min-height: 400px;
+  cursor: text;
+}
+
+/* TipTap / ProseMirror global styles (scoped to component) */
+:host ::ng-deep {
+  .ProseMirror {
+    outline: none;
+    min-height: 400px;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--text-primary);
+
+    p { margin: 0 0 1em; }
+    p.is-editor-empty:first-child::before {
+      content: attr(data-placeholder);
+      color: var(--text-secondary);
+      opacity: 0.5;
+      pointer-events: none;
+      float: left;
+      height: 0;
+    }
+
+    h1 { font-size: 2rem; margin: 1.5em 0 0.5em; }
+    h2 { font-size: 1.5rem; margin: 1.4em 0 0.5em; }
+    h3 { font-size: 1.2rem; margin: 1.3em 0 0.4em; }
+
+    ul, ol { padding-left: 1.5em; margin: 0.5em 0 1em; }
+    li { margin: 0.2em 0; }
+
+    blockquote {
+      border-left: 3px solid var(--accent-primary);
+      margin: 1em 0;
+      padding: 0.5em 1.2em;
+      color: var(--text-secondary);
+      font-style: italic;
+    }
+
+    code {
+      background: #f1f5f9;
+      border-radius: 4px;
+      padding: 2px 5px;
+      font-size: 0.875em;
+      font-family: 'Courier New', monospace;
+    }
+
+    pre {
+      background: #0f172a;
+      color: #e2e8f0;
+      border-radius: 10px;
+      padding: 1em 1.2em;
+      overflow-x: auto;
+      margin: 1em 0;
+
+      code { background: none; color: inherit; padding: 0; }
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid var(--glass-border);
+      margin: 2em 0;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 1em 0;
+      display: block;
+    }
+
+    a { color: var(--accent-primary); text-decoration: underline; }
+  }
+}

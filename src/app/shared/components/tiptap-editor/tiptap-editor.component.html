@@ -1,0 +1,36 @@
+<div class="editor-wrap">
+  <!-- Toolbar -->
+  <div class="toolbar" role="toolbar" aria-label="Text formatting">
+    <div class="toolbar-group">
+      <button type="button" class="tb-btn" [class.active]="isActive('heading', {level:1})" (click)="heading(1)" title="Heading 1">H1</button>
+      <button type="button" class="tb-btn" [class.active]="isActive('heading', {level:2})" (click)="heading(2)" title="Heading 2">H2</button>
+      <button type="button" class="tb-btn" [class.active]="isActive('heading', {level:3})" (click)="heading(3)" title="Heading 3">H3</button>
+    </div>
+    <div class="toolbar-sep"></div>
+    <div class="toolbar-group">
+      <button type="button" class="tb-btn" [class.active]="isActive('bold')"   (click)="bold()"   title="Bold"><strong>B</strong></button>
+      <button type="button" class="tb-btn" [class.active]="isActive('italic')" (click)="italic()" title="Italic"><em>I</em></button>
+      <button type="button" class="tb-btn" [class.active]="isActive('strike')" (click)="strike()" title="Strikethrough"><s>S</s></button>
+      <button type="button" class="tb-btn" [class.active]="isActive('code')"   (click)="code()"   title="Inline code">&#96;&#96;</button>
+    </div>
+    <div class="toolbar-sep"></div>
+    <div class="toolbar-group">
+      <button type="button" class="tb-btn" [class.active]="isActive('bulletList')"  (click)="bulletList()"  title="Bullet list">• ≡</button>
+      <button type="button" class="tb-btn" [class.active]="isActive('orderedList')" (click)="orderedList()" title="Ordered list">1. ≡</button>
+    </div>
+    <div class="toolbar-sep"></div>
+    <div class="toolbar-group">
+      <button type="button" class="tb-btn" [class.active]="isActive('blockquote')" (click)="blockquote()" title="Blockquote">" "</button>
+      <button type="button" class="tb-btn" [class.active]="isActive('codeBlock')"  (click)="codeBlock()"  title="Code block">&#123; &#125;</button>
+      <button type="button" class="tb-btn" [class.active]="isActive('link')"       (click)="setLink()"    title="Link">🔗</button>
+      <button type="button" class="tb-btn" (click)="hr()" title="Divider">—</button>
+    </div>
+
+    @if (isUploading()) {
+      <div class="upload-indicator">Uploading image…</div>
+    }
+  </div>
+
+  <!-- Editor mount point -->
+  <div #editorEl class="prosemirror-host"></div>
+</div>

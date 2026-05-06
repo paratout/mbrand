@@ -21,16 +21,16 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./public/login/login.component').then((m) => m.LoginComponent),
   },
-  // Admin routes (lazy-loaded, guarded)
+  // Admin — uses AdminLayoutComponent as parent shell (provides nav + router-outlet)
   {
     path: 'admin',
     canActivate: [adminGuard],
+    loadComponent: () =>
+      import('./admin/layout/admin-layout.component').then(
+        (m) => m.AdminLayoutComponent
+      ),
     children: [
-      {
-        path: '',
-        redirectTo: 'dashboard',
-        pathMatch: 'full',
-      },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       {
         path: 'dashboard',
         loadComponent: () =>
