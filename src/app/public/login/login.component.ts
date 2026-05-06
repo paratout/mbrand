@@ -11,25 +11,27 @@ export class LoginComponent implements OnInit {
   protected auth   = inject(AuthService);
   protected router = inject(Router);
   protected error   = signal<string | null>(null);
-  protected loading = signal(false);
+  protected loading = signal(true);
 
-  /** Pick up the credential after Google redirects back to this page */
   async ngOnInit(): Promise<void> {
-    this.loading.set(true);
-    try {
-      await this.auth.handleRedirectResult();
-    } catch (err: unknown) {
-      this.error.set(err instanceof Error ? err.message : 'Sign-in failed.');
-    } finally {
-      this.loading.set(false);
+    // Wait for Firebase to restore auth state (handles both persisted sessions
+    // and the return leg of a redirect flow).
+    await this.auth.authStateReady();
+
+    if (this.auth.isOwner()) {
+      // Already authenticated — skip the login screen entirely.
+      await this.router.navigate(['/writer/dashboard'], { replaceUrl: true });
+      return;
     }
+
+    this.loading.set(false);
   }
 
   async signIn(): Promise<void> {
     this.error.set(null);
     this.loading.set(true);
     try {
-      await this.auth.signInWithGoogle(); // Navigates away — no code runs after this
+      await this.auth.signInWithGoogle(); // Redirects away — nothing runs after this
     } catch (err: unknown) {
       this.error.set(err instanceof Error ? err.message : 'Sign-in failed.');
       this.loading.set(false);

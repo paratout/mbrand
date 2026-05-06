@@ -1,9 +1,8 @@
-import { Injectable, inject, signal, computed } from '@angular/core';
+import { Injectable, inject, computed } from '@angular/core';
 import {
   Auth,
   GoogleAuthProvider,
   signInWithRedirect,
-  getRedirectResult,
   signOut,
   user,
 } from '@angular/fire/auth';
@@ -13,43 +12,34 @@ import { toSignal } from '@angular/core/rxjs-interop';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private auth   = inject(Auth);
-  private router = inject(Router);
+  readonly firebaseAuth = inject(Auth);
+  private router        = inject(Router);
 
-  readonly currentUser = toSignal(user(this.auth), { initialValue: null });
+  readonly currentUser = toSignal(user(this.firebaseAuth), { initialValue: null });
   readonly isLoggedIn  = computed(() => this.currentUser() !== null);
   readonly isOwner     = computed(() => this.currentUser()?.email === environment.adminEmail);
 
   /**
-   * Starts the Google redirect auth flow.
-   * The page navigates away — handleRedirectResult() must be called on return.
+   * Resolves once Firebase has fully restored auth state from redirect / cache.
+   * The guard awaits this before trusting isOwner().
+   */
+  authStateReady(): Promise<void> {
+    return this.firebaseAuth.authStateReady();
+  }
+
+  /**
+   * Starts the Google redirect flow — page navigates away.
+   * On return the Firebase SDK automatically processes the credential;
+   * no getRedirectResult() call is needed.
    */
   async signInWithGoogle(): Promise<void> {
     const provider = new GoogleAuthProvider();
     provider.setCustomParameters({ login_hint: environment.adminEmail });
-    await signInWithRedirect(this.auth, provider);
-  }
-
-  /**
-   * Must be called on the login page's ngOnInit.
-   * Picks up the credential after Google redirects the user back.
-   */
-  async handleRedirectResult(): Promise<void> {
-    try {
-      const result = await getRedirectResult(this.auth);
-      if (!result) return; // No redirect in progress — normal page load
-      if (result.user.email !== environment.adminEmail) {
-        await signOut(this.auth);
-        throw new Error('Unauthorized: this site is private.');
-      }
-      await this.router.navigate(['/writer/dashboard']);
-    } catch (err) {
-      throw err;
-    }
+    await signInWithRedirect(this.firebaseAuth, provider);
   }
 
   async signOut(): Promise<void> {
-    await signOut(this.auth);
+    await signOut(this.firebaseAuth);
     await this.router.navigate(['/']);
   }
 }
