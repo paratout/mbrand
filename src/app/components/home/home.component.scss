@@ -142,28 +142,28 @@
 
 .pillars-row {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;           /* always one line */
     align-items: center;
     justify-content: center;
     gap: 0;
+    width: 100%;
     margin-bottom: var(--spacing-lg);
 }
 
 .pillar {
-    font-size: 0.85rem;
+    font-size: clamp(0.5rem, 3.2vw, 0.85rem);  /* scales down on narrow screens */
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 2.5px;
+    letter-spacing: clamp(0.5px, 0.4vw, 2.5px);
     color: var(--text-secondary);
     white-space: nowrap;
     padding: 4px 0;
 
-    /* Separator lives on the pillar itself so it never orphans on a new line */
     &:not(:last-child)::after {
-        content: '\00d7'; /* × */
+        content: '\00d7';
         color: var(--accent-primary);
         opacity: 0.6;
-        margin: 0 12px;
+        margin: 0 clamp(4px, 1.2vw, 12px);
     }
 }
 
@@ -224,10 +224,9 @@
     .soon-footer {
         position: relative;
         margin-top: auto;
-        text-align: center;       /* centre text when lines wrap */
+        text-align: center;
     }
     .footer-links { justify-content: center; }
-    .pillar { letter-spacing: 2px; }
 }
 
 /* =============================================
