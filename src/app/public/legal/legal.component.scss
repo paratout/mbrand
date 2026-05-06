@@ -1,0 +1,113 @@
+.legal-page {
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+.legal-nav {
+  padding: 16px var(--spacing-lg);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.nav-home {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+  &:hover { color: var(--accent-primary); }
+}
+
+.legal-article {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: var(--spacing-xl) var(--spacing-lg);
+}
+
+/* Header */
+.legal-header {
+  margin-bottom: var(--spacing-xl);
+  border-bottom: 1px solid var(--glass-border);
+  padding-bottom: var(--spacing-xl);
+}
+
+.legal-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent-primary);
+  margin: 0 0 var(--spacing-sm);
+}
+
+.legal-header h1 {
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  margin: 0 0 8px;
+}
+
+.legal-date {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* Body */
+.legal-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+  font-size: 0.975rem;
+  line-height: 1.8;
+  color: var(--text-primary);
+
+  section { display: flex; flex-direction: column; gap: 10px; }
+
+  h2 {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  p { margin: 0; color: var(--text-secondary); }
+
+  strong { color: var(--text-primary); font-weight: 600; }
+
+  a {
+    color: var(--accent-primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    &:hover { opacity: 0.8; }
+  }
+}
+
+/* Footer */
+.legal-footer {
+  margin-top: var(--spacing-xl);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.875rem;
+
+  a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    &:hover { color: var(--accent-primary); }
+  }
+}
+
+.legal-sep { color: var(--text-secondary); opacity: 0.4; }
+
+/* Responsive */
+@media (max-width: 640px) {
+  .legal-article { padding: var(--spacing-lg) var(--spacing-md); }
+  .legal-header h1 { font-size: 1.6rem; }
+}

@@ -54,6 +54,17 @@ export const routes: Routes = [
       },
     ],
   },
+  // Legal pages
+  {
+    path: 'privacy',
+    loadComponent: () =>
+      import('./public/legal/privacy.component').then((m) => m.PrivacyComponent),
+  },
+  {
+    path: 'impressum',
+    loadComponent: () =>
+      import('./public/legal/impressum.component').then((m) => m.ImpressumComponent),
+  },
   // Fallback
   {
     path: '**',
