@@ -56,7 +56,7 @@
         </button>
         <button class="slug-action slug-cancel" (click)="cancelEditSlug()">✕</button>
       } @else {
-        <code class="slug-chip">{{ effectiveSlug() || '—' }}</code>
+        <code class="slug-chip">{{ effectiveSlug() || '-' }}</code>
         <button class="slug-edit-btn" title="Edit slug" (click)="startEditSlug()">✏️</button>
       }
 
