@@ -2,7 +2,7 @@ import { Injectable, inject, computed } from '@angular/core';
 import {
   Auth,
   GoogleAuthProvider,
-  signInWithRedirect,
+  signInWithPopup,
   signOut,
   user,
 } from '@angular/fire/auth';
@@ -12,34 +12,25 @@ import { toSignal } from '@angular/core/rxjs-interop';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  readonly firebaseAuth = inject(Auth);
-  private router        = inject(Router);
+  private auth   = inject(Auth);
+  private router = inject(Router);
 
-  readonly currentUser = toSignal(user(this.firebaseAuth), { initialValue: null });
+  readonly currentUser = toSignal(user(this.auth), { initialValue: null });
   readonly isLoggedIn  = computed(() => this.currentUser() !== null);
   readonly isOwner     = computed(() => this.currentUser()?.email === environment.adminEmail);
 
-  /**
-   * Resolves once Firebase has fully restored auth state from redirect / cache.
-   * The guard awaits this before trusting isOwner().
-   */
-  authStateReady(): Promise<void> {
-    return this.firebaseAuth.authStateReady();
-  }
-
-  /**
-   * Starts the Google redirect flow — page navigates away.
-   * On return the Firebase SDK automatically processes the credential;
-   * no getRedirectResult() call is needed.
-   */
   async signInWithGoogle(): Promise<void> {
     const provider = new GoogleAuthProvider();
-    provider.setCustomParameters({ login_hint: environment.adminEmail });
-    await signInWithRedirect(this.firebaseAuth, provider);
+    const result   = await signInWithPopup(this.auth, provider);
+    if (result.user.email !== environment.adminEmail) {
+      await signOut(this.auth);
+      throw new Error('Unauthorized.');
+    }
+    await this.router.navigate(['/writer/dashboard']);
   }
 
   async signOut(): Promise<void> {
-    await signOut(this.firebaseAuth);
+    await signOut(this.auth);
     await this.router.navigate(['/']);
   }
 }
