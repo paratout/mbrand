@@ -31,7 +31,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   // ---- State ----
   readonly title        = signal('');
   readonly summary      = signal('');
-  readonly content      = signal<Record<string, unknown>>({});
+  readonly content      = signal<Record<string, unknown> | null>(null);
   readonly attachments  = signal<Attachment[]>([]);
   readonly pubStatus    = signal<'draft' | 'published'>('draft');
   readonly saveStatus   = signal<SaveStatus>('idle');
@@ -123,7 +123,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     const payload = {
       title: this.title(),
       summary: this.summary(),
-      content: this.content(),
+      content: this.content() ?? {},
       attachments: this.attachments(),
     };
 

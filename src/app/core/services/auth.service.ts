@@ -1,4 +1,4 @@
-import { Injectable, inject, signal, computed } from '@angular/core';
+import { Injectable, inject, signal, computed, Injector, runInInjectionContext } from '@angular/core';
 import {
   Auth,
   GoogleAuthProvider,
@@ -14,6 +14,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 export class AuthService {
   private auth = inject(Auth);
   private router = inject(Router);
+  private injector = inject(Injector);
 
   readonly currentUser = toSignal(user(this.auth), { initialValue: null });
 
@@ -28,9 +29,10 @@ export class AuthService {
     const provider = new GoogleAuthProvider();
     provider.setCustomParameters({ login_hint: environment.adminEmail });
     try {
-      const result = await signInWithPopup(this.auth, provider);
+      const result = await runInInjectionContext(this.injector, () =>
+        signInWithPopup(this.auth, provider)
+      );
       if (result.user.email !== environment.adminEmail) {
-        // Not the owner — sign back out immediately
         await signOut(this.auth);
         throw new Error('Unauthorized: this site is private.');
       }

@@ -77,8 +77,9 @@ export class TiptapEditorComponent implements AfterViewInit, OnDestroy, OnChange
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['content'] && this.editor && !this.editor.isDestroyed) {
-      const incoming = changes['content'].currentValue;
-      if (incoming && Object.keys(incoming).length > 0) {
+      const incoming = changes['content'].currentValue as Record<string, unknown> | null;
+      // Only update if incoming is a valid non-empty TipTap doc
+      if (incoming && incoming['type'] === 'doc') {
         const current = JSON.stringify(this.editor.getJSON());
         if (current !== JSON.stringify(incoming)) {
           this.editor.commands.setContent(incoming);
@@ -107,7 +108,8 @@ export class TiptapEditorComponent implements AfterViewInit, OnDestroy, OnChange
         Placeholder.configure({ placeholder: this.placeholder }),
         buildImagePlugin(uploadImage),
       ],
-      content: this.content ?? {},
+      // Only pass content to TipTap if it's a valid doc (has a 'type' key)
+      content: this.content?.['type'] === 'doc' ? this.content : undefined,
       onUpdate: ({ editor }) => {
         this.contentChange.emit(editor.getJSON() as Record<string, unknown>);
       },
