@@ -16,7 +16,15 @@
   } @else if (pub() !== null) {
     <article class="pub-article">
 
+      <!-- Cover image -->
+      @if (pub()!.coverImage) {
+        <div class="pub-cover">
+          <img [src]="pub()!.coverImage!" [alt]="pub()!.title ?? ''" loading="lazy" />
+        </div>
+      }
+
       <!-- Header -->
+
       <header class="pub-header">
         <h1 class="pub-title">{{ pub()!.title }}</h1>
         @if (pub()!.summary) {

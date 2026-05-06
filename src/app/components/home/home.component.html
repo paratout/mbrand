@@ -40,25 +40,59 @@
             </p>
         </div>
 
-        <!-- Publications section -->
-        @if (!isLoading() && publications().length > 0) {
+        <!-- Publications section (only shown when there are publications) -->
+        @if (!isLoading() && allPublications().length > 0) {
           <section class="publications-section">
             <h2 class="pub-section-title">Publications</h2>
-            <div class="pub-grid">
+
+            <div class="pub-list">
               @for (pub of publications(); track pub.slug) {
-                <a [routerLink]="['/publications', pub.slug]" class="pub-card">
-                  <div class="pub-card-meta">
-                    <time>{{ pub.publishedAt?.toDate() | date: 'MMM d, yyyy' }}</time>
-                    <span class="read-time">{{ readTime(pub) }} min</span>
-                  </div>
-                  <h3 class="pub-card-title">{{ pub.title }}</h3>
-                  @if (pub.summary) {
-                    <p class="pub-card-summary">{{ pub.summary }}</p>
+                <a [routerLink]="['/publications', pub.slug]" class="pub-card"
+                   [class.has-cover]="!!pub.coverImage">
+
+                  <!-- Cover thumbnail (YouTube-style) -->
+                  @if (pub.coverImage) {
+                    <div class="pub-thumb">
+                      <img [src]="pub.coverImage" [alt]="pub.title ?? ''" loading="lazy" />
+                    </div>
                   }
-                  <span class="pub-card-cta">Read →</span>
+
+                  <div class="pub-info">
+                    <div class="pub-card-meta">
+                      <time>{{ pub.publishedAt?.toDate() | date: 'MMM d, yyyy' }}</time>
+                      <span>·</span>
+                      <span>{{ readTime(pub) }} min read</span>
+                    </div>
+                    <h3 class="pub-card-title">{{ pub.title }}</h3>
+                    @if (pub.summary) {
+                      <p class="pub-card-summary">{{ pub.summary }}</p>
+                    }
+                    <span class="pub-card-cta">Read →</span>
+                  </div>
                 </a>
               }
             </div>
+
+            <!-- Pagination -->
+            @if (totalPages() > 1) {
+              <nav class="pagination" aria-label="Publications pages">
+                <button class="page-btn" [disabled]="!hasPrev()" (click)="prevPage()">
+                  ←
+                </button>
+
+                @for (n of pageNumbers(); track n) {
+                  <button class="page-btn page-num"
+                    [class.active]="n === currentPage()"
+                    (click)="goToPage(n)">
+                    {{ n }}
+                  </button>
+                }
+
+                <button class="page-btn" [disabled]="!hasNext()" (click)="nextPage()">
+                  →
+                </button>
+              </nav>
+            }
           </section>
         }
 

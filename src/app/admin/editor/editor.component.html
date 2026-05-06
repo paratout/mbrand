@@ -9,43 +9,84 @@
       <a routerLink="/admin/dashboard" class="back-link">← Publications</a>
 
       <div class="topbar-right">
-        <!-- Save status -->
         <span class="save-status" [class]="saveStatus()">{{ saveLabel() }}</span>
 
-        <!-- Publish toggle -->
         @if (pubStatus() === 'draft') {
-          <button id="publish-btn" class="btn-publish" [disabled]="isPublishing() || !effectiveSlug()" (click)="publish()">
+          <button id="publish-btn" class="btn-pub btn-publish"
+            [disabled]="isPublishing() || !effectiveSlug()" (click)="publish()">
             {{ isPublishing() ? 'Publishing…' : 'Publish' }}
           </button>
         } @else {
-          <button id="unpublish-btn" class="btn-unpublish" [disabled]="isPublishing()" (click)="unpublish()">
+          <button id="unpublish-btn" class="btn-pub btn-unpublish"
+            [disabled]="isPublishing()" (click)="unpublish()">
             {{ isPublishing() ? '…' : 'Unpublish' }}
           </button>
-          <a [href]="'/publications/' + effectiveSlug()" target="_blank" class="btn-view">View →</a>
+          <a [href]="'/publications/' + effectiveSlug()" target="_blank" class="btn-pub btn-view">
+            View →
+          </a>
         }
 
-        <!-- Delete -->
         @if (!isNew()) {
-          <button class="btn-delete" [disabled]="isDeleting()" (click)="confirmDelete()">
+          <button class="btn-pub btn-delete" [disabled]="isDeleting()" (click)="confirmDelete()">
             {{ isDeleting() ? '…' : 'Delete' }}
           </button>
         }
       </div>
     </div>
 
-    <!-- Slug chip -->
+    <!-- Slug row -->
     <div class="slug-row">
-      <span class="slug-label">URL:</span>
-      <code class="slug-chip">/publications/{{ effectiveSlug() || '—' }}</code>
-      @if (pubStatus() === 'published') {
-        <span class="pub-badge">● Published</span>
+      <span class="slug-label">URL</span>
+      <span class="slug-prefix">/publications/</span>
+
+      @if (editingSlug()) {
+        <input
+          id="slug-input"
+          class="slug-input"
+          type="text"
+          [value]="pendingSlug()"
+          (input)="pendingSlug.set($any($event.target).value)"
+          (keydown.enter)="confirmSlug()"
+          (keydown.escape)="cancelEditSlug()"
+          [disabled]="isRenaming()"
+          autofocus
+        />
+        <button class="slug-action slug-confirm" (click)="confirmSlug()" [disabled]="isRenaming()">
+          {{ isRenaming() ? '…' : '✓' }}
+        </button>
+        <button class="slug-action slug-cancel" (click)="cancelEditSlug()">✕</button>
       } @else {
-        <span class="draft-badge">Draft</span>
+        <code class="slug-chip">{{ effectiveSlug() || '—' }}</code>
+        <button class="slug-edit-btn" title="Edit slug" (click)="startEditSlug()">✏️</button>
       }
+
+      <span class="slug-status" [class.published]="pubStatus() === 'published'">
+        {{ pubStatus() === 'published' ? '● Published' : 'Draft' }}
+      </span>
     </div>
 
-    <!-- Content -->
+    <!-- Content area -->
     <div class="editor-body">
+
+      <!-- Cover image -->
+      <div class="cover-section">
+        @if (coverImage()) {
+          <div class="cover-preview">
+            <img [src]="coverImage()!" alt="Cover image" class="cover-img" />
+            <button class="cover-remove" (click)="removeCover()" title="Remove cover">✕</button>
+          </div>
+        } @else {
+          <label class="cover-upload" [class.uploading]="isUploadingCover()"
+            [class.disabled]="!effectiveSlug()">
+            <span class="cover-upload-icon">🖼️</span>
+            <span>{{ isUploadingCover() ? 'Uploading…' : 'Add cover image' }}</span>
+            <input type="file" accept="image/*" hidden
+              [disabled]="!effectiveSlug() || isUploadingCover()"
+              (change)="onCoverSelected($event)" />
+          </label>
+        }
+      </div>
+
       <!-- Title -->
       <input
         id="pub-title"
@@ -80,12 +121,14 @@
           <h3>Attachments</h3>
           <label class="btn-attach" [class.uploading]="isUploadingAttachment()">
             {{ isUploadingAttachment() ? 'Uploading…' : '+ Add file' }}
-            <input type="file" hidden (change)="onAttachmentSelected($event)" [disabled]="!effectiveSlug()" />
+            <input type="file" hidden
+              [disabled]="!effectiveSlug()"
+              (change)="onAttachmentSelected($event)" />
           </label>
         </div>
 
         @if (attachments().length === 0) {
-          <p class="attach-empty">No attachments yet. Add PDFs, ZIPs, or any downloadable file.</p>
+          <p class="attach-empty">No attachments. Add PDFs, ZIPs, or any downloadable file.</p>
         } @else {
           <ul class="attach-list">
             @for (att of attachments(); track att.url; let i = $index) {
@@ -95,13 +138,12 @@
                   <a [href]="att.url" target="_blank" class="attach-name">{{ att.name }}</a>
                   <span class="attach-size">{{ formatBytes(att.sizeBytes) }}</span>
                 </div>
-                <button class="attach-remove" (click)="removeAttachment(i)" title="Remove">×</button>
+                <button class="attach-remove" (click)="removeAttachment(i)">×</button>
               </li>
             }
           </ul>
         }
       </div>
     </div>
-
   }
 </div>

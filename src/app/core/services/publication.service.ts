@@ -119,6 +119,23 @@ export class PublicationService {
     );
   }
 
+  /**
+   * Rename a publication slug: copies doc to new slug, deletes old one.
+   * Caller is responsible for navigating to the new URL after this resolves.
+   */
+  rename(oldSlug: string, newSlug: string): Observable<void> {
+    const oldRef = doc(this.colRef, oldSlug);
+    const newRef = doc(this.colRef, newSlug);
+    return from(
+      getDoc(oldRef).then(async (snap) => {
+        if (!snap.exists()) throw new Error('Publication not found');
+        const data = snap.data() as Publication;
+        await setDoc(newRef, { ...data, slug: newSlug, updatedAt: serverTimestamp() });
+        await deleteDoc(oldRef);
+      })
+    );
+  }
+
   /** Delete a publication */
   delete(slug: string): Observable<void> {
     return from(deleteDoc(doc(this.colRef, slug)));

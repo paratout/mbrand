@@ -20,32 +20,36 @@ type SaveStatus = 'idle' | 'unsaved' | 'saving' | 'saved' | 'error';
   styleUrl: './editor.component.scss',
 })
 export class EditorComponent implements OnInit, OnDestroy {
-  /** Route param — undefined when path is /admin/publications/new */
   readonly slug = input<string | undefined>(undefined);
 
-  private pubService = inject(PublicationService);
-  private storage = inject(StorageService);
-  private router = inject(Router);
-  private destroyRef = inject(DestroyRef);
+  private pubService   = inject(PublicationService);
+  private storage      = inject(StorageService);
+  private router       = inject(Router);
+  private destroyRef   = inject(DestroyRef);
 
-  // ---- State ----
+  // ---- Content state ----
   readonly title        = signal('');
   readonly summary      = signal('');
   readonly content      = signal<Record<string, unknown> | null>(null);
   readonly attachments  = signal<Attachment[]>([]);
+  readonly coverImage   = signal<string | null>(null);
   readonly pubStatus    = signal<'draft' | 'published'>('draft');
+
+  // ---- UI state ----
   readonly saveStatus   = signal<SaveStatus>('idle');
   readonly isLoading    = signal(true);
   readonly isPublishing = signal(false);
   readonly isDeleting   = signal(false);
   readonly isUploadingAttachment = signal(false);
+  readonly isUploadingCover      = signal(false);
 
-  /** True when creating a brand-new publication */
-  readonly isNew = computed(() => this.slug() === undefined);
-  /** Slug being edited or the auto-generated one for a new pub */
-  readonly generatedSlug = signal('');
-  /** True after the new doc has been created in Firestore */
-  private created = false;
+  // ---- Slug editing ----
+  readonly isNew          = computed(() => this.slug() === undefined);
+  readonly generatedSlug  = signal('');
+  readonly editingSlug    = signal(false);   // is the slug field in edit mode?
+  readonly pendingSlug    = signal('');      // value being typed
+  readonly isRenaming     = signal(false);
+  private created         = false;
 
   readonly effectiveSlug = computed(() =>
     this.isNew() ? this.generatedSlug() : (this.slug() ?? '')
@@ -53,9 +57,9 @@ export class EditorComponent implements OnInit, OnDestroy {
 
   readonly saveLabel = computed(() => {
     const s = this.saveStatus();
-    if (s === 'saving') return 'Saving…';
-    if (s === 'saved')  return 'Saved ✓';
-    if (s === 'error')  return 'Error saving';
+    if (s === 'saving')  return 'Saving…';
+    if (s === 'saved')   return 'Saved ✓';
+    if (s === 'error')   return 'Error saving';
     if (s === 'unsaved') return 'Unsaved';
     return '';
   });
@@ -63,20 +67,18 @@ export class EditorComponent implements OnInit, OnDestroy {
   private saveSubject = new Subject<void>();
 
   ngOnInit(): void {
-    // Wire autosave
     this.saveSubject.pipe(
       debounceTime(2000),
       switchMap(() => this.performSave()),
       takeUntilDestroyed(this.destroyRef),
     ).subscribe({
-      next: () => this.saveStatus.set('saved'),
+      next:  () => this.saveStatus.set('saved'),
       error: () => this.saveStatus.set('error'),
     });
 
-    // Load existing publication
     if (!this.isNew()) {
       this.pubService.getBySlug(this.slug()!).subscribe((pub) => {
-        if (pub) { this.hydrate(pub); }
+        if (pub) this.hydrate(pub);
         this.isLoading.set(false);
       });
     } else {
@@ -87,51 +89,76 @@ export class EditorComponent implements OnInit, OnDestroy {
   private hydrate(pub: Publication): void {
     this.title.set(pub.title ?? '');
     this.summary.set(pub.summary ?? '');
-    this.content.set(pub.content ?? {});
+    this.content.set(pub.content ?? null);
     this.attachments.set(pub.attachments ?? []);
+    this.coverImage.set(pub.coverImage ?? null);
     this.pubStatus.set(pub.status);
   }
 
-  // ---- Field change handlers ----
+  // ---- Field handlers ----
   onTitleChange(value: string): void {
     this.title.set(value);
-    if (this.isNew()) { this.generatedSlug.set(slugify(value)); }
+    if (this.isNew()) this.generatedSlug.set(slugify(value));
     this.markUnsaved();
   }
 
-  onSummaryChange(value: string): void {
-    this.summary.set(value);
-    this.markUnsaved();
-  }
-
-  onContentChange(json: Record<string, unknown>): void {
-    this.content.set(json);
-    this.markUnsaved();
-  }
+  onSummaryChange(value: string): void { this.summary.set(value); this.markUnsaved(); }
+  onContentChange(json: Record<string, unknown>): void { this.content.set(json); this.markUnsaved(); }
 
   private markUnsaved(): void {
     this.saveStatus.set('unsaved');
     this.saveSubject.next();
   }
 
-  // ---- Save logic ----
+  // ---- Slug editing ----
+  startEditSlug(): void {
+    this.pendingSlug.set(this.effectiveSlug());
+    this.editingSlug.set(true);
+  }
+
+  cancelEditSlug(): void { this.editingSlug.set(false); }
+
+  confirmSlug(): void {
+    const next = slugify(this.pendingSlug());
+    if (!next || next === this.effectiveSlug()) { this.editingSlug.set(false); return; }
+
+    if (this.isNew()) {
+      // Just update the generated slug before first save
+      this.generatedSlug.set(next);
+      this.editingSlug.set(false);
+      return;
+    }
+
+    // Existing pub: rename Firestore doc
+    if (!confirm(`Rename slug from "${this.effectiveSlug()}" to "${next}"?\nAny existing links to the old URL will break.`)) return;
+
+    this.isRenaming.set(true);
+    this.pubService.rename(this.effectiveSlug(), next).subscribe({
+      next: () => {
+        this.isRenaming.set(false);
+        this.editingSlug.set(false);
+        this.router.navigate(['/admin/publications', next], { replaceUrl: true });
+      },
+      error: () => this.isRenaming.set(false),
+    });
+  }
+
+  // ---- Save ----
   private performSave() {
     const slug = this.effectiveSlug();
-    if (!slug) return new Subject<void>().asObservable(); // nothing to save without a slug
-
+    if (!slug) return new Subject<void>().asObservable();
     this.saveStatus.set('saving');
     const payload = {
-      title: this.title(),
-      summary: this.summary(),
-      content: this.content() ?? {},
+      title:       this.title(),
+      summary:     this.summary(),
+      content:     this.content() ?? {},
       attachments: this.attachments(),
+      coverImage:  this.coverImage(),
     };
-
     if (this.isNew() && !this.created) {
       return this.pubService.create(slug, payload).pipe(
         tap(() => {
           this.created = true;
-          // Update the URL without adding a new browser history entry
           this.router.navigate(['/admin/publications', slug], { replaceUrl: true });
         })
       );
@@ -145,8 +172,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     if (!slug) return;
     this.isPublishing.set(true);
     this.pubService.publish(slug).subscribe(() => {
-      this.pubStatus.set('published');
-      this.isPublishing.set(false);
+      this.pubStatus.set('published'); this.isPublishing.set(false);
     });
   }
 
@@ -155,28 +181,42 @@ export class EditorComponent implements OnInit, OnDestroy {
     if (!slug) return;
     this.isPublishing.set(true);
     this.pubService.unpublish(slug).subscribe(() => {
-      this.pubStatus.set('draft');
-      this.isPublishing.set(false);
+      this.pubStatus.set('draft'); this.isPublishing.set(false);
     });
   }
 
   // ---- Delete ----
-  async confirmDelete(): Promise<void> {
+  confirmDelete(): void {
     if (!confirm('Delete this publication permanently?')) return;
     this.isDeleting.set(true);
-    this.pubService.delete(this.effectiveSlug()).subscribe(() => {
-      this.router.navigate(['/admin/dashboard']);
+    this.pubService.delete(this.effectiveSlug()).subscribe(() =>
+      this.router.navigate(['/admin/dashboard'])
+    );
+  }
+
+  // ---- Cover image ----
+  onCoverSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file  = input.files?.[0];
+    input.value = '';
+    const slug  = this.effectiveSlug();
+    if (!file || !slug) return;
+    this.isUploadingCover.set(true);
+    this.storage.uploadCover(slug, file).subscribe({
+      next:  (url) => { this.coverImage.set(url); this.isUploadingCover.set(false); this.markUnsaved(); },
+      error: ()    => this.isUploadingCover.set(false),
     });
   }
+
+  removeCover(): void { this.coverImage.set(null); this.markUnsaved(); }
 
   // ---- Attachments ----
   onAttachmentSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
-    const file = input.files?.[0];
-    input.value = ''; // reset so same file can be re-selected
-    const slug = this.effectiveSlug();
+    const file  = input.files?.[0];
+    input.value = '';
+    const slug  = this.effectiveSlug();
     if (!file || !slug) return;
-
     this.isUploadingAttachment.set(true);
     this.storage.uploadAttachment(slug, file).subscribe({
       next: (url) => {
@@ -196,9 +236,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     this.markUnsaved();
   }
 
-  formatBytes = formatBytes;
+  readonly formatBytes = formatBytes;
 
-  ngOnDestroy(): void {
-    this.saveSubject.complete();
-  }
+  ngOnDestroy(): void { this.saveSubject.complete(); }
 }
