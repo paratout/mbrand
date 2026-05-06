@@ -228,3 +228,90 @@
         letter-spacing: 2px;
     }
 }
+
+/* ---- Publications section ---- */
+.publications-section {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 860px;
+    margin: 0 auto var(--spacing-xl);
+    padding: 0 var(--spacing-lg);
+}
+
+.pub-section-title {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    margin: 0 0 var(--spacing-md);
+    opacity: 0.6;
+}
+
+.pub-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.pub-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 20px 24px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    backdrop-filter: blur(12px);
+    text-decoration: none;
+    transition: background var(--transition-base), box-shadow var(--transition-base), transform var(--transition-base);
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.12);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+        transform: translateY(-2px);
+
+        .pub-card-cta { color: var(--accent-primary); }
+    }
+}
+
+.pub-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    opacity: 0.7;
+}
+
+.read-time { opacity: 0.8; }
+
+.pub-card-title {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+    letter-spacing: -0.02em;
+}
+
+.pub-card-summary {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.pub-card-cta {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-top: 4px;
+    transition: color var(--transition-base);
+}
+

@@ -1,0 +1,64 @@
+<div class="pub-page">
+
+  <!-- Minimal nav -->
+  <nav class="pub-nav">
+    <a routerLink="/" class="nav-home">← MB</a>
+  </nav>
+
+  @if (isLoading()) {
+    <div class="state-msg">Loading…</div>
+  } @else if (notFound()) {
+    <div class="not-found">
+      <h1>Publication not found</h1>
+      <p>This publication may be unpublished or the link may be incorrect.</p>
+      <a routerLink="/" class="btn-home">← Go home</a>
+    </div>
+  } @else if (pub() !== null) {
+    <article class="pub-article">
+
+      <!-- Header -->
+      <header class="pub-header">
+        <h1 class="pub-title">{{ pub()!.title }}</h1>
+        @if (pub()!.summary) {
+          <p class="pub-summary">{{ pub()!.summary }}</p>
+        }
+        <div class="pub-meta">
+          <time [dateTime]="pub()!.publishedAt?.toDate()?.toISOString() ?? ''">
+            {{ pub()!.publishedAt?.toDate() | date: 'MMMM d, yyyy' }}
+          </time>
+          <span class="meta-sep">·</span>
+          <span>{{ readTime() }} min read</span>
+        </div>
+      </header>
+
+      <hr class="header-rule">
+
+      <!-- Body -->
+      <div class="pub-body" [innerHTML]="bodyHtml()"></div>
+
+      <!-- Attachments -->
+      @if (pub()!.attachments?.length) {
+        <section class="pub-attachments">
+          <h2>Downloads</h2>
+          <ul class="attach-list">
+            @for (att of pub()!.attachments; track att.url) {
+              <li class="attach-item">
+                <a [href]="att.url" target="_blank" rel="noopener" class="attach-link">
+                  <span class="attach-icon">📎</span>
+                  <span class="attach-name">{{ att.name }}</span>
+                  <span class="attach-size">{{ formatBytes(att.sizeBytes) }}</span>
+                </a>
+              </li>
+            }
+          </ul>
+        </section>
+      }
+
+      <!-- Footer -->
+      <footer class="pub-footer">
+        <a routerLink="/" class="back-link">← Back to all publications</a>
+      </footer>
+
+    </article>
+  }
+</div>
