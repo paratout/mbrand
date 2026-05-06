@@ -1,7 +1,7 @@
 services:
-  angular-app:
+  angular:
     build: .
-    container_name: mb-website-angular
+    container_name: mb-angular
     working_dir: /app
     volumes:
       - .:/app
@@ -9,14 +9,28 @@ services:
       - firebase-emulators:/root/.cache/firebase/emulators
     ports:
       - "4200:4200"   # Angular dev server
+    command: >
+      sh -c "npm install && rm -rf .angular/cache && npm run start -- --host 0.0.0.0 --poll 2000"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - emulators
+
+  emulators:
+    build: .
+    container_name: mb-emulators
+    working_dir: /app
+    volumes:
+      - .:/app
+      - firebase-config:/root/.config
+      - firebase-emulators:/root/.cache/firebase/emulators
+    ports:
       - "4000:4000"   # Firebase Emulator UI
       - "8080:8080"   # Firestore
       - "9099:9099"   # Auth
       - "9199:9199"   # Storage
     command: >
-      sh -c "npm install && rm -rf .angular/cache && npm run start -- --host 0.0.0.0 --poll 2000"
-    environment:
-      - CHOKIDAR_USEPOLLING=true
+      sh -c "npm install && npx firebase emulators:start --project mbamou-2fc1b --only auth,firestore,storage"
 
 volumes:
   firebase-config:
