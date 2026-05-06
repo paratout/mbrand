@@ -6,8 +6,14 @@ services:
     volumes:
       - .:/app
       - firebase-config:/root/.config
+      - firebase-emulators:/root/.cache/firebase/emulators
     ports:
-      - "4200:4200"
+      - "4200:4200"   # Angular dev server
+      - "4000:4000"   # Firebase Emulator UI
+      - "5001:5001"   # Cloud Functions
+      - "8080:8080"   # Firestore
+      - "9099:9099"   # Auth
+      - "9199:9199"   # Storage
     command: >
       sh -c "npm install && npm run start -- --host 0.0.0.0 --poll 2000"
     environment:
@@ -15,3 +21,4 @@ services:
 
 volumes:
   firebase-config:
+  firebase-emulators:
