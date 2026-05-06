@@ -142,11 +142,11 @@
 
 .pillars-row {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    gap: 16px;
+    gap: 0;
     margin-bottom: var(--spacing-lg);
-    flex-wrap: wrap;
 }
 
 .pillar {
@@ -155,9 +155,17 @@
     text-transform: uppercase;
     letter-spacing: 2.5px;
     color: var(--text-secondary);
-}
+    white-space: nowrap;
+    padding: 4px 0;
 
-.divider { color: var(--accent-primary); font-size: 1rem; opacity: 0.6; }
+    /* Separator lives on the pillar itself so it never orphans on a new line */
+    &:not(:last-child)::after {
+        content: '\00d7'; /* × */
+        color: var(--accent-primary);
+        opacity: 0.6;
+        margin: 0 12px;
+    }
+}
 
 .tagline {
     font-size: clamp(1.05rem, 2vw, 1.2rem);
@@ -213,9 +221,13 @@
 @media (max-width: 640px) {
     .top-bar { padding: var(--spacing-md); }
     .center-block { margin-top: 60px; margin-bottom: 80px; }
-    .soon-footer { position: relative; margin-top: auto; }
-    .pillars-row { gap: 10px; }
-    .pillar { font-size: 0.75rem; letter-spacing: 2px; }
+    .soon-footer {
+        position: relative;
+        margin-top: auto;
+        text-align: center;       /* centre text when lines wrap */
+    }
+    .footer-links { justify-content: center; }
+    .pillar { letter-spacing: 2px; }
 }
 
 /* =============================================
