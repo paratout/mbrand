@@ -137,7 +137,7 @@ export class EditorComponent implements OnInit, OnDestroy {
       next: () => {
         this.isRenaming.set(false);
         this.editingSlug.set(false);
-        this.router.navigate(['/admin/publications', next], { replaceUrl: true });
+        this.router.navigate(['/writer/publications', next], { replaceUrl: true });
       },
       error: () => this.isRenaming.set(false),
     });
@@ -159,7 +159,7 @@ export class EditorComponent implements OnInit, OnDestroy {
       return this.pubService.create(slug, payload).pipe(
         tap(() => {
           this.created = true;
-          this.router.navigate(['/admin/publications', slug], { replaceUrl: true });
+          this.router.navigate(['/writer/publications', slug], { replaceUrl: true });
         })
       );
     }
@@ -190,7 +190,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     if (!confirm('Delete this publication permanently?')) return;
     this.isDeleting.set(true);
     this.pubService.delete(this.effectiveSlug()).subscribe(() =>
-      this.router.navigate(['/admin/dashboard'])
+      this.router.navigate(['/writer/dashboard'])
     );
   }
 

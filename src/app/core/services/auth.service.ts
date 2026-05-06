@@ -36,7 +36,7 @@ export class AuthService {
         await signOut(this.auth);
         throw new Error('Unauthorized: this site is private.');
       }
-      await this.router.navigate(['/admin/dashboard']);
+      await this.router.navigate(['/writer/dashboard']);
     } catch (err) {
       throw err;
     }

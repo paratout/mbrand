@@ -23,7 +23,7 @@ export const routes: Routes = [
   },
   // Admin — uses AdminLayoutComponent as parent shell (provides nav + router-outlet)
   {
-    path: 'admin',
+    path: 'writer',
     canActivate: [adminGuard],
     loadComponent: () =>
       import('./admin/layout/admin-layout.component').then(

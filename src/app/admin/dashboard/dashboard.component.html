@@ -1,7 +1,7 @@
 <div class="dashboard">
   <div class="dash-header">
     <h1>Publications</h1>
-    <a routerLink="/admin/publications/new" id="new-pub-btn" class="btn-primary">
+    <a routerLink="/writer/publications/new" id="new-pub-btn" class="btn-primary">
       + New Publication
     </a>
   </div>
@@ -11,14 +11,14 @@
   } @else if (publications().length === 0) {
     <div class="empty-state">
       <p>No publications yet.</p>
-      <a routerLink="/admin/publications/new" class="btn-primary">Write your first one</a>
+      <a routerLink="/writer/publications/new" class="btn-primary">Write your first one</a>
     </div>
   } @else {
     <div class="pub-list">
       @for (pub of publications(); track pub.slug) {
         <div class="pub-row">
           <div class="pub-info">
-            <a [routerLink]="['/admin/publications', pub.slug]" class="pub-title">
+            <a [routerLink]="['/writer/publications', pub.slug]" class="pub-title">
               {{ pub.title?.trim() || 'Untitled' }}
             </a>
             <span class="pub-slug">{{ pub.slug }}</span>
@@ -34,7 +34,7 @@
           </div>
 
           <div class="pub-actions">
-            <a [routerLink]="['/admin/publications', pub.slug]" class="btn-icon" title="Edit">
+            <a [routerLink]="['/writer/publications', pub.slug]" class="btn-icon" title="Edit">
               ✏️
             </a>
             @if (pub.status === 'published') {
