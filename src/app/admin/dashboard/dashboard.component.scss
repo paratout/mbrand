@@ -4,15 +4,19 @@
   padding: var(--spacing-xl) var(--spacing-lg);
 }
 
+/* ---- Header ---- */
 .dash-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: var(--spacing-lg);
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
 
   h1 { margin: 0; font-size: 1.5rem; }
 }
 
+/* ---- Primary button ---- */
 .btn-primary {
   display: inline-flex;
   align-items: center;
@@ -26,11 +30,13 @@
   text-decoration: none;
   border: none;
   cursor: pointer;
+  white-space: nowrap;
   transition: background var(--transition-base), transform var(--transition-base);
 
   &:hover { background: var(--accent-primary-hover); transform: translateY(-1px); }
 }
 
+/* ---- States ---- */
 .state-message {
   text-align: center;
   color: var(--text-secondary);
@@ -52,12 +58,14 @@
   p { color: var(--text-secondary); margin: 0; }
 }
 
+/* ---- List ---- */
 .pub-list {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 6px;
 }
 
+/* ---- Row (desktop) ---- */
 .pub-row {
   display: flex;
   align-items: center;
@@ -92,9 +100,12 @@
 }
 
 .pub-slug {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--text-secondary);
   font-family: monospace;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .pub-meta {
@@ -115,10 +126,7 @@
   background: #f1f5f9;
   color: var(--text-secondary);
 
-  &.published {
-    background: #dcfce7;
-    color: #15803d;
-  }
+  &.published { background: #dcfce7; color: #15803d; }
 }
 
 .pub-date {
@@ -139,8 +147,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   border-radius: 8px;
   border: none;
   background: transparent;
@@ -149,7 +157,51 @@
   text-decoration: none;
   transition: background var(--transition-base);
 
-  &:hover { background: rgba(0, 0, 0, 0.06); }
-  &:disabled { opacity: 0.4; cursor: not-allowed; }
+  &:hover           { background: rgba(0, 0, 0, 0.06); }
+  &:disabled        { opacity: 0.4; cursor: not-allowed; }
   &.btn-delete:hover { background: #fee2e2; }
+}
+
+/* ================================================================
+   MOBILE — cards replace the row layout
+   ================================================================ */
+@media (max-width: 640px) {
+  .dashboard {
+    padding: var(--spacing-md);
+  }
+
+  .dash-header h1 { font-size: 1.2rem; }
+
+  .pub-row {
+    /* Switch to card layout: stack info, then a bottom row for meta + actions */
+    flex-wrap: wrap;
+    padding: 14px 16px;
+    gap: 8px;
+  }
+
+  /* Title + slug take full width */
+  .pub-info {
+    width: 100%;
+    flex: none;
+  }
+
+  /* Date hidden on mobile to save space */
+  .pub-date { display: none; }
+
+  /* Status + actions share the bottom row */
+  .pub-meta {
+    flex: 1;
+    gap: 8px;
+  }
+
+  .pub-actions {
+    gap: 2px;
+  }
+
+  /* Bigger tap targets on mobile */
+  .btn-icon {
+    width: 38px;
+    height: 38px;
+    font-size: 1.1rem;
+  }
 }
