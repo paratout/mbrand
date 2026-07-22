@@ -1,5 +1,5 @@
 import {
-  Component, input, OnInit, OnDestroy, signal, computed, inject, HostListener,
+  Component, input, effect, untracked, OnDestroy, signal, computed, inject, HostListener,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DatePipe, DOCUMENT } from '@angular/common';
@@ -20,7 +20,7 @@ interface LightboxImage {
   templateUrl: './publication.component.html',
   styleUrl: './publication.component.scss',
 })
-export class PublicationComponent implements OnInit, OnDestroy {
+export class PublicationComponent implements OnDestroy {
   /** Bound from route :slug via withComponentInputBinding() */
   readonly slug = input<string>('');
 
@@ -42,8 +42,26 @@ export class PublicationComponent implements OnInit, OnDestroy {
 
   private jsonLdEl: HTMLScriptElement | null = null;
 
-  ngOnInit(): void {
-    this.pubService.getBySlug(this.slug()).subscribe({
+  constructor() {
+    // The router reuses this component when navigating between articles
+    // (read-next card), so reload whenever the :slug input changes.
+    effect(() => {
+      const slug = this.slug();
+      untracked(() => this.load(slug));
+    });
+  }
+
+  private load(slug: string): void {
+    if (!slug) return;
+    this.isLoading.set(true);
+    this.notFound.set(false);
+    this.readNext.set(null);
+    this.progress.set(0);
+    this.closeLightbox();
+    this.jsonLdEl?.remove();
+    window.scrollTo({ top: 0 });
+
+    this.pubService.getBySlug(slug).subscribe({
       next: (p) => {
         if (!p) {
           this.notFound.set(true);
