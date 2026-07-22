@@ -76,7 +76,7 @@ for (const file of files) {
     title: meta.title ?? slug,
     summary: meta.summary ?? '',
     coverImage: meta.cover ?? null,
-    publishedAt: meta.date ? `${meta.date}T09:00:00.000Z` : null,
+    publishedAt: meta.date ? `${meta.date}T${meta.time ?? '09:00'}:00.000Z` : null,
     status: meta.status ?? 'draft',
     readMinutes: readMinutes(body),
     html,
