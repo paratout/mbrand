@@ -5,10 +5,12 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { PublicationService, Publication } from '../../core/services/publication.service';
 import { tiptapToHtml } from '../../core/utils/tiptap-html.utils';
 import { estimateReadTime, formatBytes } from '../../core/utils/format.utils';
+import { SiteHeaderComponent } from '../../shared/components/site-header/site-header.component';
+import { SiteFooterComponent } from '../../shared/components/site-footer/site-footer.component';
 
 @Component({
   selector: 'app-publication',
-  imports: [RouterLink, DatePipe],
+  imports: [RouterLink, DatePipe, SiteHeaderComponent, SiteFooterComponent],
   templateUrl: './publication.component.html',
   styleUrl: './publication.component.scss',
 })

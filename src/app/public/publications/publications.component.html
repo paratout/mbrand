@@ -1,0 +1,75 @@
+<div class="pubs-page">
+
+  <app-site-header />
+
+  <main>
+    <section class="pubs">
+      <div class="container">
+
+        <header class="pubs-head">
+          <span class="kicker">Writing</span>
+          <h1 class="pubs-title">Publications</h1>
+          <p class="pubs-lede">
+            Essays and field notes on enterprise architecture, governance, and
+            technology in large organizations.
+          </p>
+        </header>
+
+        @if (isLoading()) {
+          <p class="state-msg">Loading…</p>
+        } @else if (allPublications().length === 0) {
+          <p class="state-msg">Nothing published yet - the first piece is on its way.</p>
+        } @else {
+
+          <div class="pub-list">
+            @for (pub of publications(); track pub.slug) {
+              <a [routerLink]="['/publications', pub.slug]" class="pub-row"
+                 [class.has-cover]="!!pub.coverImage">
+
+                @if (pub.coverImage) {
+                  <div class="pub-thumb">
+                    <img [src]="pub.coverImage" [alt]="pub.title ?? ''" loading="lazy" />
+                  </div>
+                }
+
+                <div class="pub-info">
+                  <div class="pub-meta">
+                    <time>{{ pub.publishedAt?.toDate() | date: 'MMM d, yyyy' }}</time>
+                    <span class="meta-sep">·</span>
+                    <span>{{ readTime(pub) }} min read</span>
+                  </div>
+                  <h2 class="pub-title">{{ pub.title }}</h2>
+                  @if (pub.summary) {
+                    <p class="pub-summary">{{ pub.summary }}</p>
+                  }
+                  <span class="pub-cta">Read <span class="arrow">→</span></span>
+                </div>
+              </a>
+            }
+          </div>
+
+          @if (totalPages() > 1) {
+            <nav class="pagination" aria-label="Publications pages">
+              <button class="page-btn" [disabled]="!hasPrev()" (click)="prevPage()">←</button>
+
+              @for (n of pageNumbers(); track n) {
+                <button class="page-btn page-num"
+                  [class.active]="n === currentPage()"
+                  (click)="goToPage(n)">
+                  {{ n }}
+                </button>
+              }
+
+              <button class="page-btn" [disabled]="!hasNext()" (click)="nextPage()">→</button>
+            </nav>
+          }
+
+        }
+
+      </div>
+    </section>
+  </main>
+
+  <app-site-footer />
+
+</div>

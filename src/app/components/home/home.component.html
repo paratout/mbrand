@@ -1,104 +1,102 @@
-<div class="soon-page">
+<div class="home-page">
 
-    <!-- Ambient background -->
-    <div class="ambient">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
-    </div>
+  <app-site-header />
 
-    <!-- Subtle grid overlay -->
-    <div class="grid-overlay"></div>
+  <main>
 
-    <!-- Main content -->
-    <main class="soon-content">
+    <!-- ============ Hero ============ -->
+    <section class="hero">
+      <div class="container hero-grid">
 
-        <!-- Top bar -->
-        <header class="top-bar">
-            <span class="logo">MB</span>
-        </header>
+        <div class="hero-copy">
+          <span class="kicker">Organization · Governance · Technology</span>
 
-        <!-- Center block -->
-        <div class="center-block">
-            <h1 class="name">Mehdi Bamou</h1>
+          <h1 class="hero-title">
+            Clear thinking on how organizations, governance
+            <em>and technology</em> fit together.
+          </h1>
 
-            <div class="pillars-row">
-                <span class="pillar">Organization</span>
-                <span class="pillar">Governance</span>
-                <span class="pillar">Technology</span>
-            </div>
+          <p class="hero-lede">
+            I'm Mehdi Bamou - an enterprise architect writing about how large
+            organizations actually work: the structures, the systems, and the
+            decisions that connect them.
+          </p>
 
-            <p class="tagline">
-                A personal platform for ideas at the intersection of enterprise, innovation, and governance.
-            </p>
+          <div class="hero-actions">
+            <a routerLink="/publications" class="btn btn-primary">Read publications</a>
+            <a routerLink="/about" class="btn btn-ghost">About me</a>
+          </div>
         </div>
 
-        <!-- Publications section (only shown when there are publications) -->
-        @if (!isLoading() && allPublications().length > 0) {
-          <section class="publications-section">
-            <h2 class="pub-section-title">Publications</h2>
+        <div class="hero-photo">
+          <div class="photo-frame">
+            <img
+              src="/images/portrait-hero.webp"
+              alt="Portrait of Mehdi Bamou"
+              width="1200"
+              height="1500"
+              fetchpriority="high"
+            />
+          </div>
+        </div>
 
-            <div class="pub-list">
-              @for (pub of publications(); track pub.slug) {
-                <a [routerLink]="['/publications', pub.slug]" class="pub-card"
-                   [class.has-cover]="!!pub.coverImage">
+      </div>
+    </section>
 
-                  <!-- Cover thumbnail (YouTube-style) -->
-                  @if (pub.coverImage) {
-                    <div class="pub-thumb">
-                      <img [src]="pub.coverImage" [alt]="pub.title ?? ''" loading="lazy" />
-                    </div>
-                  }
-
-                  <div class="pub-info">
-                    <div class="pub-card-meta">
-                      <time>{{ pub.publishedAt?.toDate() | date: 'MMM d, yyyy' }}</time>
-                      <span>·</span>
-                      <span>{{ readTime(pub) }} min read</span>
-                    </div>
-                    <h3 class="pub-card-title">{{ pub.title }}</h3>
-                    @if (pub.summary) {
-                      <p class="pub-card-summary">{{ pub.summary }}</p>
-                    }
-                    <span class="pub-card-cta">Read →</span>
-                  </div>
-                </a>
-              }
+    <!-- ============ Focus areas ============ -->
+    <section class="focus">
+      <div class="container">
+        <div class="focus-grid">
+          @for (area of focusAreas; track area.index) {
+            <div class="focus-item">
+              <span class="focus-index">{{ area.index }}</span>
+              <h2 class="focus-title">{{ area.title }}</h2>
+              <p class="focus-text">{{ area.text }}</p>
             </div>
+          }
+        </div>
+      </div>
+    </section>
 
-            <!-- Pagination -->
-            @if (totalPages() > 1) {
-              <nav class="pagination" aria-label="Publications pages">
-                <button class="page-btn" [disabled]="!hasPrev()" (click)="prevPage()">
-                  ←
-                </button>
+    <!-- ============ Latest publications ============ -->
+    @if (!isLoading() && latest().length > 0) {
+      <section class="latest">
+        <div class="container">
 
-                @for (n of pageNumbers(); track n) {
-                  <button class="page-btn page-num"
-                    [class.active]="n === currentPage()"
-                    (click)="goToPage(n)">
-                    {{ n }}
-                  </button>
+          <div class="section-head">
+            <span class="kicker">Writing</span>
+            <h2 class="section-title">Latest publications</h2>
+          </div>
+
+          <div class="pub-list">
+            @for (pub of latest(); track pub.slug) {
+              <a [routerLink]="['/publications', pub.slug]" class="pub-row">
+                <div class="pub-meta">
+                  <time>{{ pub.publishedAt?.toDate() | date: 'MMM d, yyyy' }}</time>
+                  <span class="meta-sep">·</span>
+                  <span>{{ readTime(pub) }} min read</span>
+                </div>
+                <h3 class="pub-title">{{ pub.title }}</h3>
+                @if (pub.summary) {
+                  <p class="pub-summary">{{ pub.summary }}</p>
                 }
-
-                <button class="page-btn" [disabled]="!hasNext()" (click)="nextPage()">
-                  →
-                </button>
-              </nav>
+                <span class="pub-cta">Read <span class="arrow">→</span></span>
+              </a>
             }
-          </section>
-        }
+          </div>
 
-        <!-- Footer -->
-        <footer class="soon-footer">
-            <div class="footer-links">
-                <a routerLink="/privacy" class="footer-link">Privacy Policy</a>
-                <span class="footer-sep">·</span>
-                <a routerLink="/impressum" class="footer-link">Legal Notice</a>
+          @if (hasMore()) {
+            <div class="latest-more">
+              <a routerLink="/publications" class="btn btn-ghost">All publications</a>
             </div>
-            <p class="copyright">&copy; 2026 Mehdi Bamou &middot; Personal website</p>
-            <p class="no-cookies">No cookies &middot; No tracking &middot; No data collection</p>
-        </footer>
+          }
 
-    </main>
+        </div>
+      </section>
+    }
+
+  </main>
+
+  <app-site-footer />
+
 </div>

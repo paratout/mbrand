@@ -1,9 +1,6 @@
 <div class="pub-page">
 
-  <!-- Minimal nav -->
-  <nav class="pub-nav">
-    <a routerLink="/" class="nav-home">← MB</a>
-  </nav>
+  <app-site-header />
 
   @if (isLoading()) {
     <div class="state-msg">Loading…</div>
@@ -64,9 +61,11 @@
 
       <!-- Footer -->
       <footer class="pub-footer">
-        <a routerLink="/" class="back-link">← Back to all publications</a>
+        <a routerLink="/publications" class="back-link">← Back to all publications</a>
       </footer>
 
     </article>
   }
+
+  <app-site-footer />
 </div>

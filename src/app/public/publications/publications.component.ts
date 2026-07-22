@@ -6,40 +6,36 @@ import { estimateReadTime } from '../../core/utils/format.utils';
 import { SiteHeaderComponent } from '../../shared/components/site-header/site-header.component';
 import { SiteFooterComponent } from '../../shared/components/site-footer/site-footer.component';
 
-const LATEST_COUNT = 3;
+const PAGE_SIZE = 10;
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-publications',
   imports: [RouterLink, DatePipe, SiteHeaderComponent, SiteFooterComponent],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.scss',
+  templateUrl: './publications.component.html',
+  styleUrl: './publications.component.scss',
 })
-export class HomeComponent implements OnInit {
+export class PublicationsComponent implements OnInit {
   private pubService = inject(PublicationService);
 
   readonly allPublications = signal<Publication[]>([]);
+  readonly currentPage     = signal(1);
   readonly isLoading       = signal(true);
 
-  readonly latest = computed(() => this.allPublications().slice(0, LATEST_COUNT));
-  readonly hasMore = computed(() => this.allPublications().length > LATEST_COUNT);
+  readonly totalPages = computed(() =>
+    Math.max(1, Math.ceil(this.allPublications().length / PAGE_SIZE))
+  );
 
-  readonly focusAreas = [
-    {
-      index: '01',
-      title: 'Organization',
-      text: 'How companies structure themselves: operating models, business processes, and the people who make them work.',
-    },
-    {
-      index: '02',
-      title: 'Governance',
-      text: 'The decision rights, standards, and guardrails that keep complex organizations and IT landscapes coherent.',
-    },
-    {
-      index: '03',
-      title: 'Technology',
-      text: 'Application portfolios, enterprise architecture, and the pragmatic use of technology at scale.',
-    },
-  ];
+  readonly publications = computed(() => {
+    const start = (this.currentPage() - 1) * PAGE_SIZE;
+    return this.allPublications().slice(start, start + PAGE_SIZE);
+  });
+
+  readonly hasPrev = computed(() => this.currentPage() > 1);
+  readonly hasNext = computed(() => this.currentPage() < this.totalPages());
+
+  readonly pageNumbers = computed(() =>
+    Array.from({ length: this.totalPages() }, (_, i) => i + 1)
+  );
 
   ngOnInit(): void {
     this.pubService.getPublished().subscribe({
@@ -47,6 +43,16 @@ export class HomeComponent implements OnInit {
       error: ()     => this.isLoading.set(false),
     });
   }
+
+  prevPage(): void {
+    if (this.hasPrev()) { this.currentPage.update((p) => p - 1); window.scrollTo(0, 0); }
+  }
+
+  nextPage(): void {
+    if (this.hasNext()) { this.currentPage.update((p) => p + 1); window.scrollTo(0, 0); }
+  }
+
+  goToPage(n: number): void { this.currentPage.set(n); window.scrollTo(0, 0); }
 
   readTime(pub: Publication): number {
     if (!pub.content) return 1;
