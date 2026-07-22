@@ -4,6 +4,9 @@ import { RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet],
-  template: '<router-outlet />'
+  template: `
+    <a class="skip-link" href="#main">Skip to content</a>
+    <router-outlet />
+  `,
 })
 export class AppComponent {}

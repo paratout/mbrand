@@ -2,7 +2,7 @@
 
   <app-site-header />
 
-  <main>
+  <main id="main">
     <section class="pubs">
       <div class="container">
 
@@ -10,8 +10,8 @@
           <span class="kicker">Writing</span>
           <h1 class="pubs-title">Publications</h1>
           <p class="pubs-lede">
-            Essays and field notes on enterprise architecture, governance, and
-            technology in large organizations.
+            Essays and practical notes on enterprise architecture, governance,
+            and technology in large organizations.
           </p>
         </header>
 
@@ -28,15 +28,15 @@
 
                 @if (pub.coverImage) {
                   <div class="pub-thumb">
-                    <img [src]="pub.coverImage" [alt]="pub.title ?? ''" loading="lazy" />
+                    <img [src]="pub.coverImage" [alt]="pub.title" loading="lazy" />
                   </div>
                 }
 
                 <div class="pub-info">
                   <div class="pub-meta">
-                    <time>{{ pub.publishedAt?.toDate() | date: 'MMM d, yyyy' }}</time>
-                    <span class="meta-sep">·</span>
-                    <span>{{ readTime(pub) }} min read</span>
+                    <time>{{ pub.publishedAt | date: 'MMM d, yyyy' }}</time>
+                    <span class="meta-sep">-</span>
+                    <span>{{ pub.readMinutes }} min read</span>
                   </div>
                   <h2 class="pub-title">{{ pub.title }}</h2>
                   @if (pub.summary) {

@@ -1,8 +1,8 @@
 import { Component, inject, OnInit, signal, computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { Title, Meta } from '@angular/platform-browser';
 import { PublicationService, Publication } from '../../core/services/publication.service';
-import { estimateReadTime } from '../../core/utils/format.utils';
 import { SiteHeaderComponent } from '../../shared/components/site-header/site-header.component';
 import { SiteFooterComponent } from '../../shared/components/site-footer/site-footer.component';
 
@@ -16,6 +16,14 @@ const PAGE_SIZE = 10;
 })
 export class PublicationsComponent implements OnInit {
   private pubService = inject(PublicationService);
+
+  constructor() {
+    inject(Title).setTitle('Publications - Mehdi Bamou');
+    inject(Meta).updateTag({
+      name: 'description',
+      content: 'Essays and practical notes on enterprise architecture, governance, and technology in large organizations.',
+    });
+  }
 
   readonly allPublications = signal<Publication[]>([]);
   readonly currentPage     = signal(1);
@@ -53,9 +61,4 @@ export class PublicationsComponent implements OnInit {
   }
 
   goToPage(n: number): void { this.currentPage.set(n); window.scrollTo(0, 0); }
-
-  readTime(pub: Publication): number {
-    if (!pub.content) return 1;
-    return estimateReadTime(JSON.stringify(pub.content));
-  }
 }

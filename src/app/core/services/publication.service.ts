@@ -1,143 +1,44 @@
-import { Injectable, inject } from '@angular/core';
-import {
-  Firestore,
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  setDoc,
-  updateDoc,
-  deleteDoc,
-  query,
-  where,
-  orderBy,
-  serverTimestamp,
-  Timestamp,
-} from '@angular/fire/firestore';
+import { Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
 
+/**
+ * Publications are static JSON generated at build time from
+ * content/publications/*.md by scripts/build-content.mjs.
+ */
 export interface Publication {
   slug: string;
-  title: string | null;
+  title: string;
   summary: string;
-  content: Record<string, unknown>;
   coverImage: string | null;
-  attachments: Attachment[];
-  status: 'draft' | 'published';
-  createdAt: Timestamp | null;
-  updatedAt: Timestamp | null;
-  publishedAt: Timestamp | null;
+  publishedAt: string | null; // ISO string
+  readMinutes: number;
 }
 
-export interface Attachment {
-  name: string;
-  url: string;
-  sizeBytes: number;
-  mimeType: string;
+export interface PublicationDetail extends Publication {
+  html: string;
 }
-
-export type PublicationInput = Omit<Publication, 'createdAt' | 'updatedAt' | 'publishedAt'>;
 
 @Injectable({ providedIn: 'root' })
 export class PublicationService {
-  private firestore = inject(Firestore);
-  private colRef = collection(this.firestore, 'publications');
-
-  /** Get all published publications, ordered by publishedAt desc */
+  /** All published publications, newest first. */
   getPublished(): Observable<Publication[]> {
-    const q = query(
-      this.colRef,
-      where('status', '==', 'published'),
-      orderBy('publishedAt', 'desc')
-    );
-    return from(getDocs(q).then((snap) => snap.docs.map((d) => d.data() as Publication)));
-  }
-
-  /** Get all publications (owner admin dashboard) */
-  getAll(): Observable<Publication[]> {
-    const q = query(this.colRef, orderBy('updatedAt', 'desc'));
-    return from(getDocs(q).then((snap) => snap.docs.map((d) => d.data() as Publication)));
-  }
-
-  /** Get a single publication by slug */
-  getBySlug(slug: string): Observable<Publication | null> {
     return from(
-      getDoc(doc(this.colRef, slug)).then((snap) =>
-        snap.exists() ? (snap.data() as Publication) : null
-      )
-    );
-  }
-
-  /** Create a new publication (slug as doc ID) */
-  create(slug: string, data: Partial<PublicationInput>): Observable<void> {
-    return from(
-      setDoc(doc(this.colRef, slug), {
-        slug,
-        title: '',
-        summary: '',
-        content: {},
-        coverImage: null,
-        attachments: [],
-        status: 'draft',
-        ...data,
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp(),
-        publishedAt: null,
+      fetch('/content/publications.json').then((r) => {
+        if (!r.ok) throw new Error(`publications.json ${r.status}`);
+        return r.json() as Promise<Publication[]>;
       })
     );
   }
 
-  /** Update fields on an existing publication */
-  update(slug: string, data: Partial<PublicationInput>): Observable<void> {
+  /** One publication with rendered HTML body, or null when missing. */
+  getBySlug(slug: string): Observable<PublicationDetail | null> {
+    const safe = encodeURIComponent(slug);
     return from(
-      updateDoc(doc(this.colRef, slug), {
-        ...data,
-        updatedAt: serverTimestamp(),
+      fetch(`/content/publications/${safe}.json`).then((r) => {
+        if (r.status === 404) return null;
+        if (!r.ok) throw new Error(`publication ${slug} ${r.status}`);
+        return r.json() as Promise<PublicationDetail>;
       })
     );
-  }
-
-  /** Publish a publication */
-  publish(slug: string): Observable<void> {
-    return from(
-      updateDoc(doc(this.colRef, slug), {
-        status: 'published',
-        publishedAt: serverTimestamp(),
-        updatedAt: serverTimestamp(),
-      })
-    );
-  }
-
-  /** Unpublish (revert to draft) */
-  unpublish(slug: string): Observable<void> {
-    return from(
-      updateDoc(doc(this.colRef, slug), {
-        status: 'draft',
-        publishedAt: null,
-        updatedAt: serverTimestamp(),
-      })
-    );
-  }
-
-  /**
-   * Rename a publication slug: copies doc to new slug, deletes old one.
-   * Caller is responsible for navigating to the new URL after this resolves.
-   */
-  rename(oldSlug: string, newSlug: string): Observable<void> {
-    const oldRef = doc(this.colRef, oldSlug);
-    const newRef = doc(this.colRef, newSlug);
-    return from(
-      getDoc(oldRef).then(async (snap) => {
-        if (!snap.exists()) throw new Error('Publication not found');
-        const data = snap.data() as Publication;
-        await setDoc(newRef, { ...data, slug: newSlug, updatedAt: serverTimestamp() });
-        await deleteDoc(oldRef);
-      })
-    );
-  }
-
-  /** Delete a publication */
-  delete(slug: string): Observable<void> {
-    return from(deleteDoc(doc(this.colRef, slug)));
   }
 }

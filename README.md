@@ -1,53 +1,57 @@
 # mehdibamou.com
 
-Personal website for Mehdi Bamou — at the intersection of Business, Technology, and Governance.
+Personal website of Mehdi Bamou - organization, governance & technology.
 
-Currently in **coming soon** mode.
+Fully static site: articles live as Markdown in this repository, are compiled
+to JSON at build time, and ship as plain files on Firebase Hosting.
+No database, no cookies, no tracking.
 
 ## Stack
 
-- **Frontend**: Angular 18 (standalone components, SCSS)
-- **Hosting**: Firebase Hosting
-- **Dev Environment**: Docker (no local Node required)
+- **Frontend**: Angular 19 (standalone components, signals, SCSS)
+- **Content**: Markdown in `content/publications/`, compiled by `scripts/build-content.mjs` (marked)
+- **Hosting**: Firebase Hosting (project `mbamou-2fc1b`)
 
-## Getting Started
+## Content workflow
 
-### Prerequisites
+Each article is one file: `content/publications/<slug>.md`. The file name is the URL slug.
 
-- Docker & Docker Compose
+```
+---
+title: The article title
+summary: One or two sentences shown in lists and previews.
+date: 2026-07-22
+cover: /images/pub/<slug>/cover.png
+status: published        <- or "draft" (drafts never ship)
+---
 
-### Development
+Markdown body. Images go in public/images/pub/<slug>/ and are referenced
+with absolute paths: ![alt](/images/pub/<slug>/figure.png)
+```
+
+To edit an article: change the `.md` file, then build & deploy. That's all.
+
+`npm run content` regenerates `public/content/*` and `public/sitemap.xml`.
+It runs automatically as part of `npm run build`.
+
+## Development
 
 ```bash
-docker compose up
+npm install
+npm start          # content build + dev server on :4200
 ```
 
-Open [http://localhost:4200](http://localhost:4200).
-
-### Deploy to Production
+## Deploy
 
 ```bash
-docker compose run --rm angular-app sh -c "npm run deploy"
+npm run deploy     # content build + ng build + firebase deploy --only hosting
 ```
 
-### First-Time Firebase Auth (inside container)
+Requires a Firebase-authenticated CLI (`npx firebase-tools login`).
 
-```bash
-docker compose run --rm angular-app sh -c "npx firebase login --no-localhost"
-```
+## Repository notes
 
-## Project Structure
-
-```
-src/app/
-  app.component.ts      # Root component (renders HomeComponent)
-  app.config.ts         # Angular app config
-  components/
-    home/               # Coming soon page
-public/
-  favicon.svg           # Custom SVG favicon
-```
-
-## License
-
-Private — All rights reserved.
+- `firestore.rules` / `storage.rules` protect legacy Firestore/Storage data;
+  the site itself no longer reads or writes Firestore.
+- A deployed Cloud Function `subscribeNewsletter` exists in the Firebase
+  project but is not yet wired into the site.

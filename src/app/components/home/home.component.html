@@ -2,14 +2,14 @@
 
   <app-site-header />
 
-  <main>
+  <main id="main">
 
     <!-- ============ Hero ============ -->
     <section class="hero">
       <div class="container hero-grid">
 
         <div class="hero-copy">
-          <span class="kicker">Organization · Governance · Technology</span>
+          <span class="kicker">Organization, Governance, Technology</span>
 
           <h1 class="hero-title">
             Clear thinking on how organizations, governance
@@ -72,9 +72,9 @@
             @for (pub of latest(); track pub.slug) {
               <a [routerLink]="['/publications', pub.slug]" class="pub-row">
                 <div class="pub-meta">
-                  <time>{{ pub.publishedAt?.toDate() | date: 'MMM d, yyyy' }}</time>
-                  <span class="meta-sep">·</span>
-                  <span>{{ readTime(pub) }} min read</span>
+                  <time>{{ pub.publishedAt | date: 'MMM d, yyyy' }}</time>
+                  <span class="meta-sep">-</span>
+                  <span>{{ pub.readMinutes }} min read</span>
                 </div>
                 <h3 class="pub-title">{{ pub.title }}</h3>
                 @if (pub.summary) {

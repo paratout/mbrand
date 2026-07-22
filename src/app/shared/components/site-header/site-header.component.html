@@ -2,9 +2,18 @@
   <div class="container header-inner">
     <a routerLink="/" class="wordmark">Mehdi&nbsp;Bamou</a>
 
-    <nav class="site-nav" aria-label="Main navigation">
-      <a routerLink="/about" routerLinkActive="active" class="nav-link">About</a>
-      <a routerLink="/publications" routerLinkActive="active" class="nav-link">Publications</a>
-    </nav>
+    <div class="header-right">
+      <div class="text-size" role="group" aria-label="Text size">
+        <button type="button" class="ts-btn" (click)="smaller()"
+                [disabled]="textSize() === 's'" aria-label="Decrease text size">A&minus;</button>
+        <button type="button" class="ts-btn ts-lg" (click)="larger()"
+                [disabled]="textSize() === 'l'" aria-label="Increase text size">A+</button>
+      </div>
+
+      <nav class="site-nav" aria-label="Main navigation">
+        <a routerLink="/about" routerLinkActive="active" class="nav-link">About</a>
+        <a routerLink="/publications" routerLinkActive="active" class="nav-link">Publications</a>
+      </nav>
+    </div>
   </div>
 </header>

@@ -3,6 +3,25 @@
   background: var(--bg-primary);
 }
 
+/* ---- Reading progress ---- */
+.read-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 60;
+  background: transparent;
+  pointer-events: none;
+}
+
+.read-progress-fill {
+  height: 100%;
+  width: 0;
+  background: var(--accent);
+  transition: width 0.08s linear;
+}
+
 /* ---- State messages ---- */
 .state-msg {
   text-align: center;
@@ -104,6 +123,21 @@
     h1          { font-size: 2rem; margin: 1.6em 0 0.5em; letter-spacing: -0.02em; }
     h2          { font-size: 1.5rem; margin: 1.4em 0 0.5em; letter-spacing: -0.02em; }
     h3          { font-size: 1.15rem; margin: 1.3em 0 0.4em; }
+
+    .h-anchor {
+      margin-left: 0.4em;
+      font-size: 0.8em;
+      color: var(--line-strong);
+      text-decoration: none;
+      opacity: 0;
+      transition: opacity var(--transition-base), color var(--transition-base);
+
+      &:hover { color: var(--accent); }
+    }
+
+    h2:hover .h-anchor,
+    h3:hover .h-anchor,
+    .h-anchor:focus-visible { opacity: 1; }
     ul, ol      { padding-left: 1.5em; margin: 0.5em 0 1.2em; }
     li          { margin: 0.3em 0; }
 
@@ -230,8 +264,11 @@
 /* ---- Footer ---- */
 .pub-footer {
   margin-top: var(--spacing-xl);
-  padding-top: var(--spacing-xl);
-  border-top: 1px solid var(--glass-border);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
 }
 
 .back-link {

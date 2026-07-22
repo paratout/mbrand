@@ -1,15 +1,12 @@
 {
   "name": "mb-website",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "scripts": {
-    "start": "ng serve --configuration=development",
-    "build": "ng build",
-    "build:dev": "ng build --configuration=development",
-    "deploy": "ng build && firebase deploy --only hosting",
-    "deploy:rules": "firebase deploy --only firestore:rules,storage",
-    "emulators": "firebase emulators:start",
-    "emulators:export": "firebase emulators:export ./emulator-data",
-    "emulators:import": "firebase emulators:start --import=./emulator-data"
+    "content": "node scripts/build-content.mjs",
+    "start": "npm run content && ng serve --configuration=development",
+    "build": "npm run content && ng build",
+    "build:dev": "npm run content && ng build --configuration=development",
+    "deploy": "npm run build && firebase deploy --only hosting"
   },
   "private": true,
   "dependencies": {
@@ -20,15 +17,6 @@
     "@angular/platform-browser": "^19.0.0",
     "@angular/platform-browser-dynamic": "^19.0.0",
     "@angular/router": "^19.0.0",
-    "@angular/fire": "^19.0.0",
-    "firebase": "^11.0.0",
-    "@tiptap/core": "^2.11.0",
-    "@tiptap/starter-kit": "^2.11.0",
-    "@tiptap/extension-image": "^2.11.0",
-    "@tiptap/extension-placeholder": "^2.11.0",
-    "@tiptap/extension-character-count": "^2.11.0",
-    "@tiptap/extension-link": "^2.11.0",
-    "uuid": "^11.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },
@@ -36,8 +24,8 @@
     "@angular-devkit/build-angular": "^19.0.0",
     "@angular/cli": "^19.0.0",
     "@angular/compiler-cli": "^19.0.0",
-    "@types/uuid": "^10.0.0",
     "firebase-tools": "^13.0.0",
+    "marked": "^15.0.0",
     "typescript": "~5.6.0"
   }
 }

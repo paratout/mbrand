@@ -2,7 +2,6 @@ import { Component, inject, OnInit, signal, computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { PublicationService, Publication } from '../../core/services/publication.service';
-import { estimateReadTime } from '../../core/utils/format.utils';
 import { SiteHeaderComponent } from '../../shared/components/site-header/site-header.component';
 import { SiteFooterComponent } from '../../shared/components/site-footer/site-footer.component';
 
@@ -46,10 +45,5 @@ export class HomeComponent implements OnInit {
       next:  (pubs) => { this.allPublications.set(pubs); this.isLoading.set(false); },
       error: ()     => this.isLoading.set(false),
     });
-  }
-
-  readTime(pub: Publication): number {
-    if (!pub.content) return 1;
-    return estimateReadTime(JSON.stringify(pub.content));
   }
 }
