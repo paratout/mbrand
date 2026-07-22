@@ -16,6 +16,10 @@ export interface LibraryItem {
   relatedTitle: string | null;
 }
 
+export type LibraryFilter = 'all' | 'tool' | 'article-resource';
+
+const PAGE_SIZE = 8;
+
 @Component({
   selector: 'app-library',
   imports: [RouterLink, SiteHeaderComponent, SiteFooterComponent],
@@ -25,9 +29,35 @@ export interface LibraryItem {
 export class LibraryComponent implements OnInit {
   readonly items     = signal<LibraryItem[]>([]);
   readonly isLoading = signal(true);
+  readonly filter    = signal<LibraryFilter>('all');
+  readonly query     = signal('');
+  readonly page      = signal(1);
 
-  readonly tools     = computed(() => this.items().filter((i) => i.category === 'tool'));
-  readonly resources = computed(() => this.items().filter((i) => i.category === 'article-resource'));
+  readonly toolCount     = computed(() => this.items().filter((i) => i.category === 'tool').length);
+  readonly resourceCount = computed(() => this.items().filter((i) => i.category === 'article-resource').length);
+
+  readonly filtered = computed(() => {
+    const f = this.filter();
+    const q = this.query().trim().toLowerCase();
+    return this.items().filter((i) => {
+      if (f !== 'all' && i.category !== f) return false;
+      if (!q) return true;
+      return (i.title + ' ' + i.description + ' ' + (i.relatedTitle ?? '') + ' ' + i.filetype)
+        .toLowerCase()
+        .includes(q);
+    });
+  });
+
+  readonly pageCount = computed(() => Math.max(1, Math.ceil(this.filtered().length / PAGE_SIZE)));
+
+  readonly currentPage = computed(() => Math.min(this.page(), this.pageCount()));
+
+  readonly paged = computed(() => {
+    const start = (this.currentPage() - 1) * PAGE_SIZE;
+    return this.filtered().slice(start, start + PAGE_SIZE);
+  });
+
+  readonly pages = computed(() => Array.from({ length: this.pageCount() }, (_, i) => i + 1));
 
   constructor() {
     inject(Title).setTitle('Library - Mehdi Bamou');
@@ -44,6 +74,22 @@ export class LibraryComponent implements OnInit {
       .catch(() => this.isLoading.set(false));
   }
 
+  setFilter(f: LibraryFilter): void {
+    this.filter.set(f);
+    this.page.set(1);
+  }
+
+  onSearch(event: Event): void {
+    this.query.set((event.target as HTMLInputElement).value);
+    this.page.set(1);
+  }
+
+  goTo(p: number): void {
+    if (p < 1 || p > this.pageCount()) return;
+    this.page.set(p);
+    document.getElementById('library-grid')?.scrollIntoView({ behavior: 'auto', block: 'start' });
+  }
+
   formatSize(bytes: number | null): string {
     if (!bytes) return '';
     if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} KB`;
@@ -52,5 +98,9 @@ export class LibraryComponent implements OnInit {
 
   downloadName(item: LibraryItem): string {
     return item.file?.split('/').pop() ?? '';
+  }
+
+  categoryLabel(item: LibraryItem): string {
+    return item.category === 'tool' ? 'Tool' : 'Diagram';
   }
 }

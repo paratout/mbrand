@@ -10,7 +10,7 @@
           <span class="kicker">Library</span>
           <h1 class="lib-title">Tools you can take with you</h1>
           <p class="lib-lede">
-            Templates, workshop decks, and diagrams from my publications - free to
+            Templates, workshop decks, and every diagram from the publications - free to
             download, use, and adapt. No sign-up, no strings.
           </p>
         </header>
@@ -19,57 +19,76 @@
           <p class="state-msg">Loading…</p>
         } @else {
 
-          <!-- ============ Tools & templates ============ -->
-          <div class="section-head">
-            <h2 class="section-title">Tools &amp; templates</h2>
-            <p class="section-sub">Standalone, workshop-ready files.</p>
+          <div class="lib-toolbar" id="library-grid">
+            <div class="filter-chips" role="group" aria-label="Filter the library">
+              <button type="button" class="chip" [class.active]="filter() === 'all'" (click)="setFilter('all')">
+                All <span class="count">{{ items().length }}</span>
+              </button>
+              <button type="button" class="chip" [class.active]="filter() === 'tool'" (click)="setFilter('tool')">
+                Tools &amp; templates <span class="count">{{ toolCount() }}</span>
+              </button>
+              <button type="button" class="chip" [class.active]="filter() === 'article-resource'" (click)="setFilter('article-resource')">
+                Diagrams <span class="count">{{ resourceCount() }}</span>
+              </button>
+            </div>
+            <label class="search">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>
+              <input type="search" placeholder="Search the library" [value]="query()" (input)="onSearch($event)" aria-label="Search the library" />
+            </label>
           </div>
 
-          <div class="tool-list">
-            @for (item of tools(); track item.slug) {
-              <article class="tool-card">
-                <div class="tool-info">
-                  <span class="type-chip">{{ item.filetype }}</span>
-                  <h3 class="tool-title">{{ item.title }}</h3>
-                  <p class="tool-desc">{{ item.description }}</p>
-                </div>
-                <div class="tool-action">
-                  <a [href]="item.file" [attr.download]="downloadName(item)" class="btn btn-primary">
-                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>
-                    Download
-                  </a>
-                  <span class="file-size">{{ item.filetype }}{{ item.sizeBytes ? ', ' + formatSize(item.sizeBytes) : '' }}</span>
-                </div>
-              </article>
-            }
-          </div>
+          @if (filtered().length === 0) {
+            <p class="state-msg">Nothing matches - try another word, or clear the search.</p>
+          } @else {
 
-          <!-- ============ Diagrams from the articles ============ -->
-          <div class="section-head">
-            <h2 class="section-title">Diagrams from the articles</h2>
-            <p class="section-sub">The visuals behind each publication, in full resolution.</p>
-          </div>
+            <div class="lib-grid">
+              @for (item of paged(); track item.slug) {
+                <article class="lib-card">
 
-          <div class="res-grid">
-            @for (item of resources(); track item.slug) {
-              <article class="res-card">
-                <a [href]="item.file" [attr.download]="downloadName(item)" class="res-thumb" [attr.aria-label]="'Download ' + item.title">
-                  <img [src]="item.file" [alt]="item.title" loading="lazy" />
-                </a>
-                <div class="res-info">
-                  <h3 class="res-title">{{ item.title }}</h3>
-                  <p class="res-desc">{{ item.description }}</p>
-                  <div class="res-links">
-                    <a [href]="item.file" [attr.download]="downloadName(item)" class="res-dl">Download {{ item.filetype }}</a>
-                    @if (item.related) {
-                      <a [routerLink]="['/publications', item.related]" class="res-article">From the article <span class="arrow">→</span></a>
-                    }
+                  @if (item.category === 'article-resource') {
+                    <a [href]="item.file" [attr.download]="downloadName(item)" class="card-thumb" [attr.aria-label]="'Download ' + item.title">
+                      <img [src]="item.file" [alt]="item.title" loading="lazy" />
+                    </a>
+                  } @else {
+                    <a [href]="item.file" [attr.download]="downloadName(item)" class="card-thumb card-thumb-file" [attr.aria-label]="'Download ' + item.title">
+                      <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+                      <span class="thumb-type">{{ item.filetype }}</span>
+                    </a>
+                  }
+
+                  <div class="card-body">
+                    <div class="card-meta">
+                      <span class="cat-chip" [class.cat-tool]="item.category === 'tool'">{{ categoryLabel(item) }}</span>
+                      <span class="file-note">{{ item.filetype }}{{ item.sizeBytes ? ', ' + formatSize(item.sizeBytes) : '' }}</span>
+                    </div>
+                    <h3 class="card-title">{{ item.title }}</h3>
+                    <p class="card-desc">{{ item.description }}</p>
+                    <div class="card-links">
+                      <a [href]="item.file" [attr.download]="downloadName(item)" class="card-dl">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>
+                        Download
+                      </a>
+                      @if (item.related) {
+                        <a [routerLink]="['/publications', item.related]" class="card-article">From the article <span class="arrow">→</span></a>
+                      }
+                    </div>
                   </div>
-                </div>
-              </article>
-            }
-          </div>
 
+                </article>
+              }
+            </div>
+
+            @if (pageCount() > 1) {
+              <nav class="pager" aria-label="Library pages">
+                <button type="button" class="pager-btn" (click)="goTo(currentPage() - 1)" [disabled]="currentPage() === 1" aria-label="Previous page">←</button>
+                @for (p of pages(); track p) {
+                  <button type="button" class="pager-btn pager-num" [class.active]="p === currentPage()" (click)="goTo(p)" [attr.aria-current]="p === currentPage() ? 'page' : null">{{ p }}</button>
+                }
+                <button type="button" class="pager-btn" (click)="goTo(currentPage() + 1)" [disabled]="currentPage() === pageCount()" aria-label="Next page">→</button>
+              </nav>
+            }
+
+          }
         }
 
       </div>
