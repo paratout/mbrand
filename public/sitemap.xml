@@ -31,23 +31,28 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://mehdibamou.com/publications/business-fit-technical-fit</loc>
+    <loc>https://mehdibamou.com/publications/landscape-due-diligence</loc>
     <lastmod>2026-07-22</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://mehdibamou.com/publications/business-fit-technical-fit</loc>
+    <lastmod>2026-07-07</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://mehdibamou.com/publications/two-gate-architecture-review</loc>
-    <lastmod>2026-07-19</lastmod>
+    <lastmod>2026-06-20</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://mehdibamou.com/publications/domain-blueprinting</loc>
-    <lastmod>2026-07-01</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://mehdibamou.com/publications/application-portfolio-data-quality</loc>
-    <lastmod>2026-06-11</lastmod>
+    <lastmod>2026-05-14</lastmod>
     <priority>0.7</priority>
   </url>
 </urlset>

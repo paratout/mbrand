@@ -1,8 +1,9 @@
 ---
-title: One application, two verdicts - rating business fit and technical fit
-summary: Why business fit and technical fit must be scored separately, who owns each verdict, a four-level scale with anchor questions, and the portfolio matrix that turns two honest ratings into invest, tolerate, migrate, or eliminate. With a two-slide assessment guide to download.
-date: 2026-07-22
-cover: /images/pub/business-fit-technical-fit/cover-v1.png
+title: Business fit and technical fit are not the same question
+summary: An application can be the wrong answer implemented beautifully. On separating the business verdict from the technical one - who rates what, on what scale, and what two honest ratings buy you at portfolio level. Includes a two-slide assessment guide.
+date: 2026-07-07
+time: 14:05
+cover: /images/pub/business-fit-technical-fit/cover-v2.png
 status: published
 ---
 
@@ -10,7 +11,7 @@ Sooner or later, every application portfolio review produces the sentence "this 
 
 *Business fit and technical fit are different questions, asked of different people, failing in different ways - the moment you average them, you lose both.*
 
-What follows is drawn from my own experience running portfolio assessments on landscapes of several hundred applications, usually mid-transformation. Figures are rounded, details deliberately blurred, and examples are composites; the mechanics are the point.
+As usual, this comes from my own missions on portfolios of several hundred applications, with figures rounded and the identifying details sanded off. The examples are composites. The mechanics are real.
 
 ## Two questions, not one
 
@@ -58,18 +59,10 @@ High on both: **invest** - this is where enhancement budget belongs. High busine
 
 The matrix proposes; criticality disposes. An "eliminate" verdict on a business-critical application is not a contradiction - it is a migration with a deadline. That is why the business owner rates criticality alongside business fit: the quadrant gives you the default action, criticality sets the urgency and the risk appetite. Reviewed once a year per domain, the matrix stops portfolio strategy from being a debate about adjectives and turns it into a queue of dated moves.
 
-## The two slides to steal
+## The two slides
 
-I have condensed the whole method into a two-slide assessment guide - one slide per fit, each with the four-level scale, the anchor questions, the accountable rater, and the prerequisites. It is in the [library](/library), free to use and adapt; put your own words on the levels, but keep the anchors and keep the single rater per scale.
+I condensed the scales, the anchor questions, the raters, and the tie-breaker rule into a two-slide guide you can drop into your next portfolio workshop - it is in the [library](/library), free to use and adapt. Change the words on the levels if they clash with your house vocabulary. Keep one rater per scale, though. That part is load-bearing.
 
-## What I would tell you to steal
+If you only have the energy for one change this quarter, make it this: stop publishing a single application score. Give the business owner their own rating, give the IT owner theirs, and let the domain architect referee when they collide. Everything else - the four levels, the follow-up question, the quadrant - can come later. I ran a version of this for two quarters before the matrix existed at all, and the separated ratings alone had already changed what people argued about in the room.
 
-1. Never average the two fits into one score - the average of a wrong answer and a healthy stack is noise.
-2. Give each rating exactly one accountable owner: business owner for business fit, IT owner for technical fit.
-3. Use four levels with no neutral middle, and anchor every level to a question, not an adjective.
-4. Write the tie-breaker down before the first workshop: the domain architect decides, against principles, not volume.
-5. Attach "what moves it one level up" to every sub-top rating, and harvest the answers as your remediation backlog.
-6. Rate in domain batches - about ninety minutes for fifteen to twenty applications - and re-rate on triggers, not on anniversaries.
-7. Let the matrix set the default action and business criticality set the urgency; never let either do the other's job.
-
-One blended number lets everyone stay comfortable: the business cannot see its process gaps, IT cannot show its debt, and the portfolio review stays a conversation about feelings. Two verdicts, two owners, one written tie-breaker - the argument is the method, and the argument is worth having.
+Because that is what a blended number is really for: letting everyone stay comfortable. The business never has to see its process gaps in writing, IT never gets to show its debt, and the portfolio review stays a conversation about feelings. It took me longer than I would like to admit to notice that the arguing was the point. Start the argument.

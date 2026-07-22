@@ -1,8 +1,9 @@
 ---
 title: Your application inventory is a map - keep it honest
 summary: Where to draw the line between application and IT component, what a minimum data standard looks like, the trigger-and-cadence operating loop that outlives any clean-up wave, and the KPIs that make portfolio quality steerable.
-date: 2026-06-11
-cover: /images/pub/apm-data-quality/cover-v2.png
+date: 2026-05-14
+time: 08:40
+cover: /images/pub/apm-data-quality/cover-v3.png
 status: published
 ---
 
