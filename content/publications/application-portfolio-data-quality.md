@@ -1,8 +1,8 @@
 ---
-title: Your application inventory is a map. Keep it honest.
+title: Your application inventory is a map - keep it honest
 summary: Where to draw the line between application and IT component, what a minimum data standard looks like, the trigger-and-cadence operating loop that outlives any clean-up wave, and the KPIs that make portfolio quality steerable.
 date: 2026-07-22
-cover: /images/pub/apm-data-quality/cover.png
+cover: /images/pub/apm-data-quality/cover-v2.png
 status: published
 ---
 
@@ -30,7 +30,7 @@ Everything else stays optional until someone demonstrates they steer with it. An
 
 The initial clean-up works best in waves, domain by domain, with enterprise and domain architects driving. But the wave is the easy part; the design question that decides whether quality survives is what runs *after* the wave. The answer that has worked for me is one principle and two streams.
 
-![The operating loop: trigger-based updates when change happens, cadence-based checks on the calendar, with escalation through domain leads](/images/pub/apm-data-quality/operating-loop.png)
+![The operating loop: trigger-based updates when change happens, cadence-based checks on the calendar, with escalation through domain leads](/images/pub/apm-data-quality/operating-loop-v2.png)
 
 The principle: **responsibility sits where change happens**. Whoever changes the landscape updates the record. The central portfolio team measures, reports, and escalates - it does not type on behalf of others, because a central team that types becomes both the bottleneck and the single point of staleness.
 
@@ -42,7 +42,7 @@ The cadence stream catches what triggers miss: a quarterly attestation where eve
 
 Agree a small KPI set with the domain leads, measure the baseline honestly, and fix targets with a close date rather than leaving them as aspirations. On a recent mission, the scorecard looked roughly like this:
 
-![KPI scorecard example: IT owner coverage from about 85 to 95 percent, business owner coverage from about 65 to 85 percent, capability mapping to 95 percent, capability ownership 100 percent hard gate, attestation response above 80 percent](/images/pub/apm-data-quality/kpi-scorecard.png)
+![KPI scorecard example: IT owner coverage from about 85 to 95 percent, business owner coverage from about 65 to 85 percent, capability mapping to 95 percent, capability ownership 100 percent hard gate, attestation response above 80 percent](/images/pub/apm-data-quality/kpi-scorecard-v2.png)
 
 Two lessons live inside numbers like these. Business owner coverage starts around twenty points below IT owner coverage - it always does, because the org chart does not map one-to-one onto systems. What moves it is not mass email but routing the campaign through the domain leads with a fixed two-week answer window and a visible escalation path.
 

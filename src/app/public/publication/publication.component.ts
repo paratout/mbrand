@@ -1,13 +1,18 @@
 import {
-  Component, input, OnInit, OnDestroy, signal, inject, HostListener,
+  Component, input, OnInit, OnDestroy, signal, computed, inject, HostListener,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DatePipe, DOCUMENT } from '@angular/common';
 import { DomSanitizer, SafeHtml, Title, Meta } from '@angular/platform-browser';
-import { PublicationService, PublicationDetail } from '../../core/services/publication.service';
+import { PublicationService, Publication, PublicationDetail } from '../../core/services/publication.service';
 import { SiteHeaderComponent } from '../../shared/components/site-header/site-header.component';
 import { SiteFooterComponent } from '../../shared/components/site-footer/site-footer.component';
 import { ShareBarComponent } from '../../shared/components/share-bar/share-bar.component';
+
+interface LightboxImage {
+  src: string;
+  alt: string;
+}
 
 @Component({
   selector: 'app-publication',
@@ -30,6 +35,10 @@ export class PublicationComponent implements OnInit, OnDestroy {
   readonly isLoading = signal(true);
   readonly notFound  = signal(false);
   readonly progress  = signal(0);
+  readonly lightbox  = signal<LightboxImage | null>(null);
+  readonly readNext  = signal<Publication | null>(null);
+
+  readonly showBackToTop = computed(() => this.progress() > 15 && !this.lightbox());
 
   private jsonLdEl: HTMLScriptElement | null = null;
 
@@ -43,6 +52,7 @@ export class PublicationComponent implements OnInit, OnDestroy {
           // Content is generated at build time from our own Markdown - trusted.
           this.bodyHtml.set(this.sanitizer.bypassSecurityTrustHtml(p.html));
           this.setPageMeta(p);
+          this.loadReadNext(p.slug);
         }
         this.isLoading.set(false);
       },
@@ -53,6 +63,7 @@ export class PublicationComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.titleSvc.setTitle('Mehdi Bamou - Organization, Governance & Technology');
     this.jsonLdEl?.remove();
+    this.document.body.style.removeProperty('overflow');
   }
 
   @HostListener('window:scroll')
@@ -60,6 +71,44 @@ export class PublicationComponent implements OnInit, OnDestroy {
     const doc = this.document.documentElement;
     const total = doc.scrollHeight - doc.clientHeight;
     this.progress.set(total > 0 ? Math.min(100, (doc.scrollTop / total) * 100) : 0);
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape(): void {
+    if (this.lightbox()) this.closeLightbox();
+  }
+
+  /** Click delegation: any image inside the article body opens the lightbox. */
+  onBodyClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (target instanceof HTMLImageElement && target.closest('.pub-body')) {
+      this.openLightbox({ src: target.src, alt: target.alt });
+    }
+  }
+
+  openLightbox(img: LightboxImage): void {
+    this.lightbox.set(img);
+    this.document.body.style.overflow = 'hidden';
+  }
+
+  closeLightbox(): void {
+    this.lightbox.set(null);
+    this.document.body.style.removeProperty('overflow');
+  }
+
+  backToTop(): void {
+    window.scrollTo({ top: 0 });
+  }
+
+  private loadReadNext(currentSlug: string): void {
+    this.pubService.getPublished().subscribe({
+      next: (pubs) => {
+        const i = pubs.findIndex((p) => p.slug === currentSlug);
+        const next = pubs[i + 1] ?? (i > 0 ? pubs[i - 1] : null);
+        this.readNext.set(next ?? null);
+      },
+      error: () => this.readNext.set(null),
+    });
   }
 
   private setPageMeta(p: PublicationDetail): void {

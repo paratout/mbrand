@@ -40,8 +40,20 @@
 
         <hr class="header-rule">
 
-        <!-- Body -->
-        <div class="pub-body" [innerHTML]="bodyHtml()"></div>
+        <!-- Body (click any image to enlarge) -->
+        <div class="pub-body" [innerHTML]="bodyHtml()" (click)="onBodyClick($event)"></div>
+
+        <!-- Read next -->
+        @if (readNext(); as next) {
+          <aside class="read-next">
+            <span class="read-next-label">Read next</span>
+            <a [routerLink]="['/publications', next.slug]" class="read-next-card">
+              <span class="read-next-title">{{ next.title }}</span>
+              <span class="read-next-meta">{{ next.publishedAt | date: 'MMM d, yyyy' }} <span class="meta-sep">-</span> {{ next.readMinutes }} min read</span>
+              <span class="read-next-arrow" aria-hidden="true">→</span>
+            </a>
+          </aside>
+        }
 
         <!-- Footer -->
         <footer class="pub-footer">
@@ -54,4 +66,20 @@
   </main>
 
   <app-site-footer />
+
+  <!-- Back to top -->
+  @if (showBackToTop()) {
+    <button type="button" class="back-to-top" (click)="backToTop()" aria-label="Back to top">↑</button>
+  }
+
+  <!-- Lightbox -->
+  @if (lightbox(); as img) {
+    <div class="lightbox" role="dialog" aria-modal="true" [attr.aria-label]="img.alt || 'Enlarged image'" (click)="closeLightbox()">
+      <button type="button" class="lightbox-close" aria-label="Close enlarged image" (click)="closeLightbox()">✕</button>
+      <img [src]="img.src" [alt]="img.alt" (click)="$event.stopPropagation()" />
+      @if (img.alt) {
+        <p class="lightbox-caption">{{ img.alt }}</p>
+      }
+    </div>
+  }
 </div>

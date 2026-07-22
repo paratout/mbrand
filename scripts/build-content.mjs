@@ -142,6 +142,32 @@ for (const pub of published) {
   await writeFile(path.join(SHARE, `${pub.slug}.html`), stub);
 }
 
+// RSS feed
+const feedItems = published
+  .map(
+    (p) => `    <item>
+      <title>${escapeHtml(p.title)}</title>
+      <link>${SITE}/publications/${p.slug}</link>
+      <guid isPermaLink="true">${SITE}/publications/${p.slug}</guid>
+      <pubDate>${new Date(p.publishedAt).toUTCString()}</pubDate>
+      <description>${escapeHtml(p.summary)}</description>
+    </item>`
+  )
+  .join('\n');
+const feed = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mehdi Bamou</title>
+    <link>${SITE}</link>
+    <atom:link href="${SITE}/feed.xml" rel="self" type="application/rss+xml"/>
+    <description>Essays and practical notes on enterprise architecture, governance, and technology in large organizations.</description>
+    <language>en</language>
+${feedItems}
+  </channel>
+</rss>
+`;
+await writeFile(path.join(ROOT, 'public', 'feed.xml'), feed);
+
 // Sitemap
 const today = new Date().toISOString().slice(0, 10);
 const urls = [
@@ -157,4 +183,4 @@ ${urls.map((u) => `  <url>\n    <loc>${u.loc}</loc>\n    <lastmod>${u.date ?? to
 `;
 await writeFile(path.join(ROOT, 'public', 'sitemap.xml'), sitemap);
 
-console.log(`content: ${published.length} published, ${all.length - published.length} draft(s), ${published.length} share stub(s), sitemap ${urls.length} urls`);
+console.log(`content: ${published.length} published, ${all.length - published.length} draft(s), ${published.length} share stub(s), feed + sitemap ${urls.length} urls`);
