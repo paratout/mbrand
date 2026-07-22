@@ -1,0 +1,132 @@
+.speaking-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+}
+
+main {
+  flex: 1;
+}
+
+.speaking {
+  padding: clamp(48px, 8vw, 104px) 0 0;
+}
+
+.sp-head {
+  max-width: 660px;
+  margin-bottom: clamp(36px, 5vw, 56px);
+}
+
+.sp-title {
+  font-size: clamp(2rem, 4.2vw, 3rem);
+  margin-bottom: 14px;
+}
+
+.sp-lede {
+  color: var(--ink-2);
+  font-size: 1.02rem;
+}
+
+/* Topics */
+.topic-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.topic-card {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 20px;
+  padding: 34px 0;
+  border-top: 1px solid var(--line);
+
+  &:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+}
+
+.topic-index {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--accent);
+  padding-top: 4px;
+}
+
+.topic-title {
+  font-size: clamp(1.4rem, 2.6vw, 1.8rem);
+  margin-bottom: 4px;
+}
+
+.topic-sub {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--accent);
+  font-size: 1.02rem;
+  margin-bottom: 12px;
+}
+
+.topic-text {
+  color: var(--ink-2);
+  font-size: 0.98rem;
+  max-width: 46em;
+  margin-bottom: 14px;
+}
+
+.topic-meta {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.topic-format {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-wash);
+  border-radius: 999px;
+  padding: 5px 14px;
+}
+
+.topic-article {
+  font-size: 0.88rem;
+  font-weight: 550;
+  color: var(--ink-3);
+
+  &:hover { color: var(--accent); }
+
+  .arrow { display: inline-block; }
+}
+
+/* CTA */
+.sp-cta {
+  margin: 64px 0 0;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: clamp(28px, 4vw, 44px);
+  text-align: center;
+}
+
+.cta-title {
+  font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+  margin-bottom: 10px;
+}
+
+.cta-text {
+  color: var(--ink-2);
+  font-size: 0.98rem;
+  max-width: 44em;
+  margin: 0 auto 22px;
+}
+
+@media (max-width: 640px) {
+  .topic-card {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}

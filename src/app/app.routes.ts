@@ -26,6 +26,21 @@ export const routes: Routes = [
         (m) => m.PublicationComponent
       ),
   },
+  {
+    path: 'library',
+    loadComponent: () =>
+      import('./public/library/library.component').then((m) => m.LibraryComponent),
+  },
+  {
+    path: 'glossary',
+    loadComponent: () =>
+      import('./public/glossary/glossary.component').then((m) => m.GlossaryComponent),
+  },
+  {
+    path: 'speaking',
+    loadComponent: () =>
+      import('./public/speaking/speaking.component').then((m) => m.SpeakingComponent),
+  },
   // Legal pages
   {
     path: 'privacy',

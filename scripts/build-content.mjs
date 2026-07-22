@@ -9,7 +9,7 @@
  * Frontmatter: key: value lines between --- markers. Recognized keys:
  *   title, summary, date (YYYY-MM-DD), cover, status (published|draft)
  */
-import { readdir, readFile, writeFile, mkdir, rm } from 'node:fs/promises';
+import { readdir, readFile, writeFile, mkdir, rm, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { marked } from 'marked';
 
@@ -142,6 +142,51 @@ for (const pub of published) {
   await writeFile(path.join(SHARE, `${pub.slug}.html`), stub);
 }
 
+// ---- Library ----
+const LIBSRC = path.join(ROOT, 'content', 'library');
+const libFiles = (await readdir(LIBSRC).catch(() => [])).filter((f) => f.endsWith('.md'));
+const pubTitle = Object.fromEntries(published.map((pu) => [pu.slug, pu.title]));
+const library = [];
+for (const file of libFiles) {
+  const raw = await readFile(path.join(LIBSRC, file), 'utf8');
+  const [meta] = parseFrontmatter(raw);
+  let sizeBytes = null;
+  if (meta.file) {
+    try {
+      sizeBytes = (await stat(path.join(ROOT, 'public', meta.file.replace(/^\//, '')))).size;
+    } catch { /* file missing - leave null */ }
+  }
+  library.push({
+    slug: file.replace(/\.md$/, ''),
+    title: meta.title ?? file,
+    description: meta.description ?? '',
+    category: meta.category ?? 'tool',
+    file: meta.file ?? null,
+    filetype: meta.filetype ?? '',
+    sizeBytes,
+    related: meta.related ?? null,
+    relatedTitle: meta.related ? pubTitle[meta.related] ?? null : null,
+    order: Number(meta.order ?? 99),
+  });
+}
+library.sort((a, b) => a.order - b.order);
+await writeFile(path.join(OUT, 'library.json'), JSON.stringify(library));
+
+// ---- Glossary ----
+const glossRaw = await readFile(path.join(ROOT, 'content', 'glossary.md'), 'utf8').catch(() => null);
+const glossary = [];
+if (glossRaw) {
+  const parts = glossRaw.split(/^## /m).slice(1);
+  for (const part of parts) {
+    const nl = part.indexOf('\n');
+    const term = part.slice(0, nl).trim();
+    const body = part.slice(nl + 1).trim();
+    glossary.push({ term, id: slugifyHeading(term), html: marked.parse(body) });
+  }
+  glossary.sort((a, b) => a.term.localeCompare(b.term));
+}
+await writeFile(path.join(OUT, 'glossary.json'), JSON.stringify(glossary));
+
 // RSS feed
 const feedItems = published
   .map(
@@ -174,6 +219,9 @@ const urls = [
   { loc: `${SITE}/`, prio: '1.0' },
   { loc: `${SITE}/about`, prio: '0.8' },
   { loc: `${SITE}/publications`, prio: '0.9' },
+  { loc: `${SITE}/library`, prio: '0.8' },
+  { loc: `${SITE}/glossary`, prio: '0.6' },
+  { loc: `${SITE}/speaking`, prio: '0.6' },
   ...published.map((p) => ({ loc: `${SITE}/publications/${p.slug}`, prio: '0.7', date: String(p.publishedAt).slice(0, 10) })),
 ];
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
@@ -183,4 +231,4 @@ ${urls.map((u) => `  <url>\n    <loc>${u.loc}</loc>\n    <lastmod>${u.date ?? to
 `;
 await writeFile(path.join(ROOT, 'public', 'sitemap.xml'), sitemap);
 
-console.log(`content: ${published.length} published, ${all.length - published.length} draft(s), ${published.length} share stub(s), feed + sitemap ${urls.length} urls`);
+console.log(`content: ${published.length} published, ${all.length - published.length} draft(s), ${library.length} library item(s), ${glossary.length} glossary term(s), feed + sitemap ${urls.length} urls`);

@@ -1,0 +1,51 @@
+<div class="speaking-page">
+
+  <app-site-header />
+
+  <main id="main">
+    <section class="speaking">
+      <div class="container">
+
+        <header class="sp-head">
+          <span class="kicker">Speaking</span>
+          <h1 class="sp-title">Talks &amp; workshops</h1>
+          <p class="sp-lede">
+            I speak about the unglamorous machinery that makes large organizations
+            work: portfolios, processes, and governance. Practitioner material -
+            everything I present has been run in real organizations, not read
+            about. Sessions work in English, French, or Arabic.
+          </p>
+        </header>
+
+        <div class="topic-list">
+          @for (t of topics; track t.index) {
+            <article class="topic-card">
+              <span class="topic-index">{{ t.index }}</span>
+              <div class="topic-main">
+                <h2 class="topic-title">{{ t.title }}</h2>
+                <p class="topic-sub">{{ t.sub }}</p>
+                <p class="topic-text">{{ t.text }}</p>
+                <div class="topic-meta">
+                  <span class="topic-format">{{ t.formats }}</span>
+                  <a [routerLink]="['/publications', t.related]" class="topic-article">Read the article <span class="arrow">→</span></a>
+                </div>
+              </div>
+            </article>
+          }
+        </div>
+
+        <aside class="sp-cta">
+          <h2 class="cta-title">Have an event or a team that needs one of these?</h2>
+          <p class="cta-text">
+            Conference talks, internal architecture days, leadership briefings, or
+            hands-on workshops - reach out and we will make it fit your format.
+          </p>
+          <a href="https://www.linkedin.com/in/mehdi-bamou/" target="_blank" rel="noopener" class="btn btn-primary">Contact me on LinkedIn</a>
+        </aside>
+
+      </div>
+    </section>
+  </main>
+
+  <app-site-footer />
+</div>
