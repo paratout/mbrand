@@ -195,8 +195,13 @@ main {
 
 /* ============ Responsive ============ */
 @media (max-width: 860px) {
+  .hero {
+    padding-top: clamp(28px, 6vw, 56px);
+  }
+
   .hero-grid {
     grid-template-columns: 1fr;
+    gap: 28px;
   }
 
   .hero-photo {
@@ -204,7 +209,11 @@ main {
   }
 
   .photo-frame {
-    width: min(72%, 320px);
+    width: min(58%, 260px);
+  }
+
+  .hero-title {
+    font-size: clamp(1.9rem, 7.4vw, 2.6rem);
   }
 
   .focus-grid {
