@@ -137,4 +137,16 @@ How I would stand this up from a cold start, roughly in order. Weeks one and two
 
 Ninety days does not make the board respected. It makes it *predictable*, and predictable is the foundation respect gets built on over the following year, one held gate and one honest red key result at a time.
 
+## The field kit
+
+Everything described above now exists as working files in the [library](/library), so you can start from artifacts instead of a blank page. Three files, and a clear owner for each piece:
+
+The **field kit deck** (PPTX) is the worked-examples set - one slide per artifact, filled in with a realistic composite case: the charter as it reads when done, an agenda that respects the clock, a complete decision paper next to the tells that get papers rejected, the decision record with its conditions table, the exception with its register, the mandate-to-OKR handoff in both its failing and working form, the ten-minute visitor slot minute by minute, and the moderator's sentences verbatim. Use it to show, not explain - it is the thing to walk your future chair and secretary through before the first session.
+
+The **charter and templates document** (DOCX) is the same set as fill-in forms: charter, decision paper, decision record, exception request, and the half-page visitor briefing. Each template names its single owner - chair, presenting architect, secretary, requesting team - because an artifact with two owners has none.
+
+The **registers workbook** (XLSX) is the secretary's pair of working sheets: the numbered decision log and the exception register with an expiry countdown that goes negative when a review was missed - which is exactly the number to put on the next agenda.
+
+Who uses what, in one breath: the chair owns the charter and the decisions; the secretary owns the agenda, the record, and both registers; the presenting architect owns the paper and the repository corrections that come with it; the requesting team owns its exception and its exit plan; the receiving team owns the mandate once it becomes their key result; and the moderator owns the clock and the script. Six roles, no shared custody.
+
 The lighthouse metaphor from the opening has a second half, by the way. Lighthouses did not survive because ships loved them. They survived because the rocks were real. Your job in the first year is mostly to make sure the organization can see the rocks - the duplicated platforms, the expired exceptions, the diagram that turned out to be fiction - and that the light is on when they look. The routing-around stops on its own after that.
