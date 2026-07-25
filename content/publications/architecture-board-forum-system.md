@@ -1,7 +1,7 @@
 ---
 title: An architecture board people do not route around
 summary: The long version of how to stand one up: the forum system around it, who sits where and who visits, how to moderate it, what flows in and out, how OKRs and project management plug into it, and what all of this does to your inventory and your diagrams. With the first ninety days mapped out.
-date: 2026-07-25
+date: 2026-07-22
 time: 18:10
 cover: /images/pub/architecture-board-forum-system/cover-v1.png
 status: published
@@ -130,6 +130,8 @@ Eighteen months on, the exception register does its job: one of the two exempted
 **"Which tool do we need for the decision log?"** None, in year one. A numbered page per decision in the same wiki as everything else, linked to the repository fact sheets, beats a workflow tool while the process is still finding its shape. Tooling ossifies whatever it touches - let the format prove itself on twenty real decisions first, then automate the parts that hurt.
 
 **"How big do we need to be for all this?"** My rough line: two or more business domains and something like fifty-plus applications. Below that, run the weekly design forum only, and replace the board with a monthly written decision digest that leadership reads and can object to - the deciding-in-writing discipline matters at every size; the ceremony does not.
+
+**"We do not have any of this yet - where does the board sit in the bigger build?"** Around quarter six, in my experience. The sequence that works, and what to ship in each quarter of the first three years, is laid out in [the twelve-quarter build](/publications/first-twelve-quarters) - the board opens only once a design forum and a handful of federated architects have produced enough material to give it a queue.
 
 ## The first ninety days
 
