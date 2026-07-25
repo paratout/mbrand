@@ -1,7 +1,7 @@
 import {
   Component, input, effect, untracked, OnDestroy, signal, computed, inject, HostListener,
 } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { DatePipe, DOCUMENT } from '@angular/common';
 import { DomSanitizer, SafeHtml, Title, Meta } from '@angular/platform-browser';
 import { PublicationService, Publication, PublicationDetail } from '../../core/services/publication.service';
@@ -29,6 +29,7 @@ export class PublicationComponent implements OnDestroy {
   private titleSvc   = inject(Title);
   private metaSvc    = inject(Meta);
   private document   = inject(DOCUMENT);
+  private router     = inject(Router);
 
   readonly pub       = signal<PublicationDetail | null>(null);
   readonly bodyHtml  = signal<SafeHtml>('');
@@ -71,6 +72,7 @@ export class PublicationComponent implements OnDestroy {
           this.bodyHtml.set(this.sanitizer.bypassSecurityTrustHtml(p.html));
           this.setPageMeta(p);
           this.loadReadNext(p.slug);
+          this.fixHeadingAnchors();
         }
         this.isLoading.set(false);
       },
@@ -96,11 +98,63 @@ export class PublicationComponent implements OnDestroy {
     if (this.lightbox()) this.closeLightbox();
   }
 
-  /** Click delegation: any image inside the article body opens the lightbox. */
+  /**
+   * Heading anchors are emitted as bare "#id" hrefs. Angular's <base href="/">
+   * makes browsers resolve those against the site root, so they render as
+   * "/#id" and land on the homepage. Rewrite them to the current path once the
+   * body is in the DOM, so hovering, copying, and opening in a new tab all give
+   * a URL that actually works.
+   */
+  private fixHeadingAnchors(attempt = 0): void {
+    const win = this.document.defaultView;
+    const run = () => {
+      const anchors = this.document.querySelectorAll('.pub-body a.h-anchor');
+      // Rendering is zoneless, so the body may not be painted yet - retry briefly.
+      if (!anchors.length) {
+        if (attempt < 20) this.fixHeadingAnchors(attempt + 1);
+        return;
+      }
+      const path = this.document.location.pathname;
+      anchors.forEach((el) => {
+        const a = el as HTMLAnchorElement;
+        const id = a.getAttribute('href')?.split('#')[1] ?? '';
+        if (id) a.setAttribute('href', `${path}#${id}`);
+      });
+    };
+    if (win?.requestAnimationFrame) win.requestAnimationFrame(run); else setTimeout(run);
+  }
+
+  /** Click delegation for the article body: images, heading anchors, internal links. */
   onBodyClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
+
     if (target instanceof HTMLImageElement && target.closest('.pub-body')) {
       this.openLightbox({ src: target.src, alt: target.alt });
+      return;
+    }
+
+    const link = target.closest('a') as HTMLAnchorElement | null;
+    if (!link || event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
+
+    // Heading anchor: scroll in place and update the fragment, no page reload.
+    if (link.classList.contains('h-anchor')) {
+      const id = link.getAttribute('href')?.split('#')[1] ?? '';
+      const heading = id ? this.document.getElementById(id) : null;
+      if (heading) {
+        event.preventDefault();
+        heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        this.document.defaultView?.history.replaceState(
+          null, '', `${this.document.location.pathname}#${id}`,
+        );
+      }
+      return;
+    }
+
+    // Internal links inside the prose route through Angular instead of reloading.
+    const href = link.getAttribute('href') ?? '';
+    if (href.startsWith('/') && !href.startsWith('//') && link.target !== '_blank') {
+      event.preventDefault();
+      this.router.navigateByUrl(href);
     }
   }
 
