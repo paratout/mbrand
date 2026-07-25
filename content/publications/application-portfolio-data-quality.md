@@ -3,11 +3,12 @@ title: Your application inventory is a map - keep it honest
 summary: Where to draw the line between application and IT component, what a minimum data standard looks like, the trigger-and-cadence operating loop that outlives any clean-up wave, and the KPIs that make portfolio quality steerable.
 date: 2025-08-21
 time: 08:40
+updated: 2026-05-05
 cover: /images/pub/apm-data-quality/cover-v4.png
 status: published
 ---
 
-Every large organization has a map of its application landscape - in LeanIX, in ServiceNow, or in a spreadsheet doing its best impression of a tool. The hard part is not building that map. The hard part is that the territory keeps moving: projects go live, systems get retired, owners change jobs. Six months after the big inventory push, a third of the records are stale, people notice, and they quietly stop using the map.
+Every large organization has a map of its application landscape - in a portfolio platform, in a service management tool, or in [a spreadsheet doing its best impression of one](/publications/architecture-without-a-tool). The hard part is not building that map. The hard part is that the territory keeps moving: projects go live, systems get retired, owners change jobs. Six months after the big inventory push, a third of the records are stale, people notice, and they quietly stop using the map.
 
 *A map nobody trusts is worse than no map at all, because decisions keep getting made on it long after it stopped describing reality.*
 

@@ -10,7 +10,8 @@ export interface Publication {
   title: string;
   summary: string;
   coverImage: string | null;
-  publishedAt: string | null; // ISO string
+  publishedAt: string | null; // ISO string, drives ordering
+  updatedAt: string | null;   // ISO string, shown to readers
   readMinutes: number;
 }
 

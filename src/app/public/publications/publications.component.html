@@ -34,7 +34,7 @@
 
                 <div class="pub-info">
                   <div class="pub-meta">
-                    <time>{{ pub.publishedAt | date: 'MMM d, yyyy' }}</time>
+                    <time>Updated {{ (pub.updatedAt ?? pub.publishedAt) | date: 'MMM d, yyyy' }}</time>
                     <span class="meta-sep">-</span>
                     <span>{{ pub.readMinutes }} min read</span>
                   </div>

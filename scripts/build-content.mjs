@@ -7,7 +7,8 @@
  * Also regenerates public/sitemap.xml.
  *
  * Frontmatter: key: value lines between --- markers. Recognized keys:
- *   title, summary, date (YYYY-MM-DD), cover, status (published|draft)
+ *   title, summary, date (YYYY-MM-DD), updated (YYYY-MM-DD, shown to readers),
+ *   cover, status (published|draft)
  */
 import { readdir, readFile, writeFile, mkdir, rm, stat } from 'node:fs/promises';
 import path from 'node:path';
@@ -77,6 +78,9 @@ for (const file of files) {
     summary: meta.summary ?? '',
     coverImage: meta.cover ?? null,
     publishedAt: meta.date ? `${meta.date}T${meta.time ?? '09:00'}:00.000Z` : null,
+    updatedAt: meta.updated
+      ? `${meta.updated}T12:00:00.000Z`
+      : (meta.date ? `${meta.date}T${meta.time ?? '09:00'}:00.000Z` : null),
     status: meta.status ?? 'draft',
     readMinutes: readMinutes(body),
     html,
@@ -113,6 +117,7 @@ for (const pub of published) {
     description: pub.summary,
     image: img,
     datePublished: pub.publishedAt,
+    dateModified: pub.updatedAt,
     author: { '@type': 'Person', name: 'Mehdi Bamou', url: SITE },
     mainEntityOfPage: url,
   });
@@ -222,7 +227,7 @@ const urls = [
   { loc: `${SITE}/library`, prio: '0.8' },
   { loc: `${SITE}/glossary`, prio: '0.6' },
   { loc: `${SITE}/speaking`, prio: '0.6' },
-  ...published.map((p) => ({ loc: `${SITE}/publications/${p.slug}`, prio: '0.7', date: String(p.publishedAt).slice(0, 10) })),
+  ...published.map((p) => ({ loc: `${SITE}/publications/${p.slug}`, prio: '0.7', date: String(p.updatedAt ?? p.publishedAt).slice(0, 10) })),
 ];
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

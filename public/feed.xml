@@ -62,5 +62,12 @@
       <pubDate>Thu, 21 Aug 2025 08:40:00 GMT</pubDate>
       <description>Where to draw the line between application and IT component, what a minimum data standard looks like, the trigger-and-cadence operating loop that outlives any clean-up wave, and the KPIs that make portfolio quality steerable.</description>
     </item>
+    <item>
+      <title>You do not need an APM tool in year one</title>
+      <link>https://mehdibamou.com/publications/architecture-without-a-tool</link>
+      <guid isPermaLink="true">https://mehdibamou.com/publications/architecture-without-a-tool</guid>
+      <pubDate>Thu, 10 Jul 2025 09:45:00 GMT</pubDate>
+      <description>How to run enterprise architecture with a spreadsheet, a wiki, and a drawing tool - the workbook structure that behaves like a repository, the collection method, the quality KPIs you can compute with formulas, the cadence that keeps it alive, and the honest trigger conditions for finally buying something. With a full starter kit to download.</description>
+    </item>
   </channel>
 </rss>

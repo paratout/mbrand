@@ -3,6 +3,7 @@ title: Year one, you are the function
 summary: Twelve quarters from a single architect in a greenfield to an enterprise architecture function with its own team, budget, and mandate. What to ship each quarter, which forum to open when, when to federate instead of hire, how the money moves from someone else's budget to your own, and the signals that say slow down.
 date: 2026-05-26
 time: 11:20
+updated: 2026-05-29
 cover: /images/pub/first-twelve-quarters/cover-v2.png
 status: published
 ---
@@ -43,7 +44,7 @@ The artifact that ships: a capability map and a first-pass inventory, however ug
 
 **Q2 - Make the inventory true, and pick the line.** Turn the collection into a real inventory with owners, and settle the [application versus IT component question](/publications/application-vs-it-component) in writing before anyone has strong feelings about it. This is the cheapest quarter of your entire career to make that decision, and the one with the longest compounding.
 
-Artifact: the classification policy on one page, plus the inventory with a minimum data standard. Forum: still none, but start a fortnightly thirty-minute conversation with each of the two or three heaviest-building teams - not a review, a conversation, in their calendar not yours. Governance: the definition-of-done rule quietly appears in one project's closing checklist, with the project manager's blessing rather than a mandate. Money: still none, though you will spend a small tooling budget from the CTO's pocket if you need a repository. Resist buying an expensive one this year. A spreadsheet you keep honest beats a platform you cannot fill.
+Artifact: the classification policy on one page, plus the inventory with a minimum data standard. Forum: still none, but start a fortnightly thirty-minute conversation with each of the two or three heaviest-building teams - not a review, a conversation, in their calendar not yours. Governance: the definition-of-done rule quietly appears in one project's closing checklist, with the project manager's blessing rather than a mandate. Money: still none, though you will spend a small tooling budget from the CTO's pocket if you need a repository. Resist buying an expensive one this year - [a spreadsheet you keep honest beats a platform you cannot fill](/publications/architecture-without-a-tool), and the starter kit for running it that way is free.
 
 **Q3 - Solve something expensive, then name the pattern.** Somewhere in the landscape is a recurring, costly mistake - the same integration built four ways, the same authentication problem re-solved per team. Fix one instance with the team, then write the pattern down and put your name on the shape rather than the fix. Patterns are how a single person scales before they have anyone to scale through.
 

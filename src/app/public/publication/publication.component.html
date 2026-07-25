@@ -30,8 +30,8 @@
             <p class="pub-summary">{{ pub()!.summary }}</p>
           }
           <div class="pub-meta">
-            <time [attr.datetime]="pub()!.publishedAt">
-              {{ pub()!.publishedAt | date: 'MMMM d, yyyy' }}
+            <time [attr.datetime]="pub()!.updatedAt ?? pub()!.publishedAt">
+              Updated {{ (pub()!.updatedAt ?? pub()!.publishedAt) | date: 'MMMM d, yyyy' }}
             </time>
             <span class="meta-sep">-</span>
             <span>{{ pub()!.readMinutes }} min read</span>
@@ -49,7 +49,7 @@
             <span class="read-next-label">Read next</span>
             <a [routerLink]="['/publications', next.slug]" class="read-next-card">
               <span class="read-next-title">{{ next.title }}</span>
-              <span class="read-next-meta">{{ next.publishedAt | date: 'MMM d, yyyy' }} <span class="meta-sep">-</span> {{ next.readMinutes }} min read</span>
+              <span class="read-next-meta">Updated {{ (next.updatedAt ?? next.publishedAt) | date: 'MMM d, yyyy' }} <span class="meta-sep">-</span> {{ next.readMinutes }} min read</span>
               <span class="read-next-arrow" aria-hidden="true">→</span>
             </a>
           </aside>

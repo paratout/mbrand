@@ -3,6 +3,7 @@ title: Domain Blueprinting: redesigning a company one process at a time
 summary: A practical method for harmonizing how a multi-country organization works: cut the company into end-to-end process domains, then run each one through the same pipeline - scoping, process design, IT architecture mapping, change assessment, and roadmapping. Theory first, then a worked example on the HR domain, down to the meeting formats.
 date: 2025-09-30
 time: 17:25
+updated: 2026-05-07
 cover: /images/pub/domain-blueprinting/cover-v4.png
 status: published
 ---

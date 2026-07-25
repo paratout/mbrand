@@ -194,6 +194,7 @@ export class PublicationComponent implements OnDestroy {
       description: p.summary,
       image: p.coverImage ? `https://mehdibamou.com${p.coverImage}` : undefined,
       datePublished: p.publishedAt,
+      dateModified: p.updatedAt ?? p.publishedAt,
       author: { '@type': 'Person', name: 'Mehdi Bamou', url: 'https://mehdibamou.com' },
       mainEntityOfPage: `https://mehdibamou.com/publications/${p.slug}`,
     };
