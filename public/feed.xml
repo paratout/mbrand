@@ -7,6 +7,13 @@
     <description>Essays and practical notes on enterprise architecture, governance, and technology in large organizations.</description>
     <language>en</language>
     <item>
+      <title>Where the application ends and the IT component begins</title>
+      <link>https://mehdibamou.com/publications/application-vs-it-component</link>
+      <guid isPermaLink="true">https://mehdibamou.com/publications/application-vs-it-component</guid>
+      <pubDate>Sat, 25 Jul 2026 16:45:00 GMT</pubDate>
+      <description>One classification decision, made early and in writing, quietly decides whether your portfolio practice works for the next five years. The tests that settle the hard cases - SaaS, microservices, suites, middleware - and what the line unlocks, year by year, as the architecture function matures.</description>
+    </item>
+    <item>
       <title>Walk the landscape first - due diligence before you transform anything</title>
       <link>https://mehdibamou.com/publications/landscape-due-diligence</link>
       <guid isPermaLink="true">https://mehdibamou.com/publications/landscape-due-diligence</guid>
