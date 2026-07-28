@@ -40,7 +40,7 @@ Not everything deserves a board's attention. Route work by risk, not by habit:
 
 ![The routing matrix: pattern-conforming changes take the fast lane with silence as consent, new building blocks get both gates, landscape-changing decisions get the full treatment](/images/pub/two-gate-review/routing.png)
 
-A change that follows a **pre-approved pattern** - the standard integration, the blessed stack, the known extension - takes the fast lane: the team declares conformity, the architects spot-check, and *silence within five working days means consent*. A project introducing a **new building block** gets both gates. A decision that **changes the landscape** - a new platform, a core system replacement, a data domain redesign - gets the full treatment, including the executive sponsor.
+A change that follows a **[pre-approved pattern](/publications/architecture-patterns)** - the standard integration, the blessed stack, the known extension - takes the fast lane: the team declares conformity, the architects spot-check, and *silence within five working days means consent*. A project introducing a **new building block** gets both gates. A decision that **changes the landscape** - a new platform, a core system replacement, a data domain redesign - gets the full treatment, including the executive sponsor.
 
 The fast lane is not a loophole; it is the reward for standardization, and it is what buys the board the time to think properly about the few decisions that deserve it. In my experience, once patterns mature, well over half of all changes should be riding the fast lane - if they are not, the pattern library is too thin, and that is the board's homework, not the teams' problem.
 

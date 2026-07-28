@@ -69,5 +69,12 @@
       <pubDate>Thu, 10 Jul 2025 09:45:00 GMT</pubDate>
       <description>How to run enterprise architecture with a spreadsheet, a wiki, and a drawing tool - the workbook structure that behaves like a repository, the collection method, the quality KPIs you can compute with formulas, the cadence that keeps it alive, and the honest trigger conditions for finally buying something. With a full starter kit to download.</description>
     </item>
+    <item>
+      <title>A pattern is a decision you only make once</title>
+      <link>https://mehdibamou.com/publications/architecture-patterns</link>
+      <guid isPermaLink="true">https://mehdibamou.com/publications/architecture-patterns</guid>
+      <pubDate>Tue, 03 Jun 2025 08:20:00 GMT</pubDate>
+      <description>Where patterns come from, what belongs inside one, and how they earn their keep - the rule of the second occurrence, a worked pattern written out in full, the six-pattern starter set for a greenfield, the fast lane that makes conformance rewarding, and the lifecycle that lets a pattern be revised or retired without breaking what already runs.</description>
+    </item>
   </channel>
 </rss>
