@@ -31,7 +31,7 @@
           }
           <div class="pub-meta">
             <time [attr.datetime]="pub()!.updatedAt ?? pub()!.publishedAt">
-              Updated {{ (pub()!.updatedAt ?? pub()!.publishedAt) | date: 'MMMM d, yyyy' }}
+              Published {{ pub()!.publishedAt | date: 'MMMM d, yyyy' }}<span class="meta-sep"> - </span>Updated {{ (pub()!.updatedAt ?? pub()!.publishedAt) | date: 'MMMM d, yyyy' }}
             </time>
             <span class="meta-sep">-</span>
             <span>{{ pub()!.readMinutes }} min read</span>

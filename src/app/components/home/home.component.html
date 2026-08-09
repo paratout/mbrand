@@ -72,7 +72,7 @@
             @for (pub of latest(); track pub.slug) {
               <a [routerLink]="['/publications', pub.slug]" class="pub-row">
                 <div class="pub-meta">
-                  <time>Updated {{ (pub.updatedAt ?? pub.publishedAt) | date: 'MMM d, yyyy' }}</time>
+                  <time>Published {{ pub.publishedAt | date: 'MMM d, yyyy' }} <span class="meta-sep">-</span> Updated {{ (pub.updatedAt ?? pub.publishedAt) | date: 'MMM d, yyyy' }}</time>
                   <span class="meta-sep">-</span>
                   <span>{{ pub.readMinutes }} min read</span>
                 </div>
