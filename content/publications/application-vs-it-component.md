@@ -3,7 +3,7 @@ title: Where the application ends and the IT component begins
 summary: One classification decision, made early and in writing, quietly decides whether your portfolio practice works for the next five years. The tests that settle the hard cases - SaaS, microservices, suites, middleware - and what the line unlocks, year by year, as the architecture function matures.
 date: 2026-03-10
 time: 16:45
-updated: 2026-05-22
+updated: 2026-07-06
 cover: /images/pub/application-vs-it-component/cover-v2.png
 status: published
 ---

@@ -3,7 +3,7 @@ title: Your application inventory is a map - keep it honest
 summary: Where to draw the line between application and IT component, what a minimum data standard looks like, the trigger-and-cadence operating loop that outlives any clean-up wave, and the KPIs that make portfolio quality steerable.
 date: 2025-08-21
 time: 08:40
-updated: 2026-05-05
+updated: 2026-03-19
 cover: /images/pub/apm-data-quality/cover-v4.png
 status: published
 ---
@@ -38,7 +38,7 @@ The principle: **responsibility sits where change happens**. Whoever changes the
 
 The trigger stream hooks record updates to events: a project going live updates its records before hypercare ends - it is part of the definition of done, not a favor to architecture. Retirements set lifecycle and successor the week they land. Ownership changes are reassigned immediately, because records without a live owner rot fastest of all.
 
-The cadence stream catches what triggers miss: a quarterly attestation where every application owner confirms owners, lifecycle, and capability mapping through a short survey; a monthly quality report to the IT domain leads with completeness, stale records, duplicates, and broken quality seals - plus the remediation backlog attached, so the report is a work queue, not a newsletter; a quarterly review of the busiest integration corridors; and a yearly - only yearly - revision of the business capability model, because a taxonomy that moves every quarter cannot anchor anything.
+The cadence stream catches what triggers miss: a quarterly attestation where every application owner confirms owners, lifecycle, and capability mapping through a short survey; a [monthly quality report](/publications/portfolio-quality-report) to the IT domain leads with completeness, stale records, duplicates, and broken quality seals - plus the remediation backlog attached, so the report is a work queue, not a newsletter; a quarterly review of the busiest integration corridors; and a yearly - only yearly - revision of the business capability model, because a taxonomy that moves every quarter cannot anchor anything.
 
 ## Measure what you steer by
 
