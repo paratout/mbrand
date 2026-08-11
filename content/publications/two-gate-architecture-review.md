@@ -1,9 +1,9 @@
 ---
 title: The two-gate architecture review - governance that enables
 summary: Architecture review has a reputation problem: the committee where projects go to wait. It doesn't have to be that way. A model with exactly two gates, an engineer-level forum underneath, a fast lane for pattern-conforming work, and decisions recorded where everyone can find them.
-date: 2025-11-06
+date: 2025-12-02
 time: 09:10
-updated: 2026-06-30
+updated: 2026-02-17
 cover: /images/pub/two-gate-review/cover-v4.png
 status: published
 ---
@@ -22,7 +22,7 @@ Instead, put **two light checkpoints** where they can still change the outcome:
 
 ![The two-gate review model on a project timeline: an early direction check, a design loop supported by the weekly design forum, and a pre-build check before implementation starts](/images/pub/two-gate-review/two-gates.png)
 
-**Gate 1 - the direction check, in the earliest project phase.** The question is not "is the design good?" - there is no design yet. The question is: *are we building the right kind of thing, in the right place in the landscape?* Does this project fit the target architecture, reuse the platforms we already pay for, and respect the principles? The input is a one-pager and a sketch; the session is 30 minutes; the output is a direction: build here, reuse that, avoid this, and here are the two risks to watch. Catching a misfit at gate 1 costs a conversation. Catching it at the end costs a re-platforming.
+**Gate 1 - the direction check, in the earliest project phase.** The question is not "is the design good?" - there is no design yet. The question is: *are we building the right kind of thing, in the right place in the landscape?* Does this project fit the target architecture, reuse the platforms we already pay for, and respect [the principles](/publications/architecture-principles)? The input is a one-pager and a sketch; the session is 30 minutes; the output is a direction: build here, reuse that, avoid this, and here are the two risks to watch. Catching a misfit at gate 1 costs a conversation. Catching it at the end costs a re-platforming.
 
 **Gate 2 - the build check, before implementation starts.** Now there is a design, and the question changes: *is it sound and does it comply?* Integration patterns, data flows, security posture, operational readiness - checked against the active standards. The outcome is one of three words: approved, approved with conditions, or rework. Conditions get an owner and a date, or they are not conditions - they are wishes.
 

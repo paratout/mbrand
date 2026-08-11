@@ -1,14 +1,14 @@
 ---
 title: A pattern is a decision you only make once
 summary: Where patterns come from, what belongs inside one, and how they earn their keep - the rule of the second occurrence, a worked pattern written out in full, the six-pattern starter set for a greenfield, the fast lane that makes conformance rewarding, and the lifecycle that lets a pattern be revised or retired without breaking what already runs.
-date: 2025-06-03
+date: 2025-10-28
 time: 08:20
-updated: 2025-11-18
+updated: 2026-04-28
 cover: /images/pub/architecture-patterns/cover-v1.png
 status: published
 ---
 
-The fourth time I watched a team build the same integration in a different way, I stopped blaming the teams. Nobody had been careless. Each had solved a genuine problem with a reasonable design, in isolation, at a moment when the alternative would have meant a meeting with someone who did not yet exist. The organization had not made one bad decision - it had made the same decision four times, badly distributed.
+The fourth time I watched a team build the same [integration](/publications/clean-core-integration) in a different way, I stopped blaming the teams. Nobody had been careless. Each had solved a genuine problem with a reasonable design, in isolation, at a moment when the alternative would have meant a meeting with someone who did not yet exist. The organization had not made one bad decision - it had made the same decision four times, badly distributed.
 
 That is what a pattern prevents. Not creativity, not judgment, and certainly not thinking. Just the fourth repetition of a decision that was already correctly made once.
 
@@ -18,7 +18,7 @@ This one is drawn from my own missions, blurred where it matters, and written mo
 
 ## What a pattern is, and what it is not
 
-Four things get confused constantly, and the confusion is expensive. A principle is a value with consequences ("we prefer buying over building"). A standard is a binary constraint ("all inbound traffic terminates at the gateway"). A reference architecture is a picture of a whole domain in its target state. A pattern sits between them: it is a **reusable design decision for a recurring problem, with its context, its costs, and its limits stated**.
+Four things get confused constantly, and the confusion is expensive. A [principle](/publications/architecture-principles) is a trade-off with consequences ("configuration over build, even where building would fit better"). A standard is a binary constraint ("all inbound traffic terminates at the gateway"). A reference architecture is a picture of a whole domain in its target state. A pattern sits between them: it is a **reusable design decision for a recurring problem, with its context, its costs, and its limits stated**.
 
 ![Principle, standard, pattern, reference architecture - what each one is, who writes it, how it is enforced, and what it looks like when misused](/images/pub/architecture-patterns/taxonomy-v1.png)
 

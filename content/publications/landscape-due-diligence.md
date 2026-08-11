@@ -1,7 +1,7 @@
 ---
 title: Walk the landscape first - due diligence before you transform anything
 summary: Phase one of any serious transformation is finding out what the company actually runs. How to build the initial capability map, collect applications and IT components market by market, and read the pile once you have it - without the result dying as a PDF.
-date: 2026-02-03
+date: 2025-03-11
 time: 10:30
 updated: 2026-05-12
 cover: /images/pub/landscape-due-diligence/cover-v2.png
@@ -44,7 +44,7 @@ Once the collection exists, pick a reference baseline - in practice, the stack o
 
 ![Reading the collection: markets measured against a reference stack, with three kinds of findings called out - duplicates, local gems, and legally local exceptions](/images/pub/landscape-due-diligence/reading-the-pile-v1.png)
 
-Three kinds of findings come out of this reading, and they deserve different treatment. Duplicates are the obvious ones: five survey tools, three planogram solutions, or a capability where every market bought its own answer. These become harmonization candidates. Local gems are the happy surprise: one market built or bought something the whole group should have - I have seen a local store-marketing tool discovered this way end up on the global roadmap. Due diligence is also shopping in your own house. And then there are the legally local: payroll, some HR administration, anything pinned down by national regulation. Leave them alone - but write down *why* they are exempt, or the next transformation program will rediscover them the hard way.
+Three kinds of findings come out of this reading, and they deserve different treatment. Duplicates are the obvious ones: five survey tools, three planogram solutions, or a capability where every market bought its own answer. These become harmonization candidates. Local gems are the happy surprise: one market built or bought something the whole group should have - I have seen a local store-marketing tool discovered this way end up on the global roadmap. Due diligence is also shopping in your own house. And then there are the legally local: payroll, some HR administration, anything pinned down by national regulation. Leave them alone - but write down *why* they are exempt, or the next transformation program will rediscover them the hard way. That distinction between what the law requires and what a market simply prefers is the same [triage](/publications/clean-core-integration) that decides how much of a packaged core ends up modified.
 
 The fourth finding is the uncomfortable one: capabilities with no tooling anywhere. Those tend to be the quiet reason the transformation was needed in the first place.
 

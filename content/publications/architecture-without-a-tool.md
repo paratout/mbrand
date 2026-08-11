@@ -1,9 +1,9 @@
 ---
 title: You do not need an APM tool in year one
 summary: How to run enterprise architecture with a spreadsheet, a wiki, and a drawing tool - the workbook structure that behaves like a repository, the collection method, the quality KPIs you can compute with formulas, the cadence that keeps it alive, and the honest trigger conditions for finally buying something. With a full starter kit to download.
-date: 2025-07-10
+date: 2025-01-28
 time: 09:45
-updated: 2026-01-27
+updated: 2026-06-09
 cover: /images/pub/architecture-without-a-tool/cover-v1.png
 status: published
 ---

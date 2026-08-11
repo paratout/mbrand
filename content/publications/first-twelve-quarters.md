@@ -1,9 +1,9 @@
 ---
 title: Year one, you are the function
 summary: Twelve quarters from a single architect in a greenfield to an enterprise architecture function with its own team, budget, and mandate. What to ship each quarter, which forum to open when, when to federate instead of hire, how the money moves from someone else's budget to your own, and the signals that say slow down.
-date: 2026-05-26
+date: 2026-06-23
 time: 11:20
-updated: 2026-07-22
+updated: 2026-08-01
 cover: /images/pub/first-twelve-quarters/cover-v2.png
 status: published
 ---
