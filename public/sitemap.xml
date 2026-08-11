@@ -41,6 +41,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://mehdibamou.com/publications/data-strategy-object-model</loc>
+    <lastmod>2026-08-09</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://mehdibamou.com/publications/clean-core-integration</loc>
     <lastmod>2026-08-06</lastmod>
     <priority>0.7</priority>
@@ -97,7 +102,7 @@
   </url>
   <url>
     <loc>https://mehdibamou.com/publications/architecture-without-a-tool</loc>
-    <lastmod>2026-06-09</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <priority>0.7</priority>
   </url>
 </urlset>

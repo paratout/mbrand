@@ -1,7 +1,7 @@
 ---
 title: Where the application ends and the IT component begins
 summary: One classification decision, made early and in writing, quietly decides whether your portfolio practice works for the next five years. The tests that settle the hard cases - SaaS, microservices, suites, middleware - and what the line unlocks, year by year, as the architecture function matures.
-date: 2025-04-15
+date: 2025-03-24
 time: 16:45
 updated: 2026-07-21
 cover: /images/pub/application-vs-it-component/cover-v2.png
@@ -10,7 +10,7 @@ status: published
 
 Ask three people in the same IT organization how many applications the company runs and you will get three numbers, sometimes an order of magnitude apart. The difference is rarely about knowledge. It is about definition: one person counted the integration platform, the databases, and the job scheduler; one counted only what has a login screen; one counted whatever the license report spat out. All three are describing the same landscape.
 
-This sounds like pedantry until you realize how much sits on top of that definition. It is one of the least glamorous decisions in enterprise architecture and one of the few that compounds - quietly, for years.
+This sounds like pedantry until you realize how much sits on top of that definition - including, later, the ability to answer where a given object's data [physically sits](/publications/data-strategy-object-model), which is a question that arrives from a regulator rather than from an architect. It is one of the least glamorous decisions in enterprise architecture and one of the few that compounds - quietly, for years.
 
 *Every practice you want in year three is either enabled or poisoned by a classification you make in month one.*
 

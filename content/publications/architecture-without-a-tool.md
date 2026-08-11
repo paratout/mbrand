@@ -1,9 +1,9 @@
 ---
 title: You do not need an APM tool in year one
 summary: How to run enterprise architecture with a spreadsheet, a wiki, and a drawing tool - the workbook structure that behaves like a repository, the collection method, the quality KPIs you can compute with formulas, the cadence that keeps it alive, and the honest trigger conditions for finally buying something. With a full starter kit to download.
-date: 2025-01-28
+date: 2025-01-06
 time: 09:45
-updated: 2026-06-09
+updated: 2026-06-16
 cover: /images/pub/architecture-without-a-tool/cover-v1.png
 status: published
 ---
@@ -38,7 +38,7 @@ One file. Not five spreadsheets in five folders - one, with named sheets, owned 
 
 **IT components** is the second sheet, same shape, prefixed COMP-, carrying vendor, version, end-of-support date, and hosting. The [line between the two sheets](/publications/application-vs-it-component) is the single most valuable decision in the whole file, and it belongs on a wiki page, not in a column header.
 
-**Links** is the sheet that makes a spreadsheet stop being a list. Three columns - from ID, to ID, relationship type - and every relationship in your landscape lives there: application runs on component, application exchanges data with application, application supports capability. It is ugly and it works, because a flat link table is exactly what every graph tool imports from anyway.
+**Links** is the sheet that makes a spreadsheet stop being a list. Three columns - from ID, to ID, relationship type - and every relationship in your landscape lives there: application runs on component, application exchanges data with application, application supports capability, and later [object mastered by application](/publications/data-strategy-object-model) when you get to the data side. It is ugly and it works, because a flat link table is exactly what every graph tool imports from anyway.
 
 **Capabilities** holds the two-level map, each with an ID and an owner. **Owners** holds people once, so that when someone leaves you fix one row and not forty. And **Quality** computes the KPIs with formulas over the other sheets - completeness, ownership coverage, records with no capability, stale attestations - so that your monthly number is generated, never typed.
 

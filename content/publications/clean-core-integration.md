@@ -1,7 +1,7 @@
 ---
 title: Clean core is an integration discipline, not a coding ban
 summary: What clean core actually means once you stop reading it as "no customization" - the four places work can go, the integration rules that keep an upgrade to a weekend, how to triage what local markets genuinely need against what they merely prefer, how to hold edge cases in a register with expiry dates instead of in the core, and the scorecard that tells you whether the target is still reachable. With an extension register and an integration standard to download.
-date: 2026-04-07
+date: 2026-03-09
 time: 10:40
 updated: 2026-08-06
 cover: /images/pub/clean-core-integration/cover-v1.png
@@ -52,7 +52,7 @@ Clean core lives or dies at the integration layer, because that is where the pre
 
 **Released contracts only.** Inbound and outbound both. If the interface you need does not exist, the answer is a request to the vendor and a temporary bridge with an expiry - not a direct table read that will still be there in nine years, invisible to everyone until it breaks during an upgrade.
 
-**One owner per data object.** For every significant object - customer, supplier, article, cost centre, employee - exactly one system creates and changes it, and everyone else consumes. Write down the list. Half of all integration pain in multi-market landscapes is two systems both believing they master the same object, and no amount of middleware sophistication fixes an ownership question.
+**One owner per data object.** For every significant object - customer, supplier, article, cost centre, employee - exactly one system creates and changes it, and everyone else consumes. Write down the list, and write it down [as a proper object model](/publications/data-strategy-object-model) rather than as a paragraph in an integration standard, because the same list is about to be needed by the localization triage, the extension register and every residency question the programme receives. Half of all integration pain in multi-market landscapes is two systems both believing they master the same object, and no amount of middleware sophistication fixes an ownership question.
 
 **Canonical in the middle, dialects at the edges.** Publish and consume one shared shape per object, and translate at the boundary. Twelve markets each with their own file format is fine at the edge; twelve dialects flowing into the core is how you get an integration layer nobody can change.
 

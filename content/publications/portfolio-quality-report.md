@@ -1,7 +1,7 @@
 ---
 title: The monthly report nobody reads, and how to fix it
 summary: A portfolio quality report is either a work queue or a newsletter, and the difference is mechanical. The six checks worth running, how each one is computed, the one-page layout that gets acted on, how findings become assigned work, the escalation ladder, and what the numbers do over twelve months. With a report pack and templates to download.
-date: 2025-07-01
+date: 2025-06-09
 time: 07:55
 updated: 2026-06-30
 cover: /images/pub/portfolio-quality-report/cover-v1.png
