@@ -3,7 +3,7 @@ title: Year one, you are the function
 summary: Twelve quarters from a single architect in a greenfield to an enterprise architecture function with its own team, budget, and mandate. What to ship each quarter, which forum to open when, when to federate instead of hire, how the money moves from someone else's budget to your own, and the signals that say slow down.
 date: 2026-06-29
 time: 11:20
-updated: 2026-08-01
+updated: 2026-07-07
 cover: /images/pub/first-twelve-quarters/cover-v2.png
 status: published
 ---
@@ -80,7 +80,7 @@ Artifact: the [portfolio quality operating loop](/publications/application-portf
 
 **Q8 - Rate the portfolio, and let the numbers do the arguing.** With an honest inventory and a working board, run the first [business fit and technical fit assessment](/publications/business-fit-technical-fit) across the domains. The output is not a rating exercise; it is your first budget-grade artifact - a portfolio view that says where the money should go next year, in the language the CFO's people already speak.
 
-Artifact: the portfolio assessment and the first target-state diagrams per domain, dated and attached to board records. Forum: the quarterly session begins - the one where receiving teams score their own architecture key results in public. Governance: the definition of done now includes repository updates across all projects, enforced by the PMO rather than requested by you.
+Artifact: the portfolio assessment and the first target-state diagrams per domain, dated and attached to board records. Forum: the quarterly session begins - the one where receiving teams score their own architecture key results in public. Governance: the definition of done now includes [repository updates across all projects](/publications/every-project-needs-an-address), enforced by the PMO rather than requested by you.
 
 ## Year three: a function with its own name
 

@@ -143,7 +143,7 @@ The fix is not a bigger governance process. It is that **the model rides the dec
 
 ### Projects
 
-One question is added to the gate one-pager, and it is the whole mechanism:
+One question is added to the [gate one-pager](/publications/every-project-needs-an-address), and it is the whole mechanism:
 
 > Does this initiative create, change, copy, or move a domain object?
 

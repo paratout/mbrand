@@ -1,9 +1,9 @@
 ---
 title: Principles that could have gone the other way
 summary: Why framework principles like "data is an asset" change nothing, and how to derive a set that actually decides arguments - the falsifiability test, the five places real principles come from, the "X over Y" form that makes trade-offs explicit, three worked sets for three different organizations, and how to keep them alive without turning them into compliance. With a derivation workshop and a principle register.
-date: 2025-08-25
+date: 2025-07-21
 time: 08:35
-updated: 2026-08-04
+updated: 2026-03-17
 cover: /images/pub/architecture-principles/cover-v1.png
 status: published
 ---

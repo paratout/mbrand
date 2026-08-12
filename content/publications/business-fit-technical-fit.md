@@ -1,7 +1,7 @@
 ---
 title: Business fit and technical fit are not the same question
 summary: An application can be the wrong answer implemented beautifully. On separating the business verdict from the technical one - who rates what, on what scale, and what two honest ratings buy you at portfolio level. Includes a two-slide assessment guide.
-date: 2025-07-21
+date: 2025-06-16
 time: 14:05
 updated: 2025-11-25
 cover: /images/pub/business-fit-technical-fit/cover-v3.png
@@ -42,7 +42,7 @@ Four levels, no middle. A neutral midpoint is where ratings go to hide; with fou
 
 ![Two four-level scales side by side: business fit from unreasonable to perfect and technical fit from inappropriate to fully appropriate, each level with its anchor question, and one accountable rater per scale](/images/pub/business-fit-technical-fit/two-scales-v1.png)
 
-For business fit: level four means the process runs end to end in the system and users would choose it again; three means it does the job with accepted workarounds; two means core gaps exist and shadow tools are filling them; one means the application actively obstructs the process it claims to support. For technical fit: four means a current, supported, standard-pattern stack; three means aging but supported, nothing blocking; two means components approaching end of support and integration debt accumulating; one means out-of-support technology, security exposure, or a vendor that no longer exists.
+For business fit: level four means the process runs end to end in the system and users would choose it again; three means it does the job with accepted workarounds; two means core gaps exist and shadow tools are filling them; one means the application actively obstructs the process it claims to support. For technical fit: four means a current, supported, standard-pattern stack; three means aging but supported, nothing blocking; two means components approaching end of support and integration debt accumulating; one means out-of-support technology, security exposure, or a vendor that no longer exists. Keep these two ratings out of the [vendor evaluation score](/publications/every-project-needs-an-address) as well - blending architecture, functional and commercial criteria produces a single number nobody can take apart afterwards.
 
 One rule turns the assessment from a snapshot into a plan: every rating below the top level must answer a second question - *what would move this one level up?* The answers, collected across a domain, are a remediation backlog you got for free.
 
