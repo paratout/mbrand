@@ -178,19 +178,43 @@ library.sort((a, b) => a.order - b.order);
 await writeFile(path.join(OUT, 'library.json'), JSON.stringify(library));
 
 // ---- Glossary ----
+// Structure: `# Category` sections, each holding `## Term` entries.
 const glossRaw = await readFile(path.join(ROOT, 'content', 'glossary.md'), 'utf8').catch(() => null);
 const glossary = [];
+const glossaryCategories = [];
+const plainText = (md) =>
+  md
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1') // links to their label
+    .replace(/[*_`>#]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
 if (glossRaw) {
-  const parts = glossRaw.split(/^## /m).slice(1);
-  for (const part of parts) {
-    const nl = part.indexOf('\n');
-    const term = part.slice(0, nl).trim();
-    const body = part.slice(nl + 1).trim();
-    glossary.push({ term, id: slugifyHeading(term), html: marked.parse(body) });
+  const sections = glossRaw.split(/^# /m).slice(1);
+  for (const section of sections) {
+    const cnl = section.indexOf('\n');
+    const category = section.slice(0, cnl).trim();
+    const parts = section.slice(cnl + 1).split(/^## /m).slice(1);
+    if (!parts.length) continue;
+    glossaryCategories.push(category);
+    for (const part of parts) {
+      const nl = part.indexOf('\n');
+      const term = part.slice(0, nl).trim();
+      const body = part.slice(nl + 1).trim();
+      glossary.push({
+        term,
+        id: slugifyHeading(term),
+        category,
+        html: marked.parse(body),
+        text: plainText(body),
+      });
+    }
   }
   glossary.sort((a, b) => a.term.localeCompare(b.term));
 }
-await writeFile(path.join(OUT, 'glossary.json'), JSON.stringify(glossary));
+await writeFile(
+  path.join(OUT, 'glossary.json'),
+  JSON.stringify({ categories: glossaryCategories, terms: glossary })
+);
 
 // RSS feed
 const feedItems = published

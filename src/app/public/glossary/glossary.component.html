@@ -1,4 +1,4 @@
-<div class="glossary-page">
+<div class="glossary-page" (keydown)="onKeydown($event)" tabindex="-1">
 
   <app-site-header />
 
@@ -10,8 +10,9 @@
           <span class="kicker">Glossary</span>
           <h1 class="gl-title">The architect's dictionary</h1>
           <p class="gl-lede">
-            The vocabulary of enterprise architecture and governance, in plain
-            language - and with opinions, because neutral definitions decide nothing.
+            The working vocabulary of enterprise architecture - capabilities, portfolios,
+            data, integration, packaged software, governance, delivery, and technology -
+            in plain language, and with opinions, because neutral definitions decide nothing.
           </p>
         </header>
 
@@ -19,30 +20,89 @@
           <p class="state-msg">Loading…</p>
         } @else {
 
-          <nav class="letter-nav" aria-label="Jump to letter">
-            @for (g of groups(); track g.letter) {
-              <a [href]="'/glossary#letter-' + g.letter" class="letter-link">{{ g.letter }}</a>
-            }
-          </nav>
+          <div class="gl-toolbar">
+            <div class="toolbar-row">
+              <label class="search">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>
+                <input
+                  #searchInput
+                  type="search"
+                  placeholder="Search {{ totalCount() }} terms"
+                  [value]="query()"
+                  (input)="onSearch($event)"
+                  aria-label="Search the glossary"
+                />
+                @if (searching()) {
+                  <button type="button" class="search-clear" (click)="clearSearch()" aria-label="Clear search">&times;</button>
+                }
+              </label>
 
-          <div class="gl-list">
-            @for (g of groups(); track g.letter) {
-              <section class="letter-group">
-                <h2 class="letter-mark" [id]="'letter-' + g.letter">{{ g.letter }}</h2>
-                <div class="letter-terms">
-                  @for (t of g.terms; track t.id) {
-                    <article class="term" [id]="t.id">
-                      <h3 class="term-name">
-                        {{ t.term }}
-                        <a class="term-anchor" [href]="'/glossary#' + t.id" [attr.aria-label]="'Link to ' + t.term">#</a>
-                      </h3>
-                      <div class="term-body" [innerHTML]="t.body"></div>
-                    </article>
-                  }
-                </div>
-              </section>
-            }
+              <p class="result-count" aria-live="polite">
+                @if (searching()) {
+                  {{ resultCount() }} of {{ totalCount() }} terms
+                } @else {
+                  {{ resultCount() }} terms<span class="slash">/</span><span class="hint">press / to search</span>
+                }
+              </p>
+            </div>
+
+            <div class="chips" role="group" aria-label="Filter by area">
+              <button type="button" class="chip" [class.is-active]="category() === 'all'" (click)="setCategory('all')">
+                All <span class="chip-count">{{ totalCount() }}</span>
+              </button>
+              @for (c of chips(); track c.name) {
+                <button type="button" class="chip" [class.is-active]="category() === c.name" (click)="setCategory(c.name)">
+                  {{ c.name }} <span class="chip-count">{{ c.count }}</span>
+                </button>
+              }
+            </div>
           </div>
+
+          @if (resultCount() === 0) {
+            <p class="state-msg">No term matches that - try a shorter word, or clear the filters.</p>
+          } @else if (searching()) {
+
+            <div class="gl-list gl-results" (click)="onBodyClick($event)">
+              @for (t of filtered(); track t.id) {
+                <article class="term" [id]="t.id">
+                  <h3 class="term-name">
+                    <span>{{ t.pre }}@if (t.hit) {<mark>{{ t.hit }}</mark>}{{ t.post }}</span>
+                    <span class="term-cat">{{ t.category }}</span>
+                    <a class="term-anchor" [href]="'/glossary#' + t.id" [attr.aria-label]="'Link to ' + t.term">#</a>
+                  </h3>
+                  <div class="term-body" [innerHTML]="t.body"></div>
+                </article>
+              }
+            </div>
+
+          } @else {
+
+            <nav class="letter-nav" aria-label="Jump to letter">
+              @for (g of groups(); track g.letter) {
+                <button type="button" class="letter-link" (click)="jumpToLetter(g.letter)" [attr.aria-label]="'Jump to ' + g.letter">{{ g.letter }}</button>
+              }
+            </nav>
+
+            <div class="gl-list" (click)="onBodyClick($event)">
+              @for (g of groups(); track g.letter) {
+                <section class="letter-group">
+                  <h2 class="letter-mark" [id]="'letter-' + g.letter">{{ g.letter }}</h2>
+                  <div class="letter-terms">
+                    @for (t of g.terms; track t.id) {
+                      <article class="term" [id]="t.id">
+                        <h3 class="term-name">
+                          <span>{{ t.term }}</span>
+                          <a class="term-anchor" [href]="'/glossary#' + t.id" [attr.aria-label]="'Link to ' + t.term">#</a>
+                        </h3>
+                        <div class="term-body" [innerHTML]="t.body"></div>
+                      </article>
+                    }
+                  </div>
+                </section>
+              }
+            </div>
+
+          }
 
         }
 
