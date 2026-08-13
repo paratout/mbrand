@@ -8,39 +8,116 @@
 
         <header class="sp-head">
           <span class="kicker">Speaking</span>
-          <h1 class="sp-title">Talks &amp; workshops</h1>
+          <h1 class="sp-title"><span class="t-line">The unglamorous machinery,</span>&ngsp;<span class="t-line">explained by someone who has run it</span></h1>
           <p class="sp-lede">
-            I speak about the unglamorous machinery that makes large organizations
-            work: portfolios, processes, and governance. Practitioner material -
-            everything I present has been run in real organizations, not read
-            about. Sessions work in English, French, or Arabic.
+            Enterprise architecture is a wide discipline and most of it is never talked
+            about in public: counting a landscape, keeping an inventory true, deciding
+            what a market genuinely needs, holding a packaged core clean, and building
+            a practice that delivery teams do not route around. Everything I present has
+            been run in real organizations rather than read about, and every session is
+            written up in full so nobody has to take notes.
           </p>
+
+          <ul class="areas" aria-label="Subjects covered">
+            @for (a of areas; track a) {
+              <li class="area">{{ a }}</li>
+            }
+          </ul>
+
+          <div class="proof">
+            <a routerLink="/publications" class="proof-item">
+              <span class="proof-num">{{ articleCount() ?? '-' }}</span>
+              <span class="proof-label">published pieces behind these talks</span>
+            </a>
+            <a routerLink="/library" class="proof-item">
+              <span class="proof-num">{{ toolCount() ?? '-' }}</span>
+              <span class="proof-label">templates and workbooks, free to take away</span>
+            </a>
+            <a routerLink="/glossary" class="proof-item">
+              <span class="proof-num">{{ termCount() ?? '-' }}</span>
+              <span class="proof-label">terms defined in the dictionary</span>
+            </a>
+          </div>
         </header>
 
-        <div class="topic-list">
-          @for (t of topics; track t.index) {
-            <article class="topic-card">
-              <span class="topic-index">{{ t.index }}</span>
-              <div class="topic-main">
-                <h2 class="topic-title">{{ t.title }}</h2>
-                <p class="topic-sub">{{ t.sub }}</p>
-                <p class="topic-text">{{ t.text }}</p>
-                <div class="topic-meta">
-                  <span class="topic-format">{{ t.formats }}</span>
-                  <a [routerLink]="['/publications', t.related]" class="topic-article">Read the article <span class="arrow">→</span></a>
+        <div class="tracks">
+          @for (tr of tracks; track tr.index) {
+            <section class="track">
+              <div class="track-head">
+                <span class="track-index">{{ tr.index }}</span>
+                <div>
+                  <h2 class="track-name">{{ tr.name }}</h2>
+                  <p class="track-framing">{{ tr.framing }}</p>
                 </div>
               </div>
-            </article>
+
+              <div class="talk-list">
+                @for (t of tr.talks; track t.title) {
+                  <article class="talk">
+                    <h3 class="talk-title">{{ t.title }}</h3>
+                    <p class="talk-sub">{{ t.sub }}</p>
+                    <p class="talk-text">{{ t.text }}</p>
+                    <p class="talk-formats">{{ t.formats }}</p>
+                    <div class="talk-reads">
+                      @for (r of t.reads; track r.slug) {
+                        <a [routerLink]="['/publications', r.slug]" class="talk-read">{{ r.label }} <span class="arrow">&#8594;</span></a>
+                      }
+                    </div>
+                  </article>
+                }
+              </div>
+            </section>
           }
         </div>
 
-        <aside class="sp-cta">
-          <h2 class="cta-title">Have an event or a team that needs one of these?</h2>
-          <p class="cta-text">
-            Conference talks, internal architecture days, leadership briefings, or
-            hands-on workshops - reach out and we will make it fit your format.
+        <section class="formats-block">
+          <h2 class="block-title">Formats</h2>
+          <p class="block-lede">
+            Any topic above works in any of these. The last one is where the material
+            was designed to land, because the arc builds on itself.
           </p>
-          <a href="https://www.linkedin.com/in/mehdi-bamou/" target="_blank" rel="noopener" class="btn btn-primary">Contact me on LinkedIn</a>
+          <div class="format-grid">
+            @for (f of formats; track f.name) {
+              <article class="format">
+                <h3 class="format-name">{{ f.name }}</h3>
+                <p class="format-meta">{{ f.length }}<span class="dot"></span>{{ f.audience }}</p>
+                <p class="format-text">{{ f.text }}</p>
+              </article>
+            }
+          </div>
+        </section>
+
+        <section class="promise">
+          <h2 class="block-title">What a room leaves with</h2>
+          <div class="promise-grid">
+            <div class="promise-item">
+              <h3>Something filled in</h3>
+              <p>Workshops end with your own object list, constraint sheet, or seam register on the page - not a photograph of a flipchart.</p>
+            </div>
+            <div class="promise-item">
+              <h3>The artifacts, free</h3>
+              <p>Every session is backed by the templates, workbooks and decks in the <a routerLink="/library">library</a>. Take them, rename them, use them without asking.</p>
+            </div>
+            <div class="promise-item">
+              <h3>The long version</h3>
+              <p>Each talk is written up in full in the <a routerLink="/publications">publications</a>, so the session can be about your situation rather than about note-taking.</p>
+            </div>
+            <div class="promise-item">
+              <h3>No vendor content</h3>
+              <p>Nothing on this page is sponsored, and no product names appear in the material. Examples are composited from real missions, with details blurred.</p>
+            </div>
+          </div>
+        </section>
+
+        <aside class="sp-cta">
+          <h2 class="cta-title">Have an event, or a practice that needs one of these?</h2>
+          <p class="cta-text">
+            Conferences, internal architecture days, leadership briefings, hands-on
+            workshops, or a series across a quarter. Sessions run in English, French,
+            or Arabic, remote or on-site, and I am happy to reshape a topic around
+            what your teams are actually stuck on.
+          </p>
+          <a href="https://www.linkedin.com/in/mehdi-bamou/" target="_blank" rel="noopener" class="btn btn-primary">Get in touch on LinkedIn</a>
         </aside>
 
       </div>
