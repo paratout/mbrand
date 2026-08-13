@@ -37,44 +37,53 @@ main {
   font-family: var(--font-serif);
 }
 
-/* ---- Sticky toolbar: search + category chips ---- */
+/* ---- Sticky toolbar: search + category chips ----
+   The site header only sticks inside its own 69px host box, so in practice it
+   scrolls away. The toolbar therefore pins to the very top, and is full-bleed
+   so nothing scrolls past in the margins. --gl-stick is the space it occupies,
+   used by every scroll-margin below. */
 .gl-toolbar {
+  --gl-stick: 108px;
   position: sticky;
-  top: 68px;
-  z-index: 20;
-  background: color-mix(in srgb, var(--paper) 92%, transparent);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-top: 1px solid var(--line);
+  top: 0;
+  z-index: 30;
+  background: color-mix(in srgb, var(--paper) 96%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--line);
-  padding: 14px 0 12px;
-  margin-bottom: 8px;
+  padding: 12px 0 11px;
+  margin-bottom: 4px;
 }
 
-.toolbar-row {
-  display: flex;
+.toolbar-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 380px) auto;
+  grid-template-areas:
+    "search count"
+    "chips  chips";
   align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
+  column-gap: 16px;
+  row-gap: 10px;
 }
 
 .search {
+  grid-area: search;
   display: flex;
   align-items: center;
   gap: 8px;
   background: #fff;
   border: 1px solid var(--line-strong);
   border-radius: 999px;
-  padding: 7px 8px 7px 16px;
+  padding: 7px 8px 7px 15px;
   color: var(--ink-3);
-  min-width: 280px;
-  flex: 1;
-  max-width: 420px;
+  min-width: 0;
 
   &:focus-within {
     border-color: var(--accent);
     color: var(--accent);
   }
+
+  svg { flex: 0 0 auto; }
 
   input {
     font: inherit;
@@ -84,6 +93,7 @@ main {
     background: transparent;
     color: var(--ink);
     width: 100%;
+    min-width: 0;
 
     &::placeholder { color: var(--ink-3); }
     &::-webkit-search-cancel-button { display: none; }
@@ -98,43 +108,54 @@ main {
   line-height: 1;
   padding: 0 6px;
   cursor: pointer;
+  flex: 0 0 auto;
 
   &:hover { color: var(--accent); }
 }
 
 .result-count {
+  grid-area: count;
   font-size: 0.85rem;
   color: var(--ink-3);
   white-space: nowrap;
-
-  .slash {
-    display: inline-block;
-    margin: 0 8px;
-    color: var(--line-strong);
-  }
+  justify-self: end;
 
   .hint {
     font-family: var(--font-serif);
     font-style: italic;
+    margin-left: 10px;
+    padding-left: 10px;
+    border-left: 1px solid var(--line-strong);
   }
 }
 
+/* One row, scrolled horizontally rather than wrapped - keeps the toolbar
+   the same height on a phone as on a desktop. */
 .chips {
+  grid-area: chips;
   display: flex;
-  gap: 7px;
-  flex-wrap: wrap;
-  margin-top: 12px;
+  gap: 5px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar { display: none; }
 }
 
 .chip {
+  flex: 0 0 auto;
   border: 1px solid var(--line-strong);
   background: transparent;
   border-radius: 999px;
-  padding: 5px 13px;
+  padding: 5px 10px;
   font: inherit;
-  font-size: 0.82rem;
+  font-size: 0.78rem;
+  line-height: 1.35;
   color: var(--ink-2);
   cursor: pointer;
+  white-space: nowrap;
   transition: all var(--transition-base);
 
   &:hover {
@@ -150,9 +171,9 @@ main {
 }
 
 .chip-count {
-  font-size: 0.76rem;
-  opacity: 0.6;
-  margin-left: 3px;
+  font-size: 0.72rem;
+  opacity: 0.55;
+  margin-left: 2px;
 }
 
 /* ---- Letter nav ---- */
@@ -188,7 +209,7 @@ main {
 
 /* ---- Groups ---- */
 .letter-group {
-  scroll-margin-top: 172px;
+  scroll-margin-top: 128px;
   display: grid;
   grid-template-columns: 90px 1fr;
   gap: 24px;
@@ -203,7 +224,7 @@ main {
   font-size: 2.6rem;
   color: var(--accent);
   margin: 0;
-  scroll-margin-top: 172px;
+  scroll-margin-top: 128px;
   align-self: start;
 }
 
@@ -229,7 +250,7 @@ main {
 }
 
 .term {
-  scroll-margin-top: 190px;
+  scroll-margin-top: 128px;
   max-width: 46em;
 }
 
@@ -291,36 +312,57 @@ main {
   }
 }
 
-@media (max-width: 700px) {
-  .gl-toolbar {
-    position: static;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
+/* The chip rail fits exactly at container width; below that it scrolls, so
+   fade the right edge to show there is more. */
+@media (max-width: 1080px) {
+  .chips {
+    padding-right: 36px;
+    mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 36px), transparent 100%);
+    -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 36px), transparent 100%);
   }
-
-  .letter-mark {
-    position: static;
-    scroll-margin-top: 90px;
-  }
-
-  .term { scroll-margin-top: 90px; }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 760px) {
+  .gl-toolbar {
+    --gl-stick: 100px;
+    padding: 10px 0 9px;
+  }
+
+  .toolbar-inner {
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 12px;
+    row-gap: 9px;
+  }
+
+  .result-count {
+    font-size: 0.78rem;
+    .rc-word, .hint { display: none; }
+  }
+
+  .letter-group,
+  .letter-mark,
+  .term { scroll-margin-top: 118px; }
+
+  .letter-nav { padding: 18px 0 22px; }
+}
+
+@media (max-width: 620px) {
+  .gl-head { margin-bottom: 20px; }
+
   .letter-group {
     grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 24px 0;
+  }
+
+  .letter-mark { font-size: 1.7rem; }
+
+  .search input { font-size: 16px; } /* keeps iOS from zooming on focus */
+
+  .term-name {
+    font-size: 1.1rem;
     gap: 8px;
   }
 
-  .letter-mark {
-    font-size: 1.8rem;
-  }
-
-  .search {
-    min-width: 0;
-    max-width: none;
-  }
-
-  .result-count .slash,
-  .result-count .hint { display: none; }
+  .gl-results { gap: 20px; }
 }

@@ -15,36 +15,36 @@
             in plain language, and with opinions, because neutral definitions decide nothing.
           </p>
         </header>
+      </div>
 
-        @if (isLoading()) {
-          <p class="state-msg">Loading…</p>
-        } @else {
+      @if (isLoading()) {
+        <div class="container"><p class="state-msg">Loading…</p></div>
+      } @else {
 
-          <div class="gl-toolbar">
-            <div class="toolbar-row">
-              <label class="search">
-                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>
-                <input
-                  #searchInput
-                  type="search"
-                  placeholder="Search {{ totalCount() }} terms"
-                  [value]="query()"
-                  (input)="onSearch($event)"
-                  aria-label="Search the glossary"
-                />
-                @if (searching()) {
-                  <button type="button" class="search-clear" (click)="clearSearch()" aria-label="Clear search">&times;</button>
-                }
-              </label>
+        <div class="gl-toolbar">
+          <div class="container toolbar-inner">
+            <label class="search">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>
+              <input
+                #searchInput
+                type="search"
+                placeholder="Search {{ totalCount() }} terms"
+                [value]="query()"
+                (input)="onSearch($event)"
+                aria-label="Search the glossary"
+              />
+              @if (searching()) {
+                <button type="button" class="search-clear" (click)="clearSearch()" aria-label="Clear search">&times;</button>
+              }
+            </label>
 
-              <p class="result-count" aria-live="polite">
-                @if (searching()) {
-                  {{ resultCount() }} of {{ totalCount() }} terms
-                } @else {
-                  {{ resultCount() }} terms<span class="slash">/</span><span class="hint">press / to search</span>
-                }
-              </p>
-            </div>
+            <p class="result-count" aria-live="polite">
+              @if (searching()) {
+                {{ resultCount() }} of {{ totalCount() }}<span class="rc-word"> terms</span>
+              } @else {
+                {{ totalCount() }}<span class="rc-word"> terms</span><span class="hint">press / to search</span>
+              }
+            </p>
 
             <div class="chips" role="group" aria-label="Filter by area">
               <button type="button" class="chip" [class.is-active]="category() === 'all'" (click)="setCategory('all')">
@@ -57,7 +57,9 @@
               }
             </div>
           </div>
+        </div>
 
+        <div class="container">
           @if (resultCount() === 0) {
             <p class="state-msg">No term matches that - try a shorter word, or clear the filters.</p>
           } @else if (searching()) {
@@ -103,10 +105,10 @@
             </div>
 
           }
+        </div>
 
-        }
+      }
 
-      </div>
     </section>
   </main>
 

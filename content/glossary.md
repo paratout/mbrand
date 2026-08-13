@@ -81,7 +81,7 @@ The rules for building a particular kind of view: what is shown, what is left ou
 ## Zachman Framework
 A classification scheme that crosses six questions (what, how, where, who, when, why) with six perspectives, producing a grid of architecture artifacts. More useful as a completeness check than as a work plan.
 
-# Business and capability
+# Business
 
 ## Blueprint
 The agreed target design for one domain, covering the process to level three and the systems each step maps to. A blueprint is finished when [every step has exactly one target system](/publications/domain-blueprinting) and every gap has a named owner.
@@ -449,7 +449,7 @@ Publishing changes to an interface in a way that lets consumers move at their ow
 ## Webhook
 An outbound HTTP call a system makes when something happens, so consumers do not have to poll. Cheap, effective, and only as reliable as its retry policy.
 
-# Packaged software
+# Packages
 
 ## Best of breed
 An approach of choosing the strongest product for each function and integrating them. More capability per function, more integration to own, and the trade-off should be made once and deliberately rather than product by product.
@@ -612,7 +612,7 @@ A short, protected place on a governance agenda for someone who is not a member 
 ## Waiver
 Formal permission to not comply, usually granted above the level that set the rule. Distinct from an exception in that a waiver rarely carries an expiry, which is precisely why it should.
 
-# Delivery and change
+# Delivery
 
 ## Baseline and target architecture
 The landscape as it is today (baseline) and as it should look at a chosen horizon (target). Everything interesting happens in between - see transition architecture.
@@ -704,7 +704,7 @@ The process of choosing a supplier against published criteria. Architecture crit
 ## Wave
 One planned slice of a rollout or transformation - a set of domains, markets, or systems moved together. [Waves make multi-year change survivable](/publications/first-twelve-quarters): while one wave lands, the next is being designed.
 
-# Technology and security
+# Technology
 
 ## Audit trail
 The immutable record of who did what and when. Cheap to add at design time, impossible to reconstruct afterwards, and always wanted urgently.

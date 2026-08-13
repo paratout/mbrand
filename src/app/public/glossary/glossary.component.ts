@@ -139,17 +139,25 @@ export class GlossaryComponent implements OnInit {
    * router can honour a deep link on first load. Scroll once the list exists,
    * and retry briefly because rendering is zoneless.
    */
-  private scrollToFragment(attempt = 0): void {
+  private scrollToFragment(): void {
     const id = decodeURIComponent(location.hash.replace(/^#/, ''));
     if (!id) return;
-    requestAnimationFrame(() => {
-      const el = document.getElementById(id);
-      if (el) {
-        el.scrollIntoView({ block: 'start' });
-        return;
-      }
-      if (attempt < 20) this.scrollToFragment(attempt + 1);
-    });
+
+    const seek = (attempt: number) =>
+      requestAnimationFrame(() => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.scrollIntoView({ block: 'start' });
+          return;
+        }
+        if (attempt < 20) seek(attempt + 1);
+      });
+
+    // Web fonts reflow the page by a dozen pixels or so. Scrolling before they
+    // land leaves the term sitting under the sticky toolbar.
+    const fonts = (document as Document & { fonts?: FontFaceSet }).fonts;
+    if (fonts?.ready) fonts.ready.then(() => seek(0)).catch(() => seek(0));
+    else seek(0);
   }
 
   /** Letter nav is a jump control rather than a link, so the scroll is explicit. */
