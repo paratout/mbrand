@@ -173,6 +173,13 @@ export class SpeakingComponent implements OnInit {
           reads: [{ slug: 'governing-without-a-mandate', label: 'When nobody has to say yes' }],
         },
         {
+          title: 'The decision you did not write down',
+          sub: 'Records, registers, and the memory of why',
+          text: 'Why decision records are not only for design choices, the six kinds that exist under different names and the clock that decides where each is filed, and six worked records from a classification call to a deliberate deferral. Then what changes downstream: reviews that cite instead of re-arguing, and a procurement trail that protects the buyer.',
+          formats: 'Talk 45 min, or a working session on your own registers',
+          reads: [{ slug: 'decision-records', label: 'The decision you did not write down will be made again' }],
+        },
+        {
           title: 'Year one, you are the function',
           sub: 'From a single architect to an independent practice, quarter by quarter',
           text: 'Twelve quarters from a greenfield start: what to ship each quarter, which forum to open when, how to federate before you hire, how the money moves from somebody else\'s budget to your own, and the signals that say slow down.',
