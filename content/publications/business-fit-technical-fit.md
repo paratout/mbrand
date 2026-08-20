@@ -1,7 +1,7 @@
 ---
 title: Business fit and technical fit are not the same question
 summary: An application can be the wrong answer implemented beautifully. On separating the business verdict from the technical one - who rates what, on what scale, and what two honest ratings buy you at portfolio level. Includes a two-slide assessment guide.
-date: 2025-06-16
+date: 2025-05-12
 time: 14:05
 updated: 2025-11-25
 cover: /images/pub/business-fit-technical-fit/cover-v3.png
@@ -30,7 +30,7 @@ The **business owner** - the person accountable for the value and usage of the a
 
 The **IT owner** - typically the solution architect, tech lead, or technical custodian of the system - rates technical fit. They are the only one who knows what the stack really looks like under the demo.
 
-The architecture team rates neither. Its job is the frame: define the scale, train the raters, challenge the outliers, and arbitrate. I have come to describe the model as crowdsourced maintenance with centralized governance - the accuracy belongs to the people closest to the system, the consistency belongs to the center. A central team that fills in ratings on behalf of others becomes both the bottleneck and the single point of wrongness.
+The architecture team rates neither. Its job is the frame: define the scale, train the raters, challenge the outliers, and arbitrate - and to insist that a rating somebody disputes is [recorded with the anchor it was given against](/publications/decision-records), which turns a political argument into a technical one. I have come to describe the model as crowdsourced maintenance with centralized governance - the accuracy belongs to the people closest to the system, the consistency belongs to the center. A central team that fills in ratings on behalf of others becomes both the bottleneck and the single point of wrongness.
 
 And the two owners will disagree. In a first assessment round, expect an argument on a meaningful share of the portfolio - which is not a failure of the method but its main output. Write the tie-breaker rule down before the first workshop: when business owner and IT owner cannot agree on a rating, the domain architect decides, referencing the architecture principles and the domain roadmap - not whoever escalates loudest. Written down early, the rule converts fights into agenda items.
 

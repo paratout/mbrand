@@ -1,7 +1,7 @@
 ---
 title: A data strategy is a slide until it becomes a factsheet
 summary: How to build a data strategy that turns into something the repository can hold - the five decisions it actually has to make, the object factsheet field by field, the four joins that wire it to capabilities, applications, IT components and interfaces, the change loop that keeps it true as projects and policies land, who decides what in which forum, and a worked ERP clean core scenario from mastership disputes to the cutover. With a factsheet pack, an object model workbook, and a clean core scenario deck.
-date: 2026-04-20
+date: 2026-03-16
 time: 09:20
 updated: 2026-08-09
 cover: /images/pub/data-strategy-object-model/cover-v1.png

@@ -1,9 +1,9 @@
 ---
 title: Clean core is an integration discipline, not a coding ban
 summary: What clean core actually means once you stop reading it as "no customization" - the four places work can go, the integration rules that keep an upgrade to a weekend, how to triage what local markets genuinely need against what they merely prefer, how to hold edge cases in a register with expiry dates instead of in the core, and the scorecard that tells you whether the target is still reachable. With an extension register and an integration standard to download.
-date: 2026-03-09
+date: 2026-02-02
 time: 10:40
-updated: 2026-08-06
+updated: 2026-06-23
 cover: /images/pub/clean-core-integration/cover-v1.png
 status: published
 ---

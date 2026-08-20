@@ -1,7 +1,7 @@
 ---
 title: Principles that could have gone the other way
 summary: Why framework principles like "data is an asset" change nothing, and how to derive a set that actually decides arguments - the falsifiability test, the five places real principles come from, the "X over Y" form that makes trade-offs explicit, three worked sets for three different organizations, and how to keep them alive without turning them into compliance. With a derivation workshop and a principle register.
-date: 2025-07-21
+date: 2025-06-16
 time: 08:35
 updated: 2026-03-17
 cover: /images/pub/architecture-principles/cover-v1.png
@@ -36,7 +36,7 @@ Not from a framework, and not from a workshop that starts with a blank flipchart
 
 **The strategy, read literally.** Not the vision statement - the operational commitments. A company promising to open in new markets fast has a very different principle set from one promising the lowest cost per transaction. If the strategy says growth by acquisition, then something like *every capability is designed to absorb an acquired unit within two quarters* writes itself, and it will decide dozens of arguments about coupling.
 
-**The decision log, mined for repetition.** The same argument arriving three times is a missing principle. This is the highest-yield source and the reason a [numbered decision log](/publications/architecture-board-forum-system) pays off in ways nobody predicts. Go through a year of decisions and mark the ones that took disproportionate time; the pattern underneath them is your candidate.
+**The decision log, mined for repetition.** The same argument arriving three times is a missing principle, which is the highest-return use of [a decision record](/publications/decision-records) anybody ever finds. This is the highest-yield source and the reason a [numbered decision log](/publications/architecture-board-forum-system) pays off in ways nobody predicts. Go through a year of decisions and mark the ones that took disproportionate time; the pattern underneath them is your candidate.
 
 **The incidents.** What broke, and what the post-mortem said would prevent it. Organizations rarely convert incident findings into standing rules, and it is nearly free to do so - the evidence is already gathered and the pain is remembered.
 

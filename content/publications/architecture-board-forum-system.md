@@ -1,9 +1,9 @@
 ---
 title: An architecture board people do not route around
 summary: The long version of how to stand one up: the forum system around it, who sits where and who visits, how to moderate it, what flows in and out, how OKRs and project management plug into it, and what all of this does to your inventory and your diagrams. With the first ninety days mapped out.
-date: 2025-11-17
+date: 2025-10-13
 time: 18:10
-updated: 2026-07-28
+updated: 2026-04-07
 cover: /images/pub/architecture-board-forum-system/cover-v2.png
 status: published
 ---
@@ -40,7 +40,7 @@ The voting core: the lead enterprise architect, who chairs; two to three domain 
 
 I once inherited a board with nineteen standing members. It had not made a contested decision in a year - with nineteen people the cost of disagreement is too high, so everything contentious was settled in corridors beforehand and the meeting performed the ratification. We cut it to eight. The corridor traffic dropped within a quarter, because the room became a place where disagreeing was cheaper than lobbying.
 
-Around the core, two more rings. **Standing guests** attend always, without a vote: the PMO lead, who carries board verdicts into the project machinery, and a secretary - a real role, not a rotating chore - who owns the decision log, the agenda, and the repository links. **Visitors** come for one agenda item: the solution architect presenting a design, the project manager whose stage gate depends on a verdict, the business owner of an affected application. Visitors enter for their item and leave when it closes. This is not rudeness; it is what makes people willing to speak plainly in the room, and it keeps the meeting from swelling into an audience.
+Around the core, two more rings. **Standing guests** attend always, without a vote: the PMO lead, who carries board verdicts into the project machinery, and a secretary - a real role, not a rotating chore - who owns [the decision log](/publications/decision-records), the agenda, and the repository links. **Visitors** come for one agenda item: the solution architect presenting a design, the project manager whose stage gate depends on a verdict, the business owner of an affected application. Visitors enter for their item and leave when it closes. This is not rudeness; it is what makes people willing to speak plainly in the room, and it keeps the meeting from swelling into an audience.
 
 Vendors never attend. Their material can; their people cannot. A board that lets a vendor present is outsourcing its judgment in front of witnesses.
 

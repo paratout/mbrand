@@ -1,7 +1,7 @@
 ---
 title: Give every project an address
 summary: How to define domains that survive a reorganization, tie every project to one within days of intake, and cascade from that address to a named impact list - then attach the whole thing to the PMO lifecycle you already have. Where the build path and the buy path diverge, why the delivery team and the procurement team need the same constraint written two completely different ways, and why "architecture requirement" is the wrong name for the right thing. With a domain and intake pack, a constraint and scoring workbook, and a build-and-buy playbook.
-date: 2025-12-22
+date: 2025-11-17
 time: 08:15
 updated: 2026-08-10
 cover: /images/pub/every-project-needs-an-address/cover-v1.png
@@ -205,7 +205,7 @@ Splitting the three is most of the benefit. Whatever your organization already c
 - **ID**, so it can be cited and closed.
 - **Statement**, one sentence, in the imperative.
 - **Reason**, for this organization, naming the thing that went wrong or the commitment being served. A constraint without a reason gets negotiated; a constraint with one gets complied with or properly argued.
-- **Source** - a principle, a pattern, a board decision, a law. Visibly derived, not invented.
+- **Source** - a principle, a pattern, a [board decision](/publications/decision-records), a law. Visibly derived, not invented.
 - **Test**, answerable alone in five minutes.
 - **Owner**, a named architect who will take the call.
 - **Expiry or review date**, because some constraints exist only until a platform lands.
