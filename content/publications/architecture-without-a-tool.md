@@ -32,6 +32,8 @@ What you give up honestly: automatic dependency graphs across hundreds of record
 
 One file. Not five spreadsheets in five folders - one, with named sheets, owned by you, versioned where everyone can see it.
 
+If you are earlier than this - so new that nobody has asked you for an inventory at all - the file starts smaller still, holding the decisions in flight and the interfaces somebody else already maintains, and it grows into the shape below as the work in flight tells you which applications matter. [That first version is the one you build in month two](/publications/joining-as-the-first-architect), and the IDs you assign in it are the ones everything here joins on, so assign them as though they will outlive you.
+
 ![The starter workbook - six sheets, the keys that join them, the fields that are mandatory, and the ones deliberately left out](/images/pub/architecture-without-a-tool/workbook-v1.png)
 
 **Applications** is the spine. One row per application, with an ID you assign and never reuse (APP-001 upward), the name, a description a stranger could act on, the primary business capability, the IT owner, the business owner, the lifecycle state, and the markets or units where it runs. Nine or ten columns. Resist the eleventh until someone can name the decision it feeds.

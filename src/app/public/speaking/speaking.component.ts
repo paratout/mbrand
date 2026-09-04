@@ -63,6 +63,15 @@ export class SpeakingComponent implements OnInit {
       framing: 'You cannot plan a transformation across a landscape nobody has ever counted.',
       talks: [
         {
+          title: 'You have no mandate, only an invitation',
+          sub: 'The first ninety days when architecture is a greenfield',
+          text: 'Somebody added you to a project board and nothing else exists - no principles, no object model, no catalogue, no forum. Why you follow the work in flight rather than mapping the estate, the six phases with the output of each, the integration conversation that hands you an inventory for free, what as-is, target, reference and transition each mean and which you actually need in month two, and how to be in a room you have no authority in.',
+          formats: 'Talk 45 min, or a working session for a new or single-architect function',
+          reads: [
+            { slug: 'joining-as-the-first-architect', label: 'You have no mandate, only an invitation' },
+          ],
+        },
+        {
           title: 'Walk the landscape first',
           sub: 'Due diligence on your own company, market by market',
           text: 'Why the capability map comes before the application list, why collection by survey fails, and how to run the workshops that surface the tools nobody considers official. Includes reading the pile afterwards: duplicates, local gems, and the exceptions that are genuinely legal.',

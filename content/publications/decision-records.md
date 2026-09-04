@@ -254,7 +254,7 @@ The shape does not change. What changes is which kinds dominate, how formal the 
 
 ### A greenfield, with no history to inherit
 
-You are the only architect, there is nothing to backfill, and every decision is being made for the first time.
+You are the only architect, there is nothing to backfill, and every decision is being made for the first time. That last part is usually wrong, and it is worth checking before you accept it: an organization with no decision log still has decisions, sitting in the integration team's list of things they keep refusing and in the rules everybody follows without knowing where they came from. [Backfilling eight or ten of those](/publications/joining-as-the-first-architect) is the cheapest way to teach an organization what a record is, because it uses decisions people already agree with, and the practice arrives before the first argument rather than during it.
 
 **What dominates:** directions and classifications. Almost every call is setting a precedent rather than applying one.
 

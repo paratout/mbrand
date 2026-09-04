@@ -60,6 +60,6 @@ The last move is the one that makes the whole exercise worth the plane tickets: 
 
 ![The first pass, in seven moves: scope the capability map, collect in workshops, analyze, evaluate, document into the repository, approve, absorb into team objectives](/images/pub/landscape-due-diligence/first-pass-v1.png)
 
-If you are doing this as the only architect in a young function, this walk is your first quarter - and [the twelve-quarter build](/publications/first-twelve-quarters) puts it in sequence with everything that should follow it.
+If you are doing this as the only architect in a young function, this walk is your first quarter - and [the twelve-quarter build](/publications/first-twelve-quarters) puts it in sequence with everything that should follow it. One caveat on timing, and it matters: everything above assumes somebody has asked you to know the estate. If nobody has - if you have simply been added to a project board and are working out what you are for - then walking the whole landscape first is the wrong opening move, and [the joining sequence](/publications/joining-as-the-first-architect) inverts it: follow the work in flight, and let the work tell you which part of the landscape to walk.
 
 The walk is worth it even beyond the inventory. You meet the people who actually run the place. You learn where the shortcuts are and which official system is a facade. And for a brief moment, the whole organization can point at one picture and agree that it is true. Do not spend that moment on a PDF.

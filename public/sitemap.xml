@@ -2,32 +2,32 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://mehdibamou.com/</loc>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-09-04</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://mehdibamou.com/about</loc>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-09-04</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://mehdibamou.com/publications</loc>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-09-04</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://mehdibamou.com/library</loc>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-09-04</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://mehdibamou.com/glossary</loc>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-09-04</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://mehdibamou.com/speaking</loc>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-09-04</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
@@ -62,7 +62,7 @@
   </url>
   <url>
     <loc>https://mehdibamou.com/publications/every-project-needs-an-address</loc>
-    <lastmod>2026-08-10</lastmod>
+    <lastmod>2026-07-02</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
@@ -113,6 +113,11 @@
   <url>
     <loc>https://mehdibamou.com/publications/architecture-without-a-tool</loc>
     <lastmod>2026-06-16</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://mehdibamou.com/publications/joining-as-the-first-architect</loc>
+    <lastmod>2026-08-19</lastmod>
     <priority>0.7</priority>
   </url>
 </urlset>
