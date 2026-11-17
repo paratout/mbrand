@@ -1,6 +1,6 @@
 import { Component, OnInit, signal, inject } from '@angular/core';
+import { SeoService } from '../../core/services/seo.service';
 import { RouterLink } from '@angular/router';
-import { Title, Meta } from '@angular/platform-browser';
 import { SiteHeaderComponent } from '../../shared/components/site-header/site-header.component';
 import { SiteFooterComponent } from '../../shared/components/site-footer/site-footer.component';
 
@@ -233,10 +233,10 @@ export class SpeakingComponent implements OnInit {
   ];
 
   constructor() {
-    inject(Title).setTitle('Speaking - Mehdi Bamou');
-    inject(Meta).updateTag({
-      name: 'description',
-      content:
+    inject(SeoService).apply({
+      path: '/speaking',
+      title: 'Speaking - Mehdi Bamou',
+      description:
         'Talks and workshops on enterprise architecture: portfolio and inventory, data and integration, packaged ERP, principles and governance, delivery, federated operating models, and building the function. Practitioner material, in English, French, or Arabic.',
     });
   }

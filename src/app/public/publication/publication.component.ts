@@ -8,6 +8,7 @@ import { PublicationService, Publication, PublicationDetail } from '../../core/s
 import { SiteHeaderComponent } from '../../shared/components/site-header/site-header.component';
 import { SiteFooterComponent } from '../../shared/components/site-footer/site-footer.component';
 import { ShareBarComponent } from '../../shared/components/share-bar/share-bar.component';
+import { SeoService } from '../../core/services/seo.service';
 
 interface LightboxImage {
   src: string;
@@ -28,6 +29,7 @@ export class PublicationComponent implements OnDestroy {
   private sanitizer  = inject(DomSanitizer);
   private titleSvc   = inject(Title);
   private metaSvc    = inject(Meta);
+  private seo        = inject(SeoService);
   private document   = inject(DOCUMENT);
   private router     = inject(Router);
 
@@ -81,7 +83,12 @@ export class PublicationComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.titleSvc.setTitle('Mehdi Bamou - Organization, Governance & Technology');
+    this.seo.apply({
+      path: '/',
+      title: 'Mehdi Bamou - Organization, Governance & Technology',
+      description:
+        'Enterprise architect writing about how large organizations actually work: the structures, the systems, and the decisions that connect them.',
+    });
     this.jsonLdEl?.remove();
     this.document.body.style.removeProperty('overflow');
   }
@@ -184,8 +191,13 @@ export class PublicationComponent implements OnDestroy {
   }
 
   private setPageMeta(p: PublicationDetail): void {
-    this.titleSvc.setTitle(`${p.title} - Mehdi Bamou`);
-    this.metaSvc.updateTag({ name: 'description', content: p.summary });
+    this.seo.apply({
+      path: `/publications/${p.slug}`,
+      title: `${p.title} - Mehdi Bamou`,
+      description: p.summary,
+      image: p.coverImage,
+      type: 'article',
+    });
 
     const jsonLd = {
       '@context': 'https://schema.org',

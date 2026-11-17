@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal, computed } from '@angular/core';
+import { SeoService } from '../../core/services/seo.service';
 import { RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
-import { Title, Meta } from '@angular/platform-browser';
 import { PublicationService, Publication } from '../../core/services/publication.service';
 import { SiteHeaderComponent } from '../../shared/components/site-header/site-header.component';
 import { SiteFooterComponent } from '../../shared/components/site-footer/site-footer.component';
@@ -23,10 +23,11 @@ export class PublicationsComponent implements OnInit {
   private pubService = inject(PublicationService);
 
   constructor() {
-    inject(Title).setTitle('Publications - Mehdi Bamou');
-    inject(Meta).updateTag({
-      name: 'description',
-      content: 'Essays and practical notes on enterprise architecture, governance, and technology in large organizations.',
+    inject(SeoService).apply({
+      path: '/publications',
+      title: 'Publications - Mehdi Bamou',
+      description:
+        'Essays and practical notes on enterprise architecture, governance, and technology in large organizations.',
     });
   }
 

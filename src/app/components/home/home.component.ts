@@ -1,4 +1,5 @@
 import { Component, inject, OnInit, signal, computed } from '@angular/core';
+import { SeoService } from '../../core/services/seo.service';
 import { RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { PublicationService, Publication } from '../../core/services/publication.service';
@@ -15,6 +16,15 @@ const LATEST_COUNT = 3;
 })
 export class HomeComponent implements OnInit {
   private pubService = inject(PublicationService);
+
+  constructor() {
+    inject(SeoService).apply({
+      path: '/',
+      title: 'Mehdi Bamou - Organization, Governance & Technology',
+      description:
+        'Enterprise architect writing about how large organizations actually work: the structures, the systems, and the decisions that connect them.',
+    });
+  }
 
   readonly allPublications = signal<Publication[]>([]);
   readonly isLoading       = signal(true);

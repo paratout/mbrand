@@ -1,6 +1,6 @@
 import { Component, OnInit, signal, computed, inject, ElementRef, viewChild } from '@angular/core';
+import { SeoService } from '../../core/services/seo.service';
 import { Router } from '@angular/router';
-import { Title, Meta } from '@angular/platform-browser';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { SiteHeaderComponent } from '../../shared/components/site-header/site-header.component';
 import { SiteFooterComponent } from '../../shared/components/site-footer/site-footer.component';
@@ -101,10 +101,10 @@ export class GlossaryComponent implements OnInit {
   readonly totalCount  = computed(() => this.all().length);
 
   constructor() {
-    inject(Title).setTitle('Glossary - Mehdi Bamou');
-    inject(Meta).updateTag({
-      name: 'description',
-      content:
+    inject(SeoService).apply({
+      path: '/glossary',
+      title: 'Glossary - Mehdi Bamou',
+      description:
         'A working dictionary of enterprise architecture: capabilities, portfolios, data, integration, packaged software, governance, delivery, and technology - defined in plain language, with opinions.',
     });
   }

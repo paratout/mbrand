@@ -1,6 +1,6 @@
 import { Component, OnInit, signal, computed, inject } from '@angular/core';
+import { SeoService } from '../../core/services/seo.service';
 import { RouterLink } from '@angular/router';
-import { Title, Meta } from '@angular/platform-browser';
 import { SiteHeaderComponent } from '../../shared/components/site-header/site-header.component';
 import { SiteFooterComponent } from '../../shared/components/site-footer/site-footer.component';
 
@@ -60,10 +60,11 @@ export class LibraryComponent implements OnInit {
   readonly pages = computed(() => Array.from({ length: this.pageCount() }, (_, i) => i + 1));
 
   constructor() {
-    inject(Title).setTitle('Library - Mehdi Bamou');
-    inject(Meta).updateTag({
-      name: 'description',
-      content: 'Free tools, templates, and diagrams for enterprise architecture and governance work - ready to download and adapt.',
+    inject(SeoService).apply({
+      path: '/library',
+      title: 'Library - Mehdi Bamou',
+      description:
+        'Free tools, templates, and diagrams for enterprise architecture and governance work - ready to download and adapt.',
     });
   }
 
