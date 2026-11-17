@@ -1,9 +1,9 @@
 ---
 title: You have no mandate, only an invitation
 summary: What to actually do when you join an organization as its first architect, somebody adds you to a project board, and nothing else exists - no principles, no object model, no catalogue, no forum. Why you start with the work in flight rather than the landscape, the ninety days step by step with the output of each phase, what as-is, target, reference and transition architecture each mean and which of them you genuinely need in month two, how to run the integration conversation that hands you the inventory for free, and how to be in the room before you have any authority. With a ninety-day pack, a joining workbook, and a worked artifacts deck.
-date: 2024-12-11
+date: 2026-08-29
 time: 09:05
-updated: 2026-10-15
+updated: 2026-10-26
 cover: /images/pub/joining-as-the-first-architect/cover-v1.png
 status: published
 ---

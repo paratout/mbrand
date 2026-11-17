@@ -1,9 +1,9 @@
 ---
 title: When nobody has to say yes
 summary: Architecture and change in a federated organization - autonomous units, balanced stakeholder governance, hard local constraints, and adoption that is entirely voluntary. Why the work is done in person, how to read and record local constraints, how to design a core thin enough to be accepted, how to write a proposal that survives a consent-based room, and what to measure when compliance is not available. With a field kit, an adoption tracker, and a proposal pack.
-date: 2026-08-31
+date: 2025-09-16
 time: 09:15
-updated: 2026-09-29
+updated: 2026-06-06
 cover: /images/pub/governing-without-a-mandate/cover-v1.png
 status: published
 ---

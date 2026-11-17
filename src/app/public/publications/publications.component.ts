@@ -35,17 +35,12 @@ export class PublicationsComponent implements OnInit {
   readonly isLoading       = signal(true);
 
   /**
-   * The archive is written as a course: publication dates encode a reading
-   * order, oldest first. The JSON arrives newest-first (correct for the feed),
-   * so the page reverses it and numbers each piece. The three most recent are
-   * surfaced separately above, so "what is new" is not lost to the ordering.
+   * The JSON arrives newest-first, which is right for the feed. The page
+   * lists oldest-first so the order on screen is stable and independent of
+   * which piece happens to carry the most recent date.
    */
-  readonly inReadingOrder = computed(() =>
+  readonly ordered = computed(() =>
     [...this.allPublications()].sort((a, b) => stamp(a) - stamp(b))
-  );
-
-  readonly latest = computed(() =>
-    [...this.allPublications()].sort((a, b) => stamp(b) - stamp(a)).slice(0, 3)
   );
 
   readonly totalPages = computed(() =>
@@ -54,13 +49,8 @@ export class PublicationsComponent implements OnInit {
 
   readonly publications = computed(() => {
     const start = (this.currentPage() - 1) * PAGE_SIZE;
-    return this.inReadingOrder().slice(start, start + PAGE_SIZE);
+    return this.ordered().slice(start, start + PAGE_SIZE);
   });
-
-  /** 1-based position in the course, for the step number on each row. */
-  stepOf(pub: Publication): number {
-    return this.inReadingOrder().findIndex((p) => p.slug === pub.slug) + 1;
-  }
 
   readonly hasPrev = computed(() => this.currentPage() > 1);
   readonly hasNext = computed(() => this.currentPage() < this.totalPages());

@@ -1,9 +1,9 @@
 ---
 title: The two-gate architecture review - governance that enables
 summary: Architecture review has a reputation problem: the committee where projects go to wait. It doesn't have to be that way. A model with exactly two gates, an engineer-level forum underneath, a fast lane for pattern-conforming work, and decisions recorded where everyone can find them.
-date: 2025-11-23
+date: 2025-07-03
 time: 09:10
-updated: 2026-08-29
+updated: 2025-12-15
 cover: /images/pub/two-gate-review/cover-v4.png
 status: published
 ---

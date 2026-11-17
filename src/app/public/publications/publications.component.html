@@ -11,9 +11,7 @@
           <h1 class="pubs-title">Publications</h1>
           <p class="pubs-lede">
             Essays and practical notes on enterprise architecture, governance,
-            and technology in large organizations. They are written as one
-            course and listed in reading order, so the first piece below is
-            the place to start.
+            and technology in large organizations.
           </p>
         </header>
 
@@ -22,21 +20,6 @@
         } @else if (allPublications().length === 0) {
           <p class="state-msg">Nothing published yet - the first piece is on its way.</p>
         } @else {
-
-          @if (currentPage() === 1) {
-            <section class="latest" aria-label="Most recent">
-              <h2 class="latest-head">Most recent</h2>
-              <div class="latest-grid">
-                @for (pub of latest(); track pub.slug) {
-                  <a [routerLink]="['/publications', pub.slug]" class="latest-card">
-                    <time class="latest-date">{{ pub.publishedAt | date: 'MMM d, yyyy' }}</time>
-                    <span class="latest-title">{{ pub.title }}</span>
-                    <span class="latest-mins">{{ pub.readMinutes }} min read</span>
-                  </a>
-                }
-              </div>
-            </section>
-          }
 
           <div class="pub-list">
             @for (pub of publications(); track pub.slug) {
@@ -51,8 +34,6 @@
 
                 <div class="pub-info">
                   <div class="pub-meta">
-                    <span class="pub-step">{{ stepOf(pub) }}</span>
-                    <span class="meta-sep">-</span>
                     <time>Published {{ pub.publishedAt | date: 'MMM d, yyyy' }} <span class="meta-sep">-</span> Updated {{ (pub.updatedAt ?? pub.publishedAt) | date: 'MMM d, yyyy' }}</time>
                     <span class="meta-sep">-</span>
                     <span>{{ pub.readMinutes }} min read</span>

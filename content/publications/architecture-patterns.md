@@ -1,9 +1,9 @@
 ---
 title: A pattern is a decision you only make once
 summary: Where patterns come from, what belongs inside one, and how they earn their keep - the rule of the second occurrence, a worked pattern written out in full, the six-pattern starter set for a greenfield, the fast lane that makes conformance rewarding, and the lifecycle that lets a pattern be revised or retired without breaking what already runs.
-date: 2025-10-18
+date: 2025-08-12
 time: 08:20
-updated: 2026-11-03
+updated: 2026-03-12
 cover: /images/pub/architecture-patterns/cover-v1.png
 status: published
 ---

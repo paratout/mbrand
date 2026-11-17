@@ -1,9 +1,9 @@
 ---
 title: Business fit and technical fit are not the same question
 summary: An application can be the wrong answer implemented beautifully. On separating the business verdict from the technical one - who rates what, on what scale, and what two honest ratings buy you at portfolio level. Includes a two-slide assessment guide.
-date: 2025-08-04
+date: 2024-12-20
 time: 14:05
-updated: 2026-02-01
+updated: 2026-06-05
 cover: /images/pub/business-fit-technical-fit/cover-v3.png
 status: published
 ---
