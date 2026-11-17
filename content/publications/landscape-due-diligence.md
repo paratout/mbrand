@@ -1,9 +1,9 @@
 ---
 title: Walk the landscape first - due diligence before you transform anything
 summary: Phase one of any serious transformation is finding out what the company actually runs. How to build the initial capability map, collect applications and IT components market by market, and read the pile once you have it - without the result dying as a PDF.
-date: 2024-12-09
+date: 2025-02-27
 time: 10:30
-updated: 2026-05-12
+updated: 2025-12-04
 cover: /images/pub/landscape-due-diligence/cover-v2.png
 status: published
 ---

@@ -1,9 +1,9 @@
 ---
 title: An architecture board people do not route around
 summary: The long version of how to stand one up: the forum system around it, who sits where and who visits, how to moderate it, what flows in and out, how OKRs and project management plug into it, and what all of this does to your inventory and your diagrams. With the first ninety days mapped out.
-date: 2025-10-13
+date: 2026-01-02
 time: 18:10
-updated: 2026-04-07
+updated: 2026-02-15
 cover: /images/pub/architecture-board-forum-system/cover-v2.png
 status: published
 ---

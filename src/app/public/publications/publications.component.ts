@@ -8,6 +8,11 @@ import { SiteFooterComponent } from '../../shared/components/site-footer/site-fo
 
 const PAGE_SIZE = 10;
 
+/** publishedAt is nullable; undated pieces sort to the end of the course. */
+function stamp(p: Publication): number {
+  return p.publishedAt ? new Date(p.publishedAt).getTime() : Number.MAX_SAFE_INTEGER;
+}
+
 @Component({
   selector: 'app-publications',
   imports: [RouterLink, DatePipe, SiteHeaderComponent, SiteFooterComponent],
@@ -29,14 +34,33 @@ export class PublicationsComponent implements OnInit {
   readonly currentPage     = signal(1);
   readonly isLoading       = signal(true);
 
+  /**
+   * The archive is written as a course: publication dates encode a reading
+   * order, oldest first. The JSON arrives newest-first (correct for the feed),
+   * so the page reverses it and numbers each piece. The three most recent are
+   * surfaced separately above, so "what is new" is not lost to the ordering.
+   */
+  readonly inReadingOrder = computed(() =>
+    [...this.allPublications()].sort((a, b) => stamp(a) - stamp(b))
+  );
+
+  readonly latest = computed(() =>
+    [...this.allPublications()].sort((a, b) => stamp(b) - stamp(a)).slice(0, 3)
+  );
+
   readonly totalPages = computed(() =>
     Math.max(1, Math.ceil(this.allPublications().length / PAGE_SIZE))
   );
 
   readonly publications = computed(() => {
     const start = (this.currentPage() - 1) * PAGE_SIZE;
-    return this.allPublications().slice(start, start + PAGE_SIZE);
+    return this.inReadingOrder().slice(start, start + PAGE_SIZE);
   });
+
+  /** 1-based position in the course, for the step number on each row. */
+  stepOf(pub: Publication): number {
+    return this.inReadingOrder().findIndex((p) => p.slug === pub.slug) + 1;
+  }
 
   readonly hasPrev = computed(() => this.currentPage() > 1);
   readonly hasNext = computed(() => this.currentPage() < this.totalPages());

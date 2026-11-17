@@ -1,9 +1,9 @@
 ---
 title: A pattern is a decision you only make once
 summary: Where patterns come from, what belongs inside one, and how they earn their keep - the rule of the second occurrence, a worked pattern written out in full, the six-pattern starter set for a greenfield, the fast lane that makes conformance rewarding, and the lifecycle that lets a pattern be revised or retired without breaking what already runs.
-date: 2025-07-28
+date: 2025-10-18
 time: 08:20
-updated: 2026-04-28
+updated: 2026-11-03
 cover: /images/pub/architecture-patterns/cover-v1.png
 status: published
 ---
@@ -80,7 +80,7 @@ A greenfield is the best and the most dangerous place for patterns. Best, becaus
 1. Canonical inbound interface - the one above.
 2. Batch-to-event bridge, because something upstream will always be files.
 3. System of record and read replicas - who owns each data concept and how everyone else reads it.
-4. Channel front door - one façade per channel, so channel-specific logic stops leaking into domain services.
+4. Channel front door - one facade per channel, so channel-specific logic stops leaking into domain services.
 5. Identity and access through the central provider - the pattern that stops six bespoke user stores.
 6. Environment and release promotion - the path from a developer's branch to production, drawn once.
 
