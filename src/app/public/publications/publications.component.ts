@@ -1,7 +1,7 @@
-import { Component, inject, OnInit, signal, computed } from '@angular/core';
+import { Component, inject, OnInit, signal, computed, PLATFORM_ID } from '@angular/core';
 import { SeoService } from '../../core/services/seo.service';
 import { RouterLink } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { DatePipe, isPlatformBrowser } from '@angular/common';
 import { PublicationService, Publication } from '../../core/services/publication.service';
 import { SiteHeaderComponent } from '../../shared/components/site-header/site-header.component';
 import { SiteFooterComponent } from '../../shared/components/site-footer/site-footer.component';
@@ -21,6 +21,7 @@ function stamp(p: Publication): number {
 })
 export class PublicationsComponent implements OnInit {
   private pubService = inject(PublicationService);
+  private isBrowser  = isPlatformBrowser(inject(PLATFORM_ID));
 
   constructor() {
     inject(SeoService).apply({
@@ -68,12 +69,14 @@ export class PublicationsComponent implements OnInit {
   }
 
   prevPage(): void {
-    if (this.hasPrev()) { this.currentPage.update((p) => p - 1); window.scrollTo(0, 0); }
+    if (this.hasPrev()) { this.currentPage.update((p) => p - 1); this.toTop(); }
   }
 
   nextPage(): void {
-    if (this.hasNext()) { this.currentPage.update((p) => p + 1); window.scrollTo(0, 0); }
+    if (this.hasNext()) { this.currentPage.update((p) => p + 1); this.toTop(); }
   }
 
-  goToPage(n: number): void { this.currentPage.set(n); window.scrollTo(0, 0); }
+  goToPage(n: number): void { this.currentPage.set(n); this.toTop(); }
+
+  private toTop(): void { if (this.isBrowser) window.scrollTo(0, 0); }
 }

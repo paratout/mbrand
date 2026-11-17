@@ -1,4 +1,5 @@
 import { Component, OnInit, signal, computed, inject, ElementRef, viewChild } from '@angular/core';
+import { CONTENT_LOADER } from '../../core/services/content-loader';
 import { SeoService } from '../../core/services/seo.service';
 import { Router } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -47,6 +48,7 @@ interface CategoryChip {
   styleUrl: './glossary.component.scss',
 })
 export class GlossaryComponent implements OnInit {
+  private load = inject(CONTENT_LOADER);
   private sanitizer = inject(DomSanitizer);
   private router = inject(Router);
 
@@ -110,8 +112,8 @@ export class GlossaryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    fetch('/content/glossary.json')
-      .then((r) => (r.ok ? r.json() : { categories: [], terms: [] }))
+    this.load<GlossaryFile | GlossaryTerm[]>('glossary.json')
+      .then((d) => d ?? { categories: [], terms: [] })
       .then((data: GlossaryFile | GlossaryTerm[]) => {
         // tolerate the older array-shaped file
         const file: GlossaryFile = Array.isArray(data) ? { categories: [], terms: data } : data;

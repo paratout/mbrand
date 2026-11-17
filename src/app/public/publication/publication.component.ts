@@ -1,8 +1,8 @@
 import {
-  Component, input, effect, untracked, OnDestroy, signal, computed, inject, HostListener,
+  Component, input, effect, untracked, OnDestroy, signal, computed, inject, HostListener, PLATFORM_ID,
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { DatePipe, DOCUMENT } from '@angular/common';
+import { DatePipe, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { DomSanitizer, SafeHtml, Title, Meta } from '@angular/platform-browser';
 import { PublicationService, Publication, PublicationDetail } from '../../core/services/publication.service';
 import { SiteHeaderComponent } from '../../shared/components/site-header/site-header.component';
@@ -30,6 +30,8 @@ export class PublicationComponent implements OnDestroy {
   private titleSvc   = inject(Title);
   private metaSvc    = inject(Meta);
   private seo        = inject(SeoService);
+  /** Prerendering runs in Node, where window and scroll do not exist. */
+  private isBrowser  = isPlatformBrowser(inject(PLATFORM_ID));
   private document   = inject(DOCUMENT);
   private router     = inject(Router);
 
@@ -62,7 +64,7 @@ export class PublicationComponent implements OnDestroy {
     this.progress.set(0);
     this.closeLightbox();
     this.jsonLdEl?.remove();
-    window.scrollTo({ top: 0 });
+    if (this.isBrowser) window.scrollTo({ top: 0 });
 
     this.pubService.getBySlug(slug).subscribe({
       next: (p) => {
@@ -176,7 +178,7 @@ export class PublicationComponent implements OnDestroy {
   }
 
   backToTop(): void {
-    window.scrollTo({ top: 0 });
+    if (this.isBrowser) window.scrollTo({ top: 0 });
   }
 
   private loadReadNext(currentSlug: string): void {

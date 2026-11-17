@@ -1,4 +1,5 @@
 import { Component, OnInit, signal, inject } from '@angular/core';
+import { CONTENT_LOADER } from '../../core/services/content-loader';
 import { SeoService } from '../../core/services/seo.service';
 import { RouterLink } from '@angular/router';
 import { SiteHeaderComponent } from '../../shared/components/site-header/site-header.component';
@@ -38,6 +39,7 @@ interface Format {
   styleUrl: './speaking.component.scss',
 })
 export class SpeakingComponent implements OnInit {
+  private load = inject(CONTENT_LOADER);
   /* Live counts, so the page never goes stale as the archive grows. */
   readonly articleCount = signal<number | null>(null);
   readonly toolCount = signal<number | null>(null);
@@ -242,21 +244,20 @@ export class SpeakingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    fetch('/content/publications.json')
-      .then((r) => (r.ok ? r.json() : []))
+    this.load<unknown[]>('publications.json')
+      .then((d) => d ?? [])
       .then((p: unknown[]) => this.articleCount.set(Array.isArray(p) ? p.length : null))
       .catch(() => {});
 
-    fetch('/content/library.json')
-      .then((r) => (r.ok ? r.json() : []))
+    this.load<{ category?: string }[]>('library.json')
+      .then((d) => d ?? [])
       .then((items: { category?: string }[]) =>
         this.toolCount.set(Array.isArray(items) ? items.filter((i) => i.category === 'tool').length : null)
       )
       .catch(() => {});
 
-    fetch('/content/glossary.json')
-      .then((r) => (r.ok ? r.json() : null))
-      .then((g: { terms?: unknown[] } | unknown[]) => {
+    this.load<{ terms?: unknown[] } | unknown[]>('glossary.json')
+      .then((g: { terms?: unknown[] } | unknown[] | null) => {
         const terms = Array.isArray(g) ? g : g?.terms;
         this.termCount.set(Array.isArray(terms) ? terms.length : null);
       })

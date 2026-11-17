@@ -260,4 +260,16 @@ ${urls.map((u) => `  <url>\n    <loc>${u.loc}</loc>\n    <lastmod>${u.date ?? to
 `;
 await writeFile(path.join(ROOT, 'public', 'sitemap.xml'), sitemap);
 
+// Prerender route list. The Angular build renders one static HTML file per
+// line, which is what lets crawlers that do not run JavaScript see the actual
+// writing instead of an empty app shell. Derived from the sitemap so the two
+// can never drift apart, plus the two legal pages, which are deliberately not
+// in the sitemap but should still exist as real HTML.
+const prerenderRoutes = [
+  ...urls.map((u) => u.loc.replace(SITE, '') || '/'),
+  '/privacy',
+  '/impressum',
+];
+await writeFile(path.join(ROOT, 'prerender-routes.txt'), prerenderRoutes.join('\n') + '\n');
+
 console.log(`content: ${published.length} published, ${all.length - published.length} draft(s), ${library.length} library item(s), ${glossary.length} glossary term(s), feed + sitemap ${urls.length} urls`);

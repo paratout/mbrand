@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { from, Observable } from 'rxjs';
+import { CONTENT_LOADER } from './content-loader';
 
 /**
  * Publications are static JSON generated at build time from
@@ -21,25 +22,16 @@ export interface PublicationDetail extends Publication {
 
 @Injectable({ providedIn: 'root' })
 export class PublicationService {
+  private load = inject(CONTENT_LOADER);
+
   /** All published publications, newest first. */
   getPublished(): Observable<Publication[]> {
-    return from(
-      fetch('/content/publications.json').then((r) => {
-        if (!r.ok) throw new Error(`publications.json ${r.status}`);
-        return r.json() as Promise<Publication[]>;
-      })
-    );
+    return from(this.load<Publication[]>('publications.json').then((p) => p ?? []));
   }
 
   /** One publication with rendered HTML body, or null when missing. */
   getBySlug(slug: string): Observable<PublicationDetail | null> {
     const safe = encodeURIComponent(slug);
-    return from(
-      fetch(`/content/publications/${safe}.json`).then((r) => {
-        if (r.status === 404) return null;
-        if (!r.ok) throw new Error(`publication ${slug} ${r.status}`);
-        return r.json() as Promise<PublicationDetail>;
-      })
-    );
+    return from(this.load<PublicationDetail>(`publications/${safe}.json`));
   }
 }

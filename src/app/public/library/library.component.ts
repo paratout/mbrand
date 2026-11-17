@@ -1,4 +1,5 @@
 import { Component, OnInit, signal, computed, inject } from '@angular/core';
+import { CONTENT_LOADER } from '../../core/services/content-loader';
 import { SeoService } from '../../core/services/seo.service';
 import { RouterLink } from '@angular/router';
 import { SiteHeaderComponent } from '../../shared/components/site-header/site-header.component';
@@ -27,6 +28,7 @@ const PAGE_SIZE = 8;
   styleUrl: './library.component.scss',
 })
 export class LibraryComponent implements OnInit {
+  private load = inject(CONTENT_LOADER);
   readonly items     = signal<LibraryItem[]>([]);
   readonly isLoading = signal(true);
   readonly filter    = signal<LibraryFilter>('all');
@@ -69,8 +71,8 @@ export class LibraryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    fetch('/content/library.json')
-      .then((r) => (r.ok ? r.json() : []))
+    this.load<LibraryItem[]>('library.json')
+      .then((d) => d ?? [])
       .then((items: LibraryItem[]) => { this.items.set(items); this.isLoading.set(false); })
       .catch(() => this.isLoading.set(false));
   }

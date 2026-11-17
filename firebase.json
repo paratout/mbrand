@@ -6,6 +6,7 @@
       "**/.*",
       "**/node_modules/**"
     ],
+    "trailingSlash": false,
     "headers": [
       {
         "source": "**/*.@(js|css)",
@@ -62,7 +63,7 @@
         ]
       },
       {
-        "source": "/index.html",
+        "source": "**/index.html",
         "headers": [
           {
             "key": "Cache-Control",
