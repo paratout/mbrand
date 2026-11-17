@@ -1,9 +1,9 @@
 ---
 title: The decision you did not write down will be made again
 summary: What a decision record actually is, and why it is not only for design choices - classification calls, fit ratings, mastership moves, fit-gap dispositions, vendor selections and deliberate deferrals are all decisions somebody will re-litigate. One record shape, six kinds, and the register chosen by what the decision binds and for how long. With six fully worked records from different situations, the filing rules, how it changes what delivery and procurement can do, and how every register across the practice is the same object. Includes a record pack, a register workbook, and a scenarios deck.
-date: 2025-10-22
+date: 2026-10-06
 time: 08:45
-updated: 2026-06-21
+updated: 2026-10-09
 cover: /images/pub/decision-records/cover-v1.png
 status: published
 ---
