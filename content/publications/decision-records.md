@@ -185,7 +185,7 @@ The underrated one.
 > **Rejected:** choosing now on the strength of one producer and a proof of concept.
 > **Why:** a single producer does not exercise the properties we would be selecting on. Choosing now means choosing on a demonstration rather than on load, replay and operability.
 > **Cost:** the first producer ships on the existing queue and will migrate. Roughly two weeks of rework, accepted knowingly.
-> **Trigger:** revisit when a second producer is funded, or by 2026-09-30, whichever is first.
+> **Trigger:** revisit when a second producer is funded, or by 2027-03-31, whichever is first.
 > **Status:** accepted.
 
 A deferral with a trigger and an accepted cost is a decision. A deferral without them is an unanswered question that will be asked again next month, and the month after.
